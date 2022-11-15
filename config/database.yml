@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: Synth_etic_production
-  username: Synth_etic
-  password: <%= ENV["SYNTH_ETIC_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
