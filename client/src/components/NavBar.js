@@ -3,9 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
 
-    // function handleClick(e) {
-    //     e.target.className = 'active'
-    // }
+
   return (
     <div>
         <div className='navbar'>
@@ -14,8 +12,7 @@ const NavBar = () => {
             <a><NavLink to='/login'>LogIn</NavLink></a>
             <a><NavLink to='/explore'>Explore</NavLink></a>
             <a><NavLink to='/user'>Profile</NavLink></a>
-            <a className=''></a>
-
+            <a className='navbar-right'><NavLink to='/ahhh'>Synth-etic</NavLink></a>
         </div>
     </div>
   )
