@@ -14,13 +14,6 @@ function userReducer(state = initialState, action) {
                 entities: [...state.entities, action.payload]
             };
         
-
-        case "cats/catAdd/pending":
-            return {
-                ...state,
-                status: "loading",
-            };
-        case "cats/catAdd/fu"
     }
 }
 

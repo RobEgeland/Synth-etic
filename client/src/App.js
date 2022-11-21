@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import {useState, useEffect} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 
+
 function App() {
   const [count, setCount] = useState(0)
 
