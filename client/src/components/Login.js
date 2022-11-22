@@ -1,9 +1,14 @@
 import React from 'react'
-
+import { useContext } from 'react'
+import { UserContext } from '../context/UserContext'
 const Login = () => {
-  return (
-    <div>Login</div>
-  )
+    const {loggedIn, currentUser} = useContext(UserContext)
+    console.log(loggedIn)
+    return (
+        <div>
+            <p>{loggedIn}</p>
+        </div>
+    )
 }
 
 export default Login
