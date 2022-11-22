@@ -18,7 +18,7 @@ const SignUp = () => {
 }
   return (
     <form className='-form' >
-        <h1>Sign up for Liveify!</h1>
+        <h1>Sign up for Synth-etic!</h1>
         
         <div>
             <label htmlFor='username'>Username</label>
