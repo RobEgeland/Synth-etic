@@ -2,12 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
+import Home from './components/Home';
 import {useState, useEffect} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
 
   return (
@@ -20,7 +21,7 @@ function App() {
           <SignUp />
         </Route>
         <Route path="/">
-          <h1>Page Count: {count}</h1>
+          <Home />
         </Route>
       </Switch>
     </div>

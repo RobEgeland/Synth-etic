@@ -17,7 +17,7 @@ const SignUp = () => {
     })
 }
   return (
-    <form className='-form' onSubmit={handleSubmit}>
+    <form className='-form' >
         <h1>Sign up for Liveify!</h1>
         
         <div>
