@@ -47,21 +47,25 @@ const Login = () => {
     }
 
     return (
-        <form className='artist-form' onSubmit={handleSubmit} >
-            <h1>Log In</h1>
-            {loggedIn ? null : <div className='error'>{errors}</div>}
-            <div>
-                    <label htmlFor='username'>Username</label>
-                    <br/>
-                    <input id="username" name='username' type={"text"} value={user.username} onChange={handleChange}  />
-            </div>
-            <div>
-                <label htmlFor='password'>Password</label>
-                <br/>
-                <input id="password" name='password' type={"password"} value={user.password} onChange={handleChange}  />
-            </div>
-            <input type={"submit"} value={"Log In"}/>
-        </form>
+        <div className='form-body'>
+            <form className='login-form' onSubmit={handleSubmit} >
+                <h1 className='login-title'>Log In</h1>
+                {loggedIn ? null : <div className='error'>{errors}</div>}
+                <div className='input-container ic1'>
+                    <div>
+                            <label className='placeholder' htmlFor='username'>Username</label>
+                            <br/>
+                            <input className='input' id="username" name='username' type={"text"} value={user.username} onChange={handleChange}  />
+                    </div>
+                    <div>
+                        <label className='placeholder' htmlFor='password'>Password</label>
+                        <br/>
+                        <input className='input' id="password" name='password' type={"password"} value={user.password} onChange={handleChange}  />
+                    </div>
+                    <input className='submit' type={"submit"} value={"Log In"}/>
+                </div>
+            </form>
+        </div>
     )
 }
 
