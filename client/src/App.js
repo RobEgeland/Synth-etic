@@ -49,7 +49,7 @@ function App() {
             <SignUp />
           </Route>
           <Route path={"/login"}>
-            {loggedIn ? <Login/> : <h1>Loading</h1>}
+            {currentUser ? <Login/> : <h1>Loading</h1>}
           </Route>
           <Route path="/">
             <Home />

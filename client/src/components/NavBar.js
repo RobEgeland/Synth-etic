@@ -9,8 +9,7 @@ const NavBar = () => {
   const {loggedIn, currentUser} = useContext(UserContext)
   // const [logIn, setLogIn] = loggedIn
   // const [current, setCurrentUser] = user
-  console.log(loggedIn)
-  console.log(currentUser)
+ 
 
   return (
     <div>
