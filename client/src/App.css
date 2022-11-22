@@ -64,3 +64,9 @@
   text-decoration: none;
   font-size: 17px;
 }
+
+.error {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+  color: red;
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 const SignUp = () => {
+  const [errors, setErrors] = useState()
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -15,11 +16,43 @@ const SignUp = () => {
         ...user,
         [e.target.name]: e.target.value
     })
-}
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+    const options = {
+        method: "POST",
+        headers,
+        body: JSON.stringify(user)
+    }
+    fetch('/users', options)
+    .then(res => {
+        if(res.ok){
+            res.json().then(data => {
+              console.log(data)
+            })
+        }else {
+            res.json().then(error => {
+                console.log(error.errors)
+                const errorAr = []
+                for (const element in error.errors) {
+                    errorAr.push(` ${element} ${error.errors[element]} -`)
+                }
+                setErrors(errorAr)
+
+                throw new Error(errors)
+            })
+        }
+    })
+  }
   return (
-    <form className='-form' >
+    <form className='-form' onSubmit={handleSubmit} >
         <h1>Sign up for Synth-etic!</h1>
-        
+        {errors ? <div className='error'>{errors}</div> : null}
         <div>
             <label htmlFor='username'>Username</label>
             <br/>
