@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Login from './components/Login';
+import UserProfile from './components/UserProfile';
 import {useState, useEffect, useMemo} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import { UserContext } from './context/UserContext';
@@ -45,6 +45,9 @@ function App() {
       >
         <NavBar />
         <Switch>
+        <Route path="/my-profile">
+            <UserProfile />
+          </Route>
           <Route path="/signup">
             <SignUp />
           </Route>

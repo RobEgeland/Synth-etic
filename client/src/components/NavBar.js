@@ -22,7 +22,7 @@ const NavBar = () => {
             <a><NavLink to='/signup'>SignUp</NavLink></a>
             <a>{ currentUser ? <NavLink onClick={handClick} to='/'>LogOut</NavLink> : <NavLink to='/login'>LogIn</NavLink>}</a>
             <a><NavLink to='/explore'>Explore</NavLink></a>
-            <a><NavLink to='/user'>Profile</NavLink></a>
+            <a><NavLink to='/my-profile'>Profile</NavLink></a>
             <a className='navbar-right'><NavLink to='/ahhh'>Synth-etic</NavLink></a>
         </div>
     </div>
