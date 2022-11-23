@@ -3,6 +3,7 @@ import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Login from './components/Login';
+import TestKnob2 from './components/TestKnob2';
 import UserProfile from './components/UserProfile';
 import {useState, useEffect, useMemo} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
@@ -55,7 +56,7 @@ function App() {
             <Login/> 
           </Route>
           <Route path="/">
-            <Home />
+            <TestKnob2 />
           </Route>
         </Switch>
       </UserContext.Provider>

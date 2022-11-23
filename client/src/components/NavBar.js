@@ -20,7 +20,7 @@ const NavBar = () => {
         <div className='navbar'>
             <a><NavLink to='/'>Home</NavLink></a>
             <a><NavLink to='/signup'>SignUp</NavLink></a>
-            <a>{ currentUser ? <NavLink onClick={handClick} to='/'>LogOut</NavLink> : <NavLink to='/login'>LogIn</NavLink>}</a>
+            <a>{ currentUser ? <NavLink onClick={handClick} to='/'>Log Out</NavLink> : <NavLink to='/login'>Log In</NavLink>}</a>
             <a><NavLink to='/explore'>Explore</NavLink></a>
             <a><NavLink to='/my-profile'>Profile</NavLink></a>
             <a className='navbar-right'><NavLink to='/ahhh'>Synth-etic</NavLink></a>

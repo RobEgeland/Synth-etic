@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  
+}
+html {
+  background-color: #2a9d8f;
 }
 
 .App-logo {
@@ -149,4 +153,66 @@
   font-family: sans-serif;
   color: #eee;
   font-size: 18px;
+}
+
+/* below is knob testing for sound effects */
+
+.knob-surround {
+  position: relative;
+      background-color: grey;
+      width: 14em;
+      height: 14em;
+      border-radius: 50%;
+      border: solid 0.25em #0e0e0e;
+      margin: 5em auto;
+      background: #181818;
+}
+
+.knob {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  z-index: 10;
+}
+
+.knob::before {
+  content: "";
+  position: absolute;
+  bottom: 19%;
+  left: 19%;
+  width: 3%;
+  height: 3%;
+  background-color: #a8d8f8;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 0.4em 0 #79c3f4;
+  -moz-box-shadow: 0 0 0.4em 0 #79c3f4;
+  box-shadow: 0 0 0.4em 0 #79c3f4;
+}
+
+.min,
+.max {
+  display: block;
+  font-family: "Varela Round", sans-serif;
+  color: black;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  font-size: 90%;
+  position: absolute;
+  
+}
+
+.min {
+  bottom: 1em;
+  left: -2.5em;
+}
+
+.max {
+  bottom: 1em;
+  right: -2.5em;
 }
