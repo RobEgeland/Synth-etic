@@ -56,7 +56,7 @@ function App() {
             <Login/> 
           </Route>
           <Route path="/">
-            <TestKnob2 />
+            <Home />
           </Route>
         </Switch>
       </UserContext.Provider>
