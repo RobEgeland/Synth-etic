@@ -33,7 +33,7 @@ const Home = () => {
     portamento: 0,
     // sine, triangle, sawtooth, square
     oscillator: {
-      type: ""
+      type: "sine"
     },
     // all these are 0 - 1
     envelope : {
@@ -46,20 +46,34 @@ const Home = () => {
   })
   const synth = new Tone.Synth({
     oscillator: {
-      type: voice1.oscillator
+      type: voice1.oscillator.type
     },
     volume: voice1.volume,
-    portamento: voice1.portamento
-
+    portamento: voice1.portamento,
+    envelope: {
+      attack: voice1.envelope.attack,
+      decay: voice1.envelope.decay,
+      sustain: voice1.envelope.sustain,
+      release: voice1.envelope.release
+    }
   }).toDestination();
+  // let synthJson = {
+  //   oscillator: {
+  //     type: "sine"
+  //   },
+  //   volume: voice1.volume,
+  //   portamento: voice1.portamento,
+  //   envelope: {
+  //     attack: voice1.envelope.attack,
+  //     decay: voice1.envelope.decay,
+  //     sustain: voice1.envelope.sustain,
+  //     release: voice1.envelope.release
+  //   }
+  // }
+  // synth.set(synthJson)
   console.log(synth.get())
-  let ampEnv = new Tone.AmplitudeEnvelope({
-    attack: voice1.envelope.attack,
-    decay: voice1.envelope.decay,
-    sustain: voice1.envelope.sustain,
-    release: voice1.envelope.release
-  })
-  synth.connect(ampEnv)
+  
+
 
   function handle_voice1_osc(e) {
     if (e.target.value === "Ocs 1") {
@@ -76,7 +90,6 @@ const Home = () => {
           type: e.target.value
         }
       })
-      
     }
   }
   function handle_voice1_env(e, name) {
@@ -102,8 +115,7 @@ const Home = () => {
       <div className='voice1'>
         <form> 
           <select onChange={handle_voice1_osc} name='voice1_osc'>
-            <option>Ocs 1</option>
-            <option>sine</option>
+            <option selected>sine</option>
             <option>triangle</option>
             <option>sawtooth</option>
             <option>square</option>
@@ -137,7 +149,7 @@ const Home = () => {
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 2.0) + 0} 
+              transform={p => parseFloat(p * 1.0) + 0} 
               style={style_env} />
             <Knob
               name="Decay"
@@ -147,7 +159,7 @@ const Home = () => {
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 2.0) + 0} 
+              transform={p => parseFloat(p * 1.0) + 0} 
               style={style_env} />
             <Knob
               name="Sustain"
@@ -157,7 +169,7 @@ const Home = () => {
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 2.0) + 0} 
+              transform={p => parseFloat(p * 1.0) + 0} 
               style={style_env} />
             <Knob
               name="Release"
@@ -167,7 +179,7 @@ const Home = () => {
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 2.0) + 0} 
+              transform={p => parseFloat(p * 1.0) + 0} 
               style={style_env} />
             </div>
         </form>
@@ -182,7 +194,7 @@ const Home = () => {
       playNote={(MidiNumbers) => {
         switch(MidiNumbers) {
           case 48:
-            synth.triggerAttack("C4", Tone.now());
+            synth.triggerAttackRelease("C4", "8n");
             break;
           case 49:
             synth.triggerAttack("C#4", Tone.now());
