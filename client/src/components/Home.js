@@ -15,7 +15,7 @@ const Home = () => {
   const style_env = {
     height: "5px",
     margin: "1%",
-    height: "60px",
+    height: "75px",
     fontFamily: "Arial",
     color: "white" // Sets font color of value and knob name
   };
@@ -103,32 +103,36 @@ const Home = () => {
       <div className='voice1'>
         <div className='osc1form'>
           <form> 
-            <select onChange={handle_voice1_osc} name='voice1_osc'>
-              <option selected>sine</option>
-              <option>triangle</option>
-              <option>sawtooth</option>
-              <option>square</option>
-            </select>
-            <Knob
-              name="Volume"
-              unit="dB"
-              defaultPercentage={0}
-              onChange={(e) => handleVoice1Change(e, "volume")}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseInt(p * 50, 10) } 
-              style={style} />
-            <Knob
-              name="Portamento"
-              unit="sec"
-              defaultPercentage={0}
-              onChange={(e) => handleVoice1Change(e, "portamento")}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseInt(p * 5)} 
-              style={style} />
+            <div name='voice1_osc'>
+              <select onChange={handle_voice1_osc} >
+                <option selected>sine</option>
+                <option>triangle</option>
+                <option>sawtooth</option>
+                <option>square</option>
+              </select>
+            </div>
+            <div className='voice1_vol_port'>
+              <Knob
+                name="Volume"
+                unit="dB"
+                defaultPercentage={0}
+                onChange={(e) => handleVoice1Change(e, "volume")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseInt(p * 25, 10) } 
+                style={style} />
+              <Knob
+                name="Portamento"
+                unit="sec"
+                defaultPercentage={0}
+                onChange={(e) => handleVoice1Change(e, "portamento")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseInt(p * 5)} 
+                style={style} />
+            </div>
             <div className='voice1Env'>
               <Knob
                 name="Attack"

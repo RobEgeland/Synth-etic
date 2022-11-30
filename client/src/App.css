@@ -217,22 +217,36 @@ html {
   right: -2.5em;
 }
 .voice1 {
-  /* width: -30px; /* you could actually just change it to 0px */
-  /* margin: 100px auto;  */
   border-style: solid;
   border-width: 5px;
   border: #0e0e0e;
   
 }
+.voice1osc {
+  max-width: 55ch;
+  margin: auto;
+  color: #36454F;
+}
+
+select {
+  position: relative;
+  margin-top: 5px;
+  margin-right: 500px;
+}
+.voice1Env {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 250px;
+}
 .osc1form {
-  width: 500px;
+  width: 800px;
   height: 262px;
   position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
-  left: 0px;
+  /* left: 0px; */
   border: 3px solid black;
 }
 .voice2 {
-  width: 500px;
+  width: 800px;
   height: 262px;
   position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
   left: 0px;
@@ -242,3 +256,13 @@ html {
   position: fixed;
   bottom: 0;
 }
+
+.voice1_vol_port {
+  position: relative;
+  margin-left: 250px;
+  right: 0;
+}
+
+
+
+
