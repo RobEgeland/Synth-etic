@@ -6,14 +6,16 @@ import Knob from "react-simple-knob";
 
 const Home = () => {
   const style = {
+    height: "5px",
     margin: "1%",
-    height: "75px",
+    height: "100px",
     fontFamily: "Arial",
     color: "white" // Sets font color of value and knob name
   };
   const style_env = {
+    height: "5px",
     margin: "1%",
-    height: "50px",
+    height: "60px",
     fontFamily: "Arial",
     color: "white" // Sets font color of value and knob name
   };
@@ -177,76 +179,78 @@ const Home = () => {
       </div>
       <br>
       </br>
-      <Piano 
-      noteRange={{ first: 48, last: 77}}
-      playNote={(MidiNumbers) => {
-        switch(MidiNumbers) {
-          // 8TH note durration works for now but need to figure out how to extend
-          case 48:
-            synth.triggerAttackRelease("C4", "4n");
-            break;
-          case 49:
-            synth.triggerAttackRelease("C#4", "4n");
-            break;
-          case 50:
-            synth.triggerAttackRelease("D4", "4n");
-            break;
-          case 51:
-            synth.triggerAttackRelease("D#4", "4n");
-            break;
-          case 52:
-            synth.triggerAttackRelease("E4", "4n");
-            break;
-          case 53:
-            synth.triggerAttackRelease("F4", "4n");
-            break;
-          case 54:
-            synth.triggerAttackRelease("F#4", "4n");
-            break;
-          case 55:
-            synth.triggerAttackRelease("G4", "4n");
-            break;
-          case 56:
-            synth.triggerAttackRelease("G#4", "4n");
-            break;
-          case 57:
-            synth.triggerAttackRelease("A4", "4n");
-            break;  
-          case 58:
-            synth.triggerAttackRelease("A#4", "4n");
-            break;
-          case 59:
-            synth.triggerAttackRelease("B4", "4n");
-            break;
-          case 60:
-            synth.triggerAttackRelease("C5", "4n");
-            break;
-          case 61:
-            synth.triggerAttackRelease("C#5", "4n");
-            break;
-          case 62:
-            synth.triggerAttackRelease("D5", "4n");
-            break;
-          case 63:
-            synth.triggerAttackRelease("D#5", "4n");
-            break;
-          case 64:
-            synth.triggerAttackRelease("E5", "4n");
-            break;
-          case 65:
-            synth.triggerAttackRelease("F5", "4n");
-            break;
-        }
-      }}
-      width={1000}
-      stopNote={(midiNumber) => {
-        // synth.triggerRelease()
-        // Stop playing a given note - see notes below
-        // add .triggerRelease, also remove release from above cases
-        
-      }}
-      keyboardShortcuts={keyboardShortcuts}
-      />
+      <div className='piano'>
+        <Piano 
+        noteRange={{ first: 48, last: 77}}
+        playNote={(MidiNumbers) => {
+          switch(MidiNumbers) {
+            // 8TH note durration works for now but need to figure out how to extend
+            case 48:
+              synth.triggerAttackRelease("C4", "4n");
+              break;
+            case 49:
+              synth.triggerAttackRelease("C#4", "4n");
+              break;
+            case 50:
+              synth.triggerAttackRelease("D4", "4n");
+              break;
+            case 51:
+              synth.triggerAttackRelease("D#4", "4n");
+              break;
+            case 52:
+              synth.triggerAttackRelease("E4", "4n");
+              break;
+            case 53:
+              synth.triggerAttackRelease("F4", "4n");
+              break;
+            case 54:
+              synth.triggerAttackRelease("F#4", "4n");
+              break;
+            case 55:
+              synth.triggerAttackRelease("G4", "4n");
+              break;
+            case 56:
+              synth.triggerAttackRelease("G#4", "4n");
+              break;
+            case 57:
+              synth.triggerAttackRelease("A4", "4n");
+              break;  
+            case 58:
+              synth.triggerAttackRelease("A#4", "4n");
+              break;
+            case 59:
+              synth.triggerAttackRelease("B4", "4n");
+              break;
+            case 60:
+              synth.triggerAttackRelease("C5", "4n");
+              break;
+            case 61:
+              synth.triggerAttackRelease("C#5", "4n");
+              break;
+            case 62:
+              synth.triggerAttackRelease("D5", "4n");
+              break;
+            case 63:
+              synth.triggerAttackRelease("D#5", "4n");
+              break;
+            case 64:
+              synth.triggerAttackRelease("E5", "4n");
+              break;
+            case 65:
+              synth.triggerAttackRelease("F5", "4n");
+              break;
+          }
+        }}
+        width={1920}
+        stopNote={(midiNumber) => {
+          // synth.triggerRelease()
+          // Stop playing a given note - see notes below
+          // add .triggerRelease, also remove release from above cases
+          
+        }}
+        keyboardShortcuts={keyboardShortcuts}
+        />
+    </div>
     </div>
   )
 }
