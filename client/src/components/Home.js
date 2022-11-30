@@ -28,7 +28,7 @@ const Home = () => {
   
   const [voice1, setVoice1] = useState({
     // need to figure out how high/low this can go
-    volume: 0, 
+    volume: -10, 
     // think this will go to 5?
     portamento: 0,
     // sine, triangle, sawtooth, square
@@ -37,10 +37,10 @@ const Home = () => {
     },
     // all these are 0 - 1
     envelope : {
-      attack: 0,
-      decay: 0,
-      sustain: 0,
-      release: 0
+      attack: 0.1,
+      decay: 0.1,
+      sustain: 0.1,
+      release: 0.1
     }
 
   })
@@ -57,20 +57,6 @@ const Home = () => {
       release: voice1.envelope.release
     }
   }).toDestination();
-  // let synthJson = {
-  //   oscillator: {
-  //     type: "sine"
-  //   },
-  //   volume: voice1.volume,
-  //   portamento: voice1.portamento,
-  //   envelope: {
-  //     attack: voice1.envelope.attack,
-  //     decay: voice1.envelope.decay,
-  //     sustain: voice1.envelope.sustain,
-  //     release: voice1.envelope.release
-  //   }
-  // }
-  // synth.set(synthJson)
   console.log(synth.get())
   
 
@@ -113,76 +99,78 @@ const Home = () => {
   return (
     <div>
       <div className='voice1'>
-        <form> 
-          <select onChange={handle_voice1_osc} name='voice1_osc'>
-            <option selected>sine</option>
-            <option>triangle</option>
-            <option>sawtooth</option>
-            <option>square</option>
-          </select>
-          <Knob
-            name="Volume"
-            unit="dB"
-            defaultPercentage={0}
-            onChange={(e) => handleVoice1Change(e, "volume")}
-            bg="black"
-            fg="white"
-            mouseSpeed={5}
-            transform={p => parseInt(p * 50, 10) } 
-            style={style} />
-          <Knob
-            name="Portamento"
-            unit="sec"
-            defaultPercentage={0}
-            onChange={(e) => handleVoice1Change(e, "portamento")}
-            bg="black"
-            fg="white"
-            mouseSpeed={5}
-            transform={p => parseInt(p * 5)} 
-            style={style} />
-          <div className='voice1Env'>
+        <div className='osc1form'>
+          <form> 
+            <select onChange={handle_voice1_osc} name='voice1_osc'>
+              <option selected>sine</option>
+              <option>triangle</option>
+              <option>sawtooth</option>
+              <option>square</option>
+            </select>
             <Knob
-              name="Attack"
-              unit=""
+              name="Volume"
+              unit="dB"
               defaultPercentage={0}
-              onChange={(e) => handle_voice1_env(e, "attack")}
+              onChange={(e) => handleVoice1Change(e, "volume")}
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 1.0) + 0} 
-              style={style_env} />
+              transform={p => parseInt(p * 50, 10) } 
+              style={style} />
             <Knob
-              name="Decay"
-              unit=""
+              name="Portamento"
+              unit="sec"
               defaultPercentage={0}
-              onChange={(e) => handle_voice1_env(e, "decay")}
+              onChange={(e) => handleVoice1Change(e, "portamento")}
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p * 1.0) + 0} 
-              style={style_env} />
-            <Knob
-              name="Sustain"
-              unit=""
-              defaultPercentage={0}
-              onChange={(e) => handle_voice1_env(e, "sustain")}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p * 1.0) + 0} 
-              style={style_env} />
-            <Knob
-              name="Release"
-              unit=""
-              defaultPercentage={0}
-              onChange={(e) => handle_voice1_env(e, "release")}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p * 1.0) + 0} 
-              style={style_env} />
-            </div>
-        </form>
+              transform={p => parseInt(p * 5)} 
+              style={style} />
+            <div className='voice1Env'>
+              <Knob
+                name="Attack"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "attack")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Decay"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "decay")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Sustain"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "sustain")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Release"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "release")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              </div>
+          </form>
+        </div>
       </div>
       <div className='voice2'>
 
@@ -193,65 +181,66 @@ const Home = () => {
       noteRange={{ first: 48, last: 77}}
       playNote={(MidiNumbers) => {
         switch(MidiNumbers) {
+          // 8TH note durration works for now but need to figure out how to extend
           case 48:
-            synth.triggerAttackRelease("C4", "8n");
+            synth.triggerAttackRelease("C4", "4n");
             break;
           case 49:
-            synth.triggerAttack("C#4", Tone.now());
+            synth.triggerAttackRelease("C#4", "4n");
             break;
           case 50:
-            synth.triggerAttack("D4", Tone.now());
+            synth.triggerAttackRelease("D4", "4n");
             break;
           case 51:
-            synth.triggerAttack("D#4", Tone.now());
+            synth.triggerAttackRelease("D#4", "4n");
             break;
           case 52:
-            synth.triggerAttack("E4", Tone.now());
+            synth.triggerAttackRelease("E4", "4n");
             break;
           case 53:
-            synth.triggerAttack("F4", Tone.now());
+            synth.triggerAttackRelease("F4", "4n");
             break;
           case 54:
-            synth.triggerAttack("F#4", Tone.now());
+            synth.triggerAttackRelease("F#4", "4n");
             break;
           case 55:
-            synth.triggerAttack("G4", Tone.now());
+            synth.triggerAttackRelease("G4", "4n");
             break;
           case 56:
-            synth.triggerAttack("G#4", Tone.now());
+            synth.triggerAttackRelease("G#4", "4n");
             break;
           case 57:
-            synth.triggerAttack("A4", Tone.now());
+            synth.triggerAttackRelease("A4", "4n");
             break;  
           case 58:
-            synth.triggerAttack("A#4", Tone.now());
+            synth.triggerAttackRelease("A#4", "4n");
             break;
           case 59:
-            synth.triggerAttack("B4", Tone.now());
+            synth.triggerAttackRelease("B4", "4n");
             break;
           case 60:
-            synth.triggerAttack("C5", Tone.now());
+            synth.triggerAttackRelease("C5", "4n");
             break;
           case 61:
-            synth.triggerAttack("C#5", Tone.now());
+            synth.triggerAttackRelease("C#5", "4n");
             break;
           case 62:
-            synth.triggerAttack("D5", Tone.now());
+            synth.triggerAttackRelease("D5", "4n");
             break;
           case 63:
-            synth.triggerAttack("D#5", Tone.now());
+            synth.triggerAttackRelease("D#5", "4n");
             break;
           case 64:
-            synth.triggerAttack("E5", Tone.now());
+            synth.triggerAttackRelease("E5", "4n");
             break;
           case 65:
-            synth.triggerAttack("F5", Tone.now());
+            synth.triggerAttackRelease("F5", "4n");
             break;
         }
       }}
       width={1000}
       stopNote={(midiNumber) => {
-        synth.triggerRelease()
+        // synth.triggerRelease()
         // Stop playing a given note - see notes below
         // add .triggerRelease, also remove release from above cases
         

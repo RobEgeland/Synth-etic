@@ -216,3 +216,25 @@ html {
   bottom: 1em;
   right: -2.5em;
 }
+.voice1 {
+  /* width: -30px; /* you could actually just change it to 0px */
+  /* margin: 100px auto;  */
+  border-style: solid;
+  border-width: 5px;
+  border: #0e0e0e;
+  
+}
+.osc1form {
+  width: 500px;
+  height: 200px;
+  position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
+  left: 0px;
+  border: 3px solid black;
+}
+.voice2 {
+  width: 500px;
+  height: 200px;
+  position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
+  left: 0px;
+  border: 3px solid black;
+}
