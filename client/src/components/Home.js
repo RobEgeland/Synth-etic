@@ -44,8 +44,27 @@ const Home = () => {
       sustain: 0.1,
       release: 0.1
     }
-
   })
+
+  const [voice2, setVoice2] = useState({
+    // need to figure out how high/low this can go
+    volume: -10, 
+    // think this will go to 5?
+    portamento: 0,
+    // sine, triangle, sawtooth, square
+    oscillator: {
+      type: "sine"
+    },
+    // all these are 0 - 1
+    envelope : {
+      attack: 0.1,
+      decay: 0.1,
+      sustain: 0.1,
+      release: 0.1
+    }
+  })
+
+
   const synth = new Tone.Synth({
     oscillator: {
       type: voice1.oscillator.type
@@ -90,9 +109,16 @@ const Home = () => {
     })
   }
 
-  function handleVoice1Change(e, name) {
+  function handle_voice1_vol_port(e, name) {
     setVoice1({
       ...voice1,
+      [name]: e
+    })
+  }
+
+  function handle_voice2_vol_port(e, name) {
+    setVoice2({
+      ...voice2,
       [name]: e
     })
   }
@@ -116,7 +142,7 @@ const Home = () => {
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
-                onChange={(e) => handleVoice1Change(e, "volume")}
+                onChange={(e) => handle_voice1_vol_port(e, "volume")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -126,7 +152,7 @@ const Home = () => {
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
-                onChange={(e) => handleVoice1Change(e, "portamento")}
+                onChange={(e) => handle_voice1_vol_port(e, "portamento")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -180,20 +206,21 @@ const Home = () => {
       </div>
       <div className='voice2'>
       <form> 
-            <div name='voice1_osc'>
+            <div name='voice2_osc'>
               <select onChange={handle_voice1_osc} >
-                <option selected>sine</option>
+                <option  selected>OCS 2</option>
+                <option>sine</option>
                 <option>triangle</option>
                 <option>sawtooth</option>
                 <option>square</option>
               </select>
             </div>
-            <div className='voice1_vol_port'>
+            <div className='voice2_vol_port'>
               <Knob
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
-                onChange={(e) => handleVoice1Change(e, "volume")}
+                onChange={(e) => handle_voice2_vol_port(e, "volume")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -203,14 +230,14 @@ const Home = () => {
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
-                onChange={(e) => handleVoice1Change(e, "portamento")}
+                onChange={(e) => handle_voice2_vol_port(e, "portamento")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 5)} 
                 style={style} />
             </div>
-            <div className='voice1Env'>
+            <div className='voice2Env'>
               <Knob
                 name="Attack"
                 unit=""
