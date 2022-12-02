@@ -19,6 +19,14 @@ const Home = () => {
     fontFamily: "Arial",
     color: "white" // Sets font color of value and knob name
   };
+
+  const style3 = {
+    height: "5px",
+    margin: "10%",
+    height: "100px",
+    fontFamily: "Arial",
+    color: "white",
+  }
   
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
@@ -216,8 +224,8 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className='voice2'>
-      <form> 
+      <div className='osc1form'>
+          <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice1_osc} >
                 <option  selected>OCS 2</option>
@@ -227,7 +235,7 @@ const Home = () => {
                 <option>square</option>
               </select>
             </div>
-            <div className='voice2_vol_port'>
+            <div className='voice1_vol_port'>
               <Knob
                 name="Volume"
                 unit="dB"
@@ -249,7 +257,7 @@ const Home = () => {
                 transform={p => parseInt(p * 5)} 
                 style={style} />
             </div>
-            <div className='voice2Env'>
+            <div className='voice1Env'>
               <Knob
                 name="Attack"
                 unit=""
@@ -294,8 +302,41 @@ const Home = () => {
           </form>
       </div>
       <div className='triangle' />
+      <div className='vib_harm'>
+        <div className='vib_harm_inner'>
+          <Knob
+            name="Harmonicity"
+            unit="dB"
+            defaultPercentage={0}
+            onChange={(e) => handle_voice2_vol_port(e, "volume")}
+            bg="black"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 25, 10) } 
+            style={style3} />
+          <Knob
+            name="Vibrato Rate"
+            unit="sec"
+            defaultPercentage={0}
+            onChange={(e) => handle_voice2_vol_port(e, "portamento")}
+            bg="black"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 5)} 
+            style={style3} />
+          <Knob
+            name="Vibrato"
+            unit="sec"
+            defaultPercentage={0}
+            onChange={(e) => handle_voice2_vol_port(e, "portamento")}
+            bg="black"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 5)} 
+            style={style3} />
+          </div>
+      </div>
       
-
       <br>
       </br>
       <div className='piano'>

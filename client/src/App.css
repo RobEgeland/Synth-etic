@@ -223,23 +223,21 @@ html {
   
 }
 .voice1osc {
-  max-width: 55ch;
-  margin: auto;
-  color: #36454F;
+  position: relative;
+  width: 200px;
 }
 
-select {
-  position: relative;
-  margin-top: 5px;
-  margin-right: 500px;
-}
+
+
 .voice1Env {
-  position: relative;
+  position: absolute;
+  width: 550px;
+  top: 125px;
   margin-top: 30px;
-  margin-left: 250px;
+  margin-left: 200px;
 }
 .osc1form {
-  width: 800px;
+  width: 710px;
   height: 262px;
   position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
   /* left: 0px; */
@@ -258,7 +256,9 @@ select {
 }
 
 .voice1_vol_port {
-  position: relative;
+  position: absolute;
+  left: 35px;
+  width: 400px;
   margin-left: 250px;
   right: 0;
 }
@@ -266,15 +266,33 @@ select {
 .triangle {
   position: absolute;
   top: 34%;
-  left: 51%;
+  left: 758px;
   margin-top: -50px;
-  margin-left: -45px;
+  margin-left: -42px;
   width: 0px;
   height: 0px;
   border-top: 80px solid transparent;
   border-bottom: 80px solid transparent;
   
   border-left: 80px solid #e9c46a;
+}
+
+.vib_harm {
+  padding: 0%;
+  position: absolute;
+    top: 128px;
+    left: 51%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 300px;
+    height: 530px;
+    border: 3px solid black;
+}
+
+.vib_harm_inner {
+  position: absolute;
+  top: 30px;
+  left: 65px;
 }
 
 
