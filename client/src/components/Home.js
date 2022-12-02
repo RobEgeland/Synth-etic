@@ -179,7 +179,80 @@ const Home = () => {
         </div>
       </div>
       <div className='voice2'>
-
+      <form> 
+            <div name='voice1_osc'>
+              <select onChange={handle_voice1_osc} >
+                <option selected>sine</option>
+                <option>triangle</option>
+                <option>sawtooth</option>
+                <option>square</option>
+              </select>
+            </div>
+            <div className='voice1_vol_port'>
+              <Knob
+                name="Volume"
+                unit="dB"
+                defaultPercentage={0}
+                onChange={(e) => handleVoice1Change(e, "volume")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseInt(p * 25, 10) } 
+                style={style} />
+              <Knob
+                name="Portamento"
+                unit="sec"
+                defaultPercentage={0}
+                onChange={(e) => handleVoice1Change(e, "portamento")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseInt(p * 5)} 
+                style={style} />
+            </div>
+            <div className='voice1Env'>
+              <Knob
+                name="Attack"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "attack")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Decay"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "decay")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Sustain"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "sustain")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              <Knob
+                name="Release"
+                unit=""
+                defaultPercentage={0}
+                onChange={(e) => handle_voice1_env(e, "release")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p * 1.0) + 0} 
+                style={style_env} />
+              </div>
+          </form>
       </div>
       <br>
       </br>
