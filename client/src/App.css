@@ -263,6 +263,18 @@ select {
   right: 0;
 }
 
-
+.triangle {
+  position: absolute;
+  top: 34%;
+  left: 51%;
+  margin-top: -50px;
+  margin-left: -45px;
+  width: 0px;
+  height: 0px;
+  border-top: 80px solid transparent;
+  border-bottom: 80px solid transparent;
+  
+  border-left: 80px solid #e9c46a;
+}
 
 

@@ -293,6 +293,9 @@ const Home = () => {
               </div>
           </form>
       </div>
+      <div className='triangle' />
+      
+
       <br>
       </br>
       <div className='piano'>
