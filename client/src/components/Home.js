@@ -116,10 +116,22 @@ const Home = () => {
     })
   }
 
+
+
   function handle_voice2_vol_port(e, name) {
     setVoice2({
       ...voice2,
       [name]: e
+    })
+  }
+
+  function handle_voice2_env(e, name) {
+    setVoice2({
+      ...voice2,
+      envelope: {
+        ...voice2.envelope,
+        [name]: e
+      }
     })
   }
 
@@ -242,7 +254,7 @@ const Home = () => {
                 name="Attack"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "attack")}
+                onChange={(e) => handle_voice2_env(e, "attack")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -252,7 +264,7 @@ const Home = () => {
                 name="Decay"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "decay")}
+                onChange={(e) => handle_voice2_env(e, "decay")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -262,7 +274,7 @@ const Home = () => {
                 name="Sustain"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "sustain")}
+                onChange={(e) => handle_voice2_env(e, "sustain")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -272,7 +284,7 @@ const Home = () => {
                 name="Release"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "release")}
+                onChange={(e) => handle_voice2_env(e, "release")}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
