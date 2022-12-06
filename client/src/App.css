@@ -293,8 +293,23 @@ html {
 
 .vib_harm_inner {
   position: absolute;
-  top: 30px;
+  top: 24px;
   left: 65px;
+  padding: 3px;
+}
+
+.effects {
+  border: 3px solid black;
+  position: absolute;
+  top: 78px;
+  left: 1011px;
+  width: 903px;
+  height: 530px;
+}
+
+.effectsinner {
+  position: absolute;
+  left: 90px;
 }
 
 

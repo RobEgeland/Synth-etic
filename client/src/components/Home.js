@@ -24,6 +24,16 @@ const Home = () => {
     height: "5px",
     margin: "10%",
     height: "100px",
+    width: "200px",
+    fontFamily: "Arial",
+    color: "white",
+  }
+
+  const style4 = {
+    height: "15px",
+    margin: "0%",
+    height: "250px",
+    width: "250px",
     fontFamily: "Arial",
     color: "white",
   }
@@ -131,19 +141,7 @@ const Home = () => {
 }
 
 
-  // const synth = new Tone.Synth({
-  //   oscillator: {
-  //     type: voice1.oscillator.type
-  //   },
-  //   volume: voice1.volume,
-  //   portamento: voice1.portamento,
-  //   envelope: {
-  //     attack: voice1.envelope.attack,
-  //     decay: voice1.envelope.decay,
-  //     sustain: voice1.envelope.sustain,
-  //     release: voice1.envelope.release
-  //   }
-  // }).toDestination();
+  
   console.log(synth.get())
   
 
@@ -422,6 +420,70 @@ const Home = () => {
             transform={p => parseFloat(p)} 
             style={style3} />
           </div>
+      </div>
+      <div className='effects'>
+        <div className='effectsinner'>
+          <Knob
+              name="Reverb"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+          <Knob
+              name="Phaser"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+          <Knob
+              name="Distortion"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+          <Knob
+              name="BitCrusher"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+          <Knob
+              name="Delay"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+          <Knob
+              name="AutoFilter"
+              unit=""
+              defaultPercentage={0}
+              onChange={(e) => handle_vibrato(e, "amount")}
+              bg="black"
+              fg="white"
+              mouseSpeed={5}
+              transform={p => parseFloat(p)} 
+              style={style4} />
+        </div>
       </div>
       
       <br>
