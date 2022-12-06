@@ -35,6 +35,7 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
+  let synth;
   
   const [voice1, setVoice1] = useState({
     // need to figure out how high/low this can go
@@ -61,7 +62,7 @@ const Home = () => {
     portamento: 0,
     // sine, triangle, sawtooth, square
     oscillator: {
-      type: "sine"
+      type: "OSC 2"
     },
     // all these are 0 - 1
     envelope : {
@@ -72,9 +73,17 @@ const Home = () => {
     }
   })
 
+  const [harmonicity, setHarmonicity] = useState(1.0) // make sound very laggy, possibly cause it becomes polyphonic?
+  const [vibrato, setVibrato] = useState({
+    amount: 0,
+    rate: 5
 
-  const synth = new Tone.Synth({
+  })
+
+
+  {voice2.oscillator.type === "OSC 2" ? synth = new Tone.Synth({
     oscillator: {
+      partialCount: 0,
       type: voice1.oscillator.type
     },
     volume: voice1.volume,
@@ -85,7 +94,56 @@ const Home = () => {
       sustain: voice1.envelope.sustain,
       release: voice1.envelope.release
     }
-  }).toDestination();
+  }).toDestination() : synth = new Tone.DuoSynth({
+    
+    vibratoAmount: vibrato.amount,
+    vibratoRate: vibrato.rate,
+    harmonicity: harmonicity,
+    voice0: {
+      oscillator: {
+        type: voice1.oscillator.type
+      },
+      volume: voice1.volume,
+      portamento: voice1.portamento,
+      envelope: {
+        attack: voice1.envelope.attack,
+        decay: voice1.envelope.decay,
+        sustain: voice1.envelope.sustain,
+        release: voice1.envelope.release
+        }
+      },
+      voice1: {
+        volume: voice2.volume,
+        portamento: voice2.portamento,
+        oscillator: {
+          type: voice2.oscillator.type
+        },
+        envelope: {
+          attack: voice2.envelope.attack,
+          decay: voice2.envelope.decay,
+          sustain: voice2.envelope.sustain,
+          release: voice2.envelope.release
+        }
+      }
+
+  })
+  synth.connect(Tone.Destination)
+}
+
+
+  // const synth = new Tone.Synth({
+  //   oscillator: {
+  //     type: voice1.oscillator.type
+  //   },
+  //   volume: voice1.volume,
+  //   portamento: voice1.portamento,
+  //   envelope: {
+  //     attack: voice1.envelope.attack,
+  //     decay: voice1.envelope.decay,
+  //     sustain: voice1.envelope.sustain,
+  //     release: voice1.envelope.release
+  //   }
+  // }).toDestination();
   console.log(synth.get())
   
 
@@ -140,6 +198,35 @@ const Home = () => {
         ...voice2.envelope,
         [name]: e
       }
+    })
+  }
+
+  function handle_voice2_osc(e) {
+    if (e.target.value === "Ocs 2") {
+      setVoice2({
+        ...voice2,
+        oscillator: {
+          type: ""
+        }
+      })
+    }else {
+      setVoice2({
+        ...voice2,
+        oscillator: {
+          type: e.target.value
+        }
+      })
+    }
+  }
+
+  function handle_harm_change(e) {
+    setHarmonicity(e)
+  }
+
+  function handle_vibrato(e, name) {
+    setVibrato({
+      ...vibrato,
+      [name]: e
     })
   }
 
@@ -227,7 +314,7 @@ const Home = () => {
       <div className='osc1form'>
           <form> 
             <div name='voice2_osc'>
-              <select onChange={handle_voice1_osc} >
+              <select onChange={handle_voice2_osc} >
                 <option  selected>OCS 2</option>
                 <option>sine</option>
                 <option>triangle</option>
@@ -306,33 +393,33 @@ const Home = () => {
         <div className='vib_harm_inner'>
           <Knob
             name="Harmonicity"
-            unit="dB"
+            unit="voice(s)"
             defaultPercentage={0}
-            onChange={(e) => handle_voice2_vol_port(e, "volume")}
+            onChange={(e) => handle_harm_change(e)}
             bg="black"
             fg="white"
             mouseSpeed={5}
-            transform={p => parseInt(p * 25, 10) } 
+            transform={p => parseFloat((p) + 1) } 
             style={style3} />
           <Knob
             name="Vibrato Rate"
-            unit="sec"
+            unit="Hz"
             defaultPercentage={0}
-            onChange={(e) => handle_voice2_vol_port(e, "portamento")}
+            onChange={(e) => handle_vibrato(e, "rate")}
             bg="black"
             fg="white"
             mouseSpeed={5}
-            transform={p => parseInt(p * 5)} 
+            transform={p => parseFloat((p * 10) + 5.0)} 
             style={style3} />
           <Knob
             name="Vibrato"
-            unit="sec"
+            unit=""
             defaultPercentage={0}
-            onChange={(e) => handle_voice2_vol_port(e, "portamento")}
+            onChange={(e) => handle_vibrato(e, "amount")}
             bg="black"
             fg="white"
             mouseSpeed={5}
-            transform={p => parseInt(p * 5)} 
+            transform={p => parseFloat(p)} 
             style={style3} />
           </div>
       </div>

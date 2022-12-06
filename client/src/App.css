@@ -242,6 +242,7 @@ html {
   position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
   /* left: 0px; */
   border: 3px solid black;
+  
 }
 .voice2 {
   width: 800px;
@@ -281,12 +282,13 @@ html {
   padding: 0%;
   position: absolute;
     top: 128px;
-    left: 51%;
+    left: 761px;
     margin-top: -50px;
     margin-left: -50px;
     width: 300px;
     height: 530px;
     border: 3px solid black;
+    border-left: 0px;
 }
 
 .vib_harm_inner {
