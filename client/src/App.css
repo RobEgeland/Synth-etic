@@ -79,6 +79,8 @@ html {
   background-color: #e9c46a;
   border-radius: 30px;
   box-sizing: border-box;
+  position: absolute;
+  top: 250px;
   height: 500px;
   padding: 20px;
   width: 320px;
@@ -88,6 +90,8 @@ html {
   background-color: #e9c46a;
   border-radius: 30px;
   box-sizing: border-box;
+  position: absolute;
+  top: 220px;
   height: 550px;
   padding: 20px;
   width: 450px;
@@ -311,5 +315,13 @@ html {
   position: absolute;
   left: 90px;
 }
+
+/* .reverb_underline {
+  border: 3px solid black;
+  position: absolute;
+  left: 1100px;
+  width: 600px;
+  top: 20px;
+} */
 
 

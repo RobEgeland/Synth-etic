@@ -3,6 +3,7 @@ import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
+import { Distortion } from 'tone';
 
 const Home = () => {
   const style = {
@@ -33,7 +34,7 @@ const Home = () => {
     height: "15px",
     margin: "0%",
     height: "250px",
-    width: "250px",
+    width: "200px",
     fontFamily: "Arial",
     color: "white",
   }
@@ -89,6 +90,22 @@ const Home = () => {
     rate: 5
 
   })
+  const [reverb, setReverb] = useState({
+    amount: 0,
+    decay: 1
+  })
+  const [phaser, setPhaser] = useState(0)
+  const [distortion, setDistortion] = useState(0)
+  const [delay, setDelay] = useState(0)
+  const [autoFilter, setAutoFilter] = useState(0)
+  const [bitCrusher, setBitCrusher] = useState(1)
+
+  const Reverb = new Tone.Reverb(reverb.decay, reverb.amount)
+  const Phaser = new Tone.Phaser(phaser)
+  const Distortion = new Tone.Distortion(distortion)
+  const Delay = new Tone.FeedbackDelay(delay)
+  const AutoFilter = new Tone.AutoFilter(autoFilter)
+  const BitCrusher = new Tone.BitCrusher(bitCrusher)
 
 
   {voice2.oscillator.type === "OSC 2" ? synth = new Tone.Synth({
@@ -224,6 +241,13 @@ const Home = () => {
   function handle_vibrato(e, name) {
     setVibrato({
       ...vibrato,
+      [name]: e
+    })
+  }
+
+  function handleReverbChange(e, name) {
+    setReverb({
+      ...reverb,
       [name]: e
     })
   }
@@ -423,21 +447,34 @@ const Home = () => {
       </div>
       <div className='effects'>
         <div className='effectsinner'>
-          <Knob
-              name="Reverb"
-              unit=""
-              defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p)} 
-              style={style4} />
+          <div className='reverb'>
+            <div className='reverb_underline'></div>
+            <Knob
+                name="Amount"
+                unit=""
+                defaultPercentage={0}
+                onChange={e => handleReverbChange(e, "amount")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseFloat(p)} 
+                style={style} />
+            <Knob
+                name="Decay"
+                unit="secs"
+                defaultPercentage={0}
+                onChange={e => handleReverbChange(e, "decay")}
+                bg="black"
+                fg="white"
+                mouseSpeed={5}
+                transform={p => parseInt((p * 5) + 1)} 
+                style={style} />
+          </div>
           <Knob
               name="Phaser"
               unit=""
               defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
+              onChange={setPhaser}
               bg="black"
               fg="white"
               mouseSpeed={5}
@@ -447,7 +484,7 @@ const Home = () => {
               name="Distortion"
               unit=""
               defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
+              onChange={setDistortion}
               bg="black"
               fg="white"
               mouseSpeed={5}
@@ -457,17 +494,17 @@ const Home = () => {
               name="BitCrusher"
               unit=""
               defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
+              onChange={setBitCrusher}
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseFloat(p)} 
+              transform={p => parseInt((p * 16) + 1)} 
               style={style4} />
           <Knob
               name="Delay"
               unit=""
               defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
+              onChange={setDelay}
               bg="black"
               fg="white"
               mouseSpeed={5}
@@ -477,7 +514,7 @@ const Home = () => {
               name="AutoFilter"
               unit=""
               defaultPercentage={0}
-              onChange={(e) => handle_vibrato(e, "amount")}
+              onChange={setAutoFilter}
               bg="black"
               fg="white"
               mouseSpeed={5}
