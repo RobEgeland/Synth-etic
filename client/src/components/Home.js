@@ -89,6 +89,7 @@ const Home = () => {
       release: 0.1
     }
   })
+  const [duoSynth, setDuoSynth] = useState(false)
 
   const [harmonicity, setHarmonicity] = useState(1.0) // make sound very laggy, possibly cause it becomes polyphonic?
   const [vibrato, setVibrato] = useState({
@@ -320,6 +321,10 @@ const Home = () => {
     })
   }
 
+  function handle_osc_change() {
+    setDuoSynth(!duoSynth)
+  }
+
  
   return (
     <div>
@@ -401,7 +406,8 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className='osc1form'>
+      { duoSynth ? 
+      (<div className='osc1form'>
           <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >
@@ -477,7 +483,7 @@ const Home = () => {
                 style={style_env} />
               </div>
           </form>
-      </div>
+      </div>) : (<div className='osc1form'><button onClick={handle_osc_change}>Add an Oscillator</button></div>)  }
       <div className='triangle' />
       <div className='vib_harm'>
         <div className='vib_harm_inner'>
