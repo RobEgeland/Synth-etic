@@ -6,6 +6,10 @@ import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
 
 const Home = () => {
+  // const context = new Tone.Context({ latencyHint: "balanced"})
+  // Tone.setContext(context)
+  Tone.context.lookAhead = 0.3
+  Tone.Transport.start("+0.1")
   const style = {
     height: "5px",
     margin: "1%",
@@ -33,7 +37,7 @@ const Home = () => {
   const style4 = {
     height: "15px",
     margin: "0%",
-    height: "250px",
+    height: "200px",
     width: "200px",
     fontFamily: "Arial",
     color: "white",
@@ -46,7 +50,9 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
+  
   let synth;
+  
   
   const [voice1, setVoice1] = useState({
     // need to figure out how high/low this can go
@@ -107,6 +113,59 @@ const Home = () => {
   const AutoFilter = new Tone.AutoFilter(autoFilter)
   const BitCrusher = new Tone.BitCrusher(bitCrusher)
 
+  // if (voice2.oscillator.type !== "OSC 2") {
+  //   synth.dispose()
+  //   synth = new Tone.DuoSynth({
+  //     vibratoAmount: vibrato.amount,
+  //     vibratoRate: vibrato.rate,
+  //     harmonicity: harmonicity,
+  //     voice0: {
+  //       oscillator: {
+  //         type: voice1.oscillator.type
+  //       },
+  //       volume: voice1.volume,
+  //       portamento: voice1.portamento,
+  //       envelope: {
+  //         attack: voice1.envelope.attack,
+  //         decay: voice1.envelope.decay,
+  //         sustain: voice1.envelope.sustain,
+  //         release: voice1.envelope.release
+  //         }
+  //       },
+  //       voice1: {
+  //         volume: voice2.volume,
+  //         portamento: voice2.portamento,
+  //         oscillator: {
+  //           type: voice2.oscillator.type
+  //         },
+  //         envelope: {
+  //           attack: voice2.envelope.attack,
+  //           decay: voice2.envelope.decay,
+  //           sustain: voice2.envelope.sustain,
+  //           release: voice2.envelope.release
+  //         }
+  //       }
+  
+  //   })
+    
+  //   synth.connect(Tone.Destination)
+  // }else {
+  //   synth = new Tone.Synth({
+  //     oscillator: {
+  //       partialCount: 0,
+  //       type: voice1.oscillator.type
+  //     },
+  //     volume: voice1.volume,
+  //     portamento: voice1.portamento,
+  //     envelope: {
+  //       attack: voice1.envelope.attack,
+  //       decay: voice1.envelope.decay,
+  //       sustain: voice1.envelope.sustain,
+  //       release: voice1.envelope.release
+  //     }
+  //   }).toDestination()
+  // }
+
 
   {voice2.oscillator.type === "OSC 2" ? synth = new Tone.Synth({
     oscillator: {
@@ -122,7 +181,6 @@ const Home = () => {
       release: voice1.envelope.release
     }
   }).toDestination() : synth = new Tone.DuoSynth({
-    
     vibratoAmount: vibrato.amount,
     vibratoRate: vibrato.rate,
     harmonicity: harmonicity,
@@ -154,12 +212,22 @@ const Home = () => {
       }
 
   })
+  
   synth.connect(Tone.Destination)
-}
+  }
+
+  setTimeout(() => {
+    synth.dispose()
+  }, 10000)
+
+  
+
+
 
 
   
   console.log(synth.get())
+
   
 
 
@@ -217,7 +285,7 @@ const Home = () => {
   }
 
   function handle_voice2_osc(e) {
-    if (e.target.value === "Ocs 2") {
+    if (e.target.value === "OCS 2") {
       setVoice2({
         ...voice2,
         oscillator: {
@@ -353,7 +421,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseInt(p * 25, 10) } 
+                transform={p => parseInt(p * 10, 10) } 
                 style={style} />
               <Knob
                 name="Portamento"
