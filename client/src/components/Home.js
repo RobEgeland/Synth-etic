@@ -79,7 +79,7 @@ const Home = () => {
     portamento: 0,
     // sine, triangle, sawtooth, square
     oscillator: {
-      type: "OSC 2"
+      type: "sine"
     },
     // all these are 0 - 1
     envelope : {
@@ -168,7 +168,7 @@ const Home = () => {
   // }
 
 
-  {voice2.oscillator.type === "OSC 2" ? synth = new Tone.Synth({
+  {duoSynth === true ? synth = new Tone.Synth({
     oscillator: {
       partialCount: 0,
       type: voice1.oscillator.type
@@ -411,8 +411,7 @@ const Home = () => {
           <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >
-                <option  selected>OCS 2</option>
-                <option>sine</option>
+                <option selected>sine</option>
                 <option>triangle</option>
                 <option>sawtooth</option>
                 <option>square</option>
@@ -483,7 +482,7 @@ const Home = () => {
                 style={style_env} />
               </div>
           </form>
-      </div>) : (<div className='osc1form'><button onClick={handle_osc_change}>Add an Oscillator</button></div>)  }
+      </div>) : (<div className='osc1form'><div onClick={handle_osc_change} className='btn btn-one'><span>Add an Oscillator</span></div></div>)  }
       <div className='triangle' />
       <div className='vib_harm'>
         <div className='vib_harm_inner'>
