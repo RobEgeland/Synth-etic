@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
+import { useSharedState } from '../context/SynthSetupContext';
 
 const Home = () => {
-  // const context = new Tone.Context({ latencyHint: "balanced"})
-  // Tone.setContext(context)
-  Tone.context.lookAhead = 0.3
-  Tone.Transport.start("+0.1")
+  const [state, setState] = useSharedState()
+  // Tone.context.lookAhead = 0.3
+  // Tone.Transport.start("+0.1")
   const style = {
     height: "5px",
     margin: "1%",
@@ -51,52 +51,51 @@ const Home = () => {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
   
-  let synth;
+  let synth = new Tone.DuoSynth({state}).connect(Tone.Destination)
   
-  
-  const [voice1, setVoice1] = useState({
-    // need to figure out how high/low this can go
-    volume: -10, 
-    // think this will go to 5?
-    portamento: 0,
-    // sine, triangle, sawtooth, square
-    oscillator: {
-      type: "sine"
-    },
-    // all these are 0 - 1
-    envelope : {
-      attack: 0.1,
-      decay: 0.1,
-      sustain: 0.1,
-      release: 0.1
-    }
-  })
+  // const [voice1, setVoice1] = useState({
+  //   // need to figure out how high/low this can go
+  //   volume: -10, 
+  //   // think this will go to 5?
+  //   portamento: 0,
+  //   // sine, triangle, sawtooth, square
+  //   oscillator: {
+  //     type: "sine"
+  //   },
+  //   // all these are 0 - 1
+  //   envelope : {
+  //     attack: 0.1,
+  //     decay: 0.1,
+  //     sustain: 0.1,
+  //     release: 0.1
+  //   }
+  // })
 
-  const [voice2, setVoice2] = useState({
-    // need to figure out how high/low this can go
-    volume: -10, 
-    // think this will go to 5?
-    portamento: 0,
-    // sine, triangle, sawtooth, square
-    oscillator: {
-      type: "sine"
-    },
-    // all these are 0 - 1
-    envelope : {
-      attack: 0.1,
-      decay: 0.1,
-      sustain: 0.1,
-      release: 0.1
-    }
-  })
-  const [duoSynth, setDuoSynth] = useState(false)
+  // const [voice2, setVoice2] = useState({
+  //   // need to figure out how high/low this can go
+  //   volume: -10, 
+  //   // think this will go to 5?
+  //   portamento: 0,
+  //   // sine, triangle, sawtooth, square
+  //   oscillator: {
+  //     type: "sine"
+  //   },
+  //   // all these are 0 - 1
+  //   envelope : {
+  //     attack: 0.1,
+  //     decay: 0.1,
+  //     sustain: 0.1,
+  //     release: 0.1
+  //   }
+  // })
+  // const [synthChange, setSynthChange] = useState(false)
 
-  const [harmonicity, setHarmonicity] = useState(1.0) // make sound very laggy, possibly cause it becomes polyphonic?
-  const [vibrato, setVibrato] = useState({
-    amount: 0,
-    rate: 5
+  // const [harmonicity, setHarmonicity] = useState(1.0) // make sound very laggy, possibly cause it becomes polyphonic?
+  // const [vibrato, setVibrato] = useState({
+  //   amount: 0,
+  //   rate: 5
 
-  })
+  // })
   const [reverb, setReverb] = useState({
     amount: 0,
     decay: 1
@@ -114,46 +113,28 @@ const Home = () => {
   const AutoFilter = new Tone.AutoFilter(autoFilter)
   const BitCrusher = new Tone.BitCrusher(bitCrusher)
 
-  // if (voice2.oscillator.type !== "OSC 2") {
-  //   synth.dispose()
-  //   synth = new Tone.DuoSynth({
-  //     vibratoAmount: vibrato.amount,
-  //     vibratoRate: vibrato.rate,
-  //     harmonicity: harmonicity,
-  //     voice0: {
-  //       oscillator: {
-  //         type: voice1.oscillator.type
-  //       },
-  //       volume: voice1.volume,
-  //       portamento: voice1.portamento,
-  //       envelope: {
-  //         attack: voice1.envelope.attack,
-  //         decay: voice1.envelope.decay,
-  //         sustain: voice1.envelope.sustain,
-  //         release: voice1.envelope.release
-  //         }
-  //       },
-  //       voice1: {
-  //         volume: voice2.volume,
-  //         portamento: voice2.portamento,
-  //         oscillator: {
-  //           type: voice2.oscillator.type
-  //         },
-  //         envelope: {
-  //           attack: voice2.envelope.attack,
-  //           decay: voice2.envelope.decay,
-  //           sustain: voice2.envelope.sustain,
-  //           release: voice2.envelope.release
-  //         }
-  //       }
   
-  //   })
-    
-  //   synth.connect(Tone.Destination)
-  // }else {
-  //   synth = new Tone.Synth({
+
+
+  
+  //   oscillator: {
+  //     partialCount: 0,
+  //     type: voice1.oscillator.type
+  //   },
+  //   volume: voice1.volume,
+  //   portamento: voice1.portamento,
+  //   envelope: {
+  //     attack: voice1.envelope.attack,
+  //     decay: voice1.envelope.decay,
+  //     sustain: voice1.envelope.sustain,
+  //     release: voice1.envelope.release
+  //   }
+  // }).toDestination() : synth = new Tone.DuoSynth({
+  //   vibratoAmount: vibrato.amount,
+  //   vibratoRate: vibrato.rate,
+  //   harmonicity: harmonicity,
+  //   voice0: {
   //     oscillator: {
-  //       partialCount: 0,
   //       type: voice1.oscillator.type
   //     },
   //     volume: voice1.volume,
@@ -163,63 +144,30 @@ const Home = () => {
   //       decay: voice1.envelope.decay,
   //       sustain: voice1.envelope.sustain,
   //       release: voice1.envelope.release
+  //       }
+  //     },
+  //     voice1: {
+  //       volume: voice2.volume,
+  //       portamento: voice2.portamento,
+  //       oscillator: {
+  //         type: voice2.oscillator.type
+  //       },
+  //       envelope: {
+  //         attack: voice2.envelope.attack,
+  //         decay: voice2.envelope.decay,
+  //         sustain: voice2.envelope.sustain,
+  //         release: voice2.envelope.release
+  //       }
   //     }
-  //   }).toDestination()
+
+  // })
+  
+  // synth.connect(Tone.Destination)
   // }
 
-
-  {duoSynth === true ? synth = new Tone.Synth({
-    oscillator: {
-      partialCount: 0,
-      type: voice1.oscillator.type
-    },
-    volume: voice1.volume,
-    portamento: voice1.portamento,
-    envelope: {
-      attack: voice1.envelope.attack,
-      decay: voice1.envelope.decay,
-      sustain: voice1.envelope.sustain,
-      release: voice1.envelope.release
-    }
-  }).toDestination() : synth = new Tone.DuoSynth({
-    vibratoAmount: vibrato.amount,
-    vibratoRate: vibrato.rate,
-    harmonicity: harmonicity,
-    voice0: {
-      oscillator: {
-        type: voice1.oscillator.type
-      },
-      volume: voice1.volume,
-      portamento: voice1.portamento,
-      envelope: {
-        attack: voice1.envelope.attack,
-        decay: voice1.envelope.decay,
-        sustain: voice1.envelope.sustain,
-        release: voice1.envelope.release
-        }
-      },
-      voice1: {
-        volume: voice2.volume,
-        portamento: voice2.portamento,
-        oscillator: {
-          type: voice2.oscillator.type
-        },
-        envelope: {
-          attack: voice2.envelope.attack,
-          decay: voice2.envelope.decay,
-          sustain: voice2.envelope.sustain,
-          release: voice2.envelope.release
-        }
-      }
-
-  })
-  
-  synth.connect(Tone.Destination)
-  }
-
-  setTimeout(() => {
-    synth.dispose()
-  }, 10000)
+  // setTimeout(() => {
+  //   synth.dispose()
+  // }, 10000)
 
   
 
@@ -227,92 +175,104 @@ const Home = () => {
 
 
   
-  console.log(synth.get())
+
 
   
 
 
   function handle_voice1_osc(e) {
-    if (e.target.value === "Ocs 1") {
-      setVoice1({
-        ...voice1,
-        oscillator: {
-          type: ""
-        }
-      })
-    }else {
-      setVoice1({
-        ...voice1,
-        oscillator: {
-          type: e.target.value
-        }
-      })
-    }
+    setState((prev) => ({...prev, [state.voice0.oscillator.type]: e.target.value}))
   }
-  function handle_voice1_env(e, name) {
-    setVoice1({
-      ...voice1,
-      envelope: {
-        ...voice1.envelope,
-        [name]: e
-      }
-    })
-  }
+  // function handle_voice1_env(e, name) {
+  //   setVoice1({
+  //     ...voice1,
+  //     envelope: {
+  //       ...voice1.envelope,
+  //       [name]: e
+  //     }
+  //   })
+  // }
 
-  function handle_voice1_vol_port(e, name) {
-    setVoice1({
-      ...voice1,
-      [name]: e
-    })
+  function handle_voice1_vol(e) {
+    setState((prev) => ({...prev, [state.voice0.volume]: e}))
+  }
+  function handle_voice1_port(e) {
+    setState((prev) => ({...prev, [state.voice0.portamento]: e}))
+  }
+  function handle_voice1_attack(e) {
+    setState((prev) => ({...prev, [state.voice0.envelope.attack]: e}))
+  }
+  function handle_voice1_decay(e) {
+    setState((prev) => ({...prev, [state.voice0.envelope.decay]: e}))
+  }
+  function  handle_voice1_sustain(e) {
+    setState((prev) => ({...prev, [state.voice0.envelope.sustain]: e}))
+  }
+  function handle_voice1_release(e) {
+    setState((prev) => ({...prev, [state.voice0.envelope.release]: e}))
   }
 
 
 
-  function handle_voice2_vol_port(e, name) {
-    setVoice2({
-      ...voice2,
-      [name]: e
-    })
-  }
 
-  function handle_voice2_env(e, name) {
-    setVoice2({
-      ...voice2,
-      envelope: {
-        ...voice2.envelope,
-        [name]: e
-      }
-    })
-  }
+
+  // function handle_voice2_vol_port(e, name) {
+  //   setVoice2({
+  //     ...voice2,
+  //     [name]: e
+  //   })
+  // }
+
+  // function handle_voice2_env(e, name) {
+  //   setVoice2({
+  //     ...voice2,
+  //     envelope: {
+  //       ...voice2.envelope,
+  //       [name]: e
+  //     }
+  //   })
+  // }
 
   function handle_voice2_osc(e) {
-    if (e.target.value === "OCS 2") {
-      setVoice2({
-        ...voice2,
-        oscillator: {
-          type: ""
-        }
-      })
-    }else {
-      setVoice2({
-        ...voice2,
-        oscillator: {
-          type: e.target.value
-        }
-      })
-    }
+    setState((prev) => ({...prev, [state.voice1.oscillator.type]: e.target.value}))
+  }
+  function handle_voice2_vol(e) {
+    setState((prev) => ({...prev, [state.voice1.volume]: e}))
+  }
+  function handle_voice2_port(e) {
+    setState((prev) => ({...prev, [state.voice1.portamento]: e}))
+  }
+  function handle_voice2_attack(e) {
+    setState((prev) => ({...prev, [state.voice1.envelope.attack]: e}))
+  }
+  function handle_voice2_decay(e) {
+    setState((prev) => ({...prev, [state.voice1.envelope.decay]: e}))
+  }
+  function handle_voice2_sustain(e) {
+    setState((prev) => ({...prev, [state.voice1.envelope.sustain]: e}))
+  }
+  function handle_voice2_release(e) {
+    setState((prev) => ({...prev, [state.voice1.envelope.release]: e}))
   }
 
   function handle_harm_change(e) {
-    setHarmonicity(e)
+    setState((prev) => ({...prev, [state.harmonicity]: e}))
   }
 
-  function handle_vibrato(e, name) {
-    setVibrato({
-      ...vibrato,
-      [name]: e
-    })
+  function handle_vibrato_rate(e) {
+    setState((prev) => ({...prev, [state.vibratoRate]: e}))
   }
+
+  function handle_vibrato_amount(e) {
+    setState((prev) => ({...prev, [state.vibratoAmount]: e}))
+  }
+
+  // function handle_vibrato(e, name) {
+  //   setVibrato({
+  //     ...vibrato,
+  //     [name]: e
+  //   })
+  // }
 
   function handleReverbChange(e, name) {
     setReverb({
@@ -321,9 +281,9 @@ const Home = () => {
     })
   }
 
-  function handle_osc_change() {
-    setDuoSynth(!duoSynth)
-  }
+  // function handle_osc_change() {
+  //   setSynthChange(!synthChange)
+  // }
 
  
   return (
@@ -344,7 +304,7 @@ const Home = () => {
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_vol_port(e, "volume")}
+                onChange={(e) => handle_voice1_vol(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -354,7 +314,7 @@ const Home = () => {
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_vol_port(e, "portamento")}
+                onChange={(e) => handle_voice1_port(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -366,7 +326,7 @@ const Home = () => {
                 name="Attack"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "attack")}
+                onChange={(e) => handle_voice1_attack(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -376,7 +336,7 @@ const Home = () => {
                 name="Decay"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "decay")}
+                onChange={(e) => handle_voice1_decay(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -386,7 +346,7 @@ const Home = () => {
                 name="Sustain"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "sustain")}
+                onChange={(e) => handle_voice1_sustain(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -396,7 +356,7 @@ const Home = () => {
                 name="Release"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice1_env(e, "release")}
+                onChange={(e) => handle_voice1_release(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -406,8 +366,7 @@ const Home = () => {
           </form>
         </div>
       </div>
-      { duoSynth ? 
-      (<div className='osc1form'>
+      <div className='osc1form'>
           <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >
@@ -422,7 +381,7 @@ const Home = () => {
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_vol_port(e, "volume")}
+                onChange={(e) => handle_voice2_vol(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -432,7 +391,7 @@ const Home = () => {
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_vol_port(e, "portamento")}
+                onChange={(e) => handle_voice2_port(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -444,7 +403,7 @@ const Home = () => {
                 name="Attack"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_env(e, "attack")}
+                onChange={(e) => handle_voice2_attack(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -454,7 +413,7 @@ const Home = () => {
                 name="Decay"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_env(e, "decay")}
+                onChange={(e) => handle_voice2_decay(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -464,7 +423,7 @@ const Home = () => {
                 name="Sustain"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_env(e, "sustain")}
+                onChange={(e) => handle_voice2_sustain(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -474,7 +433,7 @@ const Home = () => {
                 name="Release"
                 unit=""
                 defaultPercentage={0}
-                onChange={(e) => handle_voice2_env(e, "release")}
+                onChange={(e) => handle_voice2_release(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -482,7 +441,7 @@ const Home = () => {
                 style={style_env} />
               </div>
           </form>
-      </div>) : (<div className='osc1form'><div onClick={handle_osc_change} className='btn btn-one'><span>Add an Oscillator</span></div></div>)  }
+      </div>
       <div className='triangle' />
       <div className='vib_harm'>
         <div className='vib_harm_inner'>
@@ -500,7 +459,7 @@ const Home = () => {
             name="Vibrato Rate"
             unit="Hz"
             defaultPercentage={0}
-            onChange={(e) => handle_vibrato(e, "rate")}
+            onChange={(e) => handle_vibrato_rate(e)}
             bg="black"
             fg="white"
             mouseSpeed={5}
@@ -510,7 +469,7 @@ const Home = () => {
             name="Vibrato"
             unit=""
             defaultPercentage={0}
-            onChange={(e) => handle_vibrato(e, "amount")}
+            onChange={(e) => handle_vibrato_amount(e)}
             bg="black"
             fg="white"
             mouseSpeed={5}
@@ -571,7 +530,7 @@ const Home = () => {
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseInt((p * 16) + 1)} 
+              transform={p => parseInt((p * 15) + 1)} 
               style={style4} />
           <Knob
               name="Delay"
