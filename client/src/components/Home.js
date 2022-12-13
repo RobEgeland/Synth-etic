@@ -4,10 +4,11 @@ import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
-import { useSharedState } from '../context/SynthSetupContext';
+import { useTrackedState, useSetState } from '../context/SynthSetupContext';
 
 const Home = () => {
-  const [state, setState] = useSharedState()
+  const state  = useTrackedState()
+  const setState = useSetState()
   // Tone.context.lookAhead = 0.3
   // Tone.Transport.start("+0.1")
   const style = {

@@ -8,7 +8,7 @@ import UserProfile from './components/UserProfile';
 import {useState, useEffect, useMemo, useRef} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import { UserContext } from './context/UserContext';
-import { SynthProvider, useSharedState } from './context/SynthSetupContext';
+import { SynthProvider, useTrackedState } from './context/SynthSetupContext';
 import * as Tone from 'tone'
 
 
@@ -17,7 +17,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
   const [synthChange, setSynthChange] = useState(false)
-  const [state, setState] = useSharedState()
+  const state= useTrackedState()
   // const [voice1, setVoice1] = useState({
   //   // need to figure out how high/low this can go
   //   volume: -10, 
