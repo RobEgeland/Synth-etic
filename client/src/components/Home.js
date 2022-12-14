@@ -1,14 +1,11 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useRef} from 'react'
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
-import { useTrackedState, useSetState } from '../context/SynthSetupContext';
 
 const Home = () => {
-  const state  = useTrackedState()
-  const setState = useSetState()
   // Tone.context.lookAhead = 0.3
   // Tone.Transport.start("+0.1")
   const style = {
@@ -51,52 +48,58 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
+
+  const harmonicity = useRef(0)
+  const vibratoAmount = useRef(0)
+  const vibratoRate = useRef(0)
+  const voice0osc = useRef("sine")
+  const voice0vol = useRef(-10)
+  const voice0port = useRef(0)
+  const voice0EnvAt = useRef(0.1)
+  const voice0EnvDe = useRef(0.1)
+  const voice0EnvSus = useRef(0.1)
+  const voice0EnvRe = useRef(0.1)
+  const voice1osc = useRef("sine")
+  const voice1vol = useRef(-10)
+  const voice1port = useRef(0)
+  const voice1EnvAt = useRef(0.1)
+  const voice1EnvDe = useRef(0.1)
+  const voice1EnvSus = useRef(0.1)
+  const voice1EnvRe = useRef(0.1)
+  let synth = new Tone.DuoSynth({
+    harmonicity: harmonicity.current,
+    vibratoAmount: vibratoAmount.current,
+    vibratoRate: vibratoRate.current,
+    voice0: {
+        oscillator: {
+            type: voice0osc.current
+        },
+        volume: voice0vol.current,
+        portamento: voice0port.current,
+        envelope: {
+            attack: voice0EnvAt.current,
+            decay: voice0EnvDe.current,
+            sustain: voice0EnvSus.current,
+            release: voice0EnvRe.current
+        }
+    },
+    voice1: {
+        oscillator: {
+            type: voice1osc.current 
+        },
+        volume: voice1vol.current,
+        portamento: voice1port.current,
+        envelope: {
+            attack: voice1EnvAt.current,
+            decay: voice1EnvDe.current,
+            sustain: voice1EnvSus.current,
+            release: voice1EnvRe.current
+        }
+    }
+  },
+  console.log("was rerendered")
+  ).connect(Tone.Destination)
   
-  let synth = new Tone.DuoSynth({state}).connect(Tone.Destination)
-  
-  // const [voice1, setVoice1] = useState({
-  //   // need to figure out how high/low this can go
-  //   volume: -10, 
-  //   // think this will go to 5?
-  //   portamento: 0,
-  //   // sine, triangle, sawtooth, square
-  //   oscillator: {
-  //     type: "sine"
-  //   },
-  //   // all these are 0 - 1
-  //   envelope : {
-  //     attack: 0.1,
-  //     decay: 0.1,
-  //     sustain: 0.1,
-  //     release: 0.1
-  //   }
-  // })
-
-  // const [voice2, setVoice2] = useState({
-  //   // need to figure out how high/low this can go
-  //   volume: -10, 
-  //   // think this will go to 5?
-  //   portamento: 0,
-  //   // sine, triangle, sawtooth, square
-  //   oscillator: {
-  //     type: "sine"
-  //   },
-  //   // all these are 0 - 1
-  //   envelope : {
-  //     attack: 0.1,
-  //     decay: 0.1,
-  //     sustain: 0.1,
-  //     release: 0.1
-  //   }
-  // })
-  // const [synthChange, setSynthChange] = useState(false)
-
-  // const [harmonicity, setHarmonicity] = useState(1.0) // make sound very laggy, possibly cause it becomes polyphonic?
-  // const [vibrato, setVibrato] = useState({
-  //   amount: 0,
-  //   rate: 5
-
-  // })
   const [reverb, setReverb] = useState({
     amount: 0,
     decay: 1
@@ -114,158 +117,64 @@ const Home = () => {
   const AutoFilter = new Tone.AutoFilter(autoFilter)
   const BitCrusher = new Tone.BitCrusher(bitCrusher)
 
-  
-
-
-  
-  //   oscillator: {
-  //     partialCount: 0,
-  //     type: voice1.oscillator.type
-  //   },
-  //   volume: voice1.volume,
-  //   portamento: voice1.portamento,
-  //   envelope: {
-  //     attack: voice1.envelope.attack,
-  //     decay: voice1.envelope.decay,
-  //     sustain: voice1.envelope.sustain,
-  //     release: voice1.envelope.release
-  //   }
-  // }).toDestination() : synth = new Tone.DuoSynth({
-  //   vibratoAmount: vibrato.amount,
-  //   vibratoRate: vibrato.rate,
-  //   harmonicity: harmonicity,
-  //   voice0: {
-  //     oscillator: {
-  //       type: voice1.oscillator.type
-  //     },
-  //     volume: voice1.volume,
-  //     portamento: voice1.portamento,
-  //     envelope: {
-  //       attack: voice1.envelope.attack,
-  //       decay: voice1.envelope.decay,
-  //       sustain: voice1.envelope.sustain,
-  //       release: voice1.envelope.release
-  //       }
-  //     },
-  //     voice1: {
-  //       volume: voice2.volume,
-  //       portamento: voice2.portamento,
-  //       oscillator: {
-  //         type: voice2.oscillator.type
-  //       },
-  //       envelope: {
-  //         attack: voice2.envelope.attack,
-  //         decay: voice2.envelope.decay,
-  //         sustain: voice2.envelope.sustain,
-  //         release: voice2.envelope.release
-  //       }
-  //     }
-
-  // })
-  
-  // synth.connect(Tone.Destination)
-  // }
-
-  // setTimeout(() => {
-  //   synth.dispose()
-  // }, 10000)
-
-  
-
-
-
-
-  
-
-
-  
-
-
+   
+ 
   function handle_voice1_osc(e) {
-    setState((prev) => ({...prev, [state.voice0.oscillator.type]: e.target.value}))
+    voice0osc.current = e.target.value
   }
-  // function handle_voice1_env(e, name) {
-  //   setVoice1({
-  //     ...voice1,
-  //     envelope: {
-  //       ...voice1.envelope,
-  //       [name]: e
-  //     }
-  //   })
-  // }
 
   function handle_voice1_vol(e) {
-    setState((prev) => ({...prev, [state.voice0.volume]: e}))
+    voice0vol.current = e
   }
   function handle_voice1_port(e) {
-    setState((prev) => ({...prev, [state.voice0.portamento]: e}))
+    voice0port.current = e
   }
   function handle_voice1_attack(e) {
-    setState((prev) => ({...prev, [state.voice0.envelope.attack]: e}))
+    voice0EnvAt.current = e
   }
   function handle_voice1_decay(e) {
-    setState((prev) => ({...prev, [state.voice0.envelope.decay]: e}))
+    voice0EnvDe.current = e
   }
   function  handle_voice1_sustain(e) {
-    setState((prev) => ({...prev, [state.voice0.envelope.sustain]: e}))
+    voice0EnvSus.current = e
   }
   function handle_voice1_release(e) {
-    setState((prev) => ({...prev, [state.voice0.envelope.release]: e}))
+    voice0EnvRe.current = e
   }
 
-
-
-
-
-  // function handle_voice2_vol_port(e, name) {
-  //   setVoice2({
-  //     ...voice2,
-  //     [name]: e
-  //   })
-  // }
-
-  // function handle_voice2_env(e, name) {
-  //   setVoice2({
-  //     ...voice2,
-  //     envelope: {
-  //       ...voice2.envelope,
-  //       [name]: e
-  //     }
-  //   })
-  // }
 
   function handle_voice2_osc(e) {
-    setState((prev) => ({...prev, [state.voice1.oscillator.type]: e.target.value}))
+    voice1osc.current = e.target.value
   }
   function handle_voice2_vol(e) {
-    setState((prev) => ({...prev, [state.voice1.volume]: e}))
+    voice1vol.current = e
   }
   function handle_voice2_port(e) {
-    setState((prev) => ({...prev, [state.voice1.portamento]: e}))
+    voice1port.current = e
   }
   function handle_voice2_attack(e) {
-    setState((prev) => ({...prev, [state.voice1.envelope.attack]: e}))
+    voice1EnvAt.current = e
   }
   function handle_voice2_decay(e) {
-    setState((prev) => ({...prev, [state.voice1.envelope.decay]: e}))
+    voice1EnvDe.current = e
   }
   function handle_voice2_sustain(e) {
-    setState((prev) => ({...prev, [state.voice1.envelope.sustain]: e}))
+    voice1EnvSus.current = e
   }
   function handle_voice2_release(e) {
-    setState((prev) => ({...prev, [state.voice1.envelope.release]: e}))
+    voice1EnvRe.current = e
   }
 
   function handle_harm_change(e) {
-    setState((prev) => ({...prev, [state.harmonicity]: e}))
+    harmonicity.current = e
   }
 
   function handle_vibrato_rate(e) {
-    setState((prev) => ({...prev, [state.vibratoRate]: e}))
+    vibratoRate.current = e
   }
 
   function handle_vibrato_amount(e) {
-    setState((prev) => ({...prev, [state.vibratoAmount]: e}))
+    vibratoAmount.current = e
   }
 
   // function handle_vibrato(e, name) {
@@ -281,11 +190,6 @@ const Home = () => {
       [name]: e
     })
   }
-
-  // function handle_osc_change() {
-  //   setSynthChange(!synthChange)
-  // }
-
  
   return (
     <div>

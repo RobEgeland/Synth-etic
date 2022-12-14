@@ -16,8 +16,7 @@ function App() {
   let synth;
   const [currentUser, setCurrentUser] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
-  const [synthChange, setSynthChange] = useState(false)
-  const state= useTrackedState()
+
   // const [voice1, setVoice1] = useState({
   //   // need to figure out how high/low this can go
   //   volume: -10, 
@@ -58,39 +57,6 @@ function App() {
   //   rate: 5
 
   // })
-  synth = new Tone.DuoSynth({
-    state
-  // vibratoAmount: vibrato.amount,
-  // vibratoRate: vibrato.rate,
-  // harmonicity: harmonicity,
-  // voice0: {
-  //   oscillator: {
-  //     type: voice1.oscillator.type
-  //   },
-  //   volume: voice1.volume,
-  //   portamento: voice1.portamento,
-  //   envelope: {
-  //     attack: voice1.envelope.attack,
-  //     decay: voice1.envelope.decay,
-  //     sustain: voice1.envelope.sustain,
-  //     release: voice1.envelope.release
-  //     }
-  //   },
-  //   voice1: {
-  //     volume: voice2.volume,
-  //     portamento: voice2.portamento,
-  //     oscillator: {
-  //       type: voice2.oscillator.type
-  //     },
-  //     envelope: {
-  //       attack: voice2.envelope.attack,
-  //       decay: voice2.envelope.decay,
-  //       sustain: voice2.envelope.sustain,
-  //       release: voice2.envelope.release
-  //     }
-  //   }
-  }).connect(Tone.Destination)
-  
   
 
   // function handle_voice1_osc(e) {
@@ -152,10 +118,6 @@ function App() {
   //     [name]: e
   //   })
   // }
-  function handle_osc_change() {
-    setSynthChange(!synthChange)
-  }
-  
   
   
   

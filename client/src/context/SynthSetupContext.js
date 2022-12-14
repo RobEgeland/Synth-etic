@@ -36,6 +36,10 @@ const initialState = {
 
 const useMyState = () => useState(initialState)
 
-export const { Provider: SynthProvider, useTracked: useTrackedState, useUpdate: useSetState } = createContainer(useMyState)
+export const {
+    Provider: SynthProvider, 
+    useTrackedState, 
+    useUpdate: useSetState 
+} = createContainer(useMyState)
 
 // export const SynthSetupContext = createContext(null)
