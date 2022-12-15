@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef} from 'react'
+import React, {useContext, useState, useRef, useEffect} from 'react'
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
@@ -48,141 +48,131 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
-  const harmonicity = useRef(0)
-  const vibratoAmount = useRef(0)
-  const vibratoRate = useRef(0)
-  const voice0osc = useRef("sine")
-  const voice0vol = useRef(-10)
-  const voice0port = useRef(0)
-  const voice0EnvAt = useRef(0.1)
-  const voice0EnvDe = useRef(0.1)
-  const voice0EnvSus = useRef(0.1)
-  const voice0EnvRe = useRef(0.1)
-  const voice1osc = useRef("sine")
-  const voice1vol = useRef(-10)
-  const voice1port = useRef(0)
-  const voice1EnvAt = useRef(0.1)
-  const voice1EnvDe = useRef(0.1)
-  const voice1EnvSus = useRef(0.1)
-  const voice1EnvRe = useRef(0.1)
-  let synth = new Tone.DuoSynth({
-    harmonicity: harmonicity.current,
-    vibratoAmount: vibratoAmount.current,
-    vibratoRate: vibratoRate.current,
-    voice0: {
-        oscillator: {
-            type: voice0osc.current
-        },
-        volume: voice0vol.current,
-        portamento: voice0port.current,
-        envelope: {
-            attack: voice0EnvAt.current,
-            decay: voice0EnvDe.current,
-            sustain: voice0EnvSus.current,
-            release: voice0EnvRe.current
-        }
+  let synth;
+  useEffect(() => {
+    synth = new Tone.DuoSynth({
+      harmonicity: 0,
+      vibratoAmount: 0.1,
+      vibratoRate: 4.5,
+      voice0: {
+          oscillator: {
+              type: "sine"
+          },
+          volume: -10,
+          portamento: 0,
+          envelope: {
+              attack:0.1,
+              decay: 0.1,
+              sustain: 0.1,
+              release: 0.1
+          }
+      },
+      voice1: {
+          oscillator: {
+              type: "sine" 
+          },
+          volume: 10,
+          envelope: {
+              attack: 0.1,
+              decay: 0.1,
+              sustain: 0.1,
+              release: 0.1
+          }
+      }
     },
-    voice1: {
-        oscillator: {
-            type: voice1osc.current 
-        },
-        volume: voice1vol.current,
-        portamento: voice1port.current,
-        envelope: {
-            attack: voice1EnvAt.current,
-            decay: voice1EnvDe.current,
-            sustain: voice1EnvSus.current,
-            release: voice1EnvRe.current
-        }
-    }
-  },
-  console.log("was rerendered")
-  ).connect(Tone.Destination)
-  
+    ).toDestination()
+
+  }, [synth])
+
   const [reverb, setReverb] = useState({
     amount: 0,
     decay: 1
   })
-  const [phaser, setPhaser] = useState(0)
+  const [phaser, setPhaser] = useState(0.3)
+
+  // synth.connect(Phaser)
+
   const [distortion, setDistortion] = useState(0)
   const [delay, setDelay] = useState(0)
   const [autoFilter, setAutoFilter] = useState(0)
   const [bitCrusher, setBitCrusher] = useState(1)
 
   const Reverb = new Tone.Reverb(reverb.decay, reverb.amount)
-  const Phaser = new Tone.Phaser(phaser)
+  const Phaser = new Tone.Phaser({
+    frequency: 15,
+	  octaves: 5,
+	  baseFrequency: 1000
+  }).toDestination()
   const Distortion = new Tone.Distortion(distortion)
   const Delay = new Tone.FeedbackDelay(delay)
   const AutoFilter = new Tone.AutoFilter(autoFilter)
   const BitCrusher = new Tone.BitCrusher(bitCrusher)
 
    
- 
+
   function handle_voice1_osc(e) {
-    voice0osc.current = e.target.value
+    synth.voice0.oscillator.type = e.target.value
   }
 
   function handle_voice1_vol(e) {
-    voice0vol.current = e
+    synth.voice0.volume.value = e
   }
   function handle_voice1_port(e) {
-    voice0port.current = e
+    synth.voice0.portamento.value = e
+    
   }
+  // these can be refactored to one function
   function handle_voice1_attack(e) {
-    voice0EnvAt.current = e
+    synth.voice0.envelope.attack = e
+
   }
   function handle_voice1_decay(e) {
-    voice0EnvDe.current = e
+    synth.voice0.envelope.decay = e
   }
   function  handle_voice1_sustain(e) {
-    voice0EnvSus.current = e
+    synth.voice0.envelope.decay = e
   }
   function handle_voice1_release(e) {
-    voice0EnvRe.current = e
+    synth.voice0.envelope.release = e
   }
 
 
   function handle_voice2_osc(e) {
-    voice1osc.current = e.target.value
+    console.log(synth.voice1.oscillator.type)
+    synth.voice1.oscillator.type = e.target.value
+    console.log(synth.voice1.oscillator.type)
   }
   function handle_voice2_vol(e) {
-    voice1vol.current = e
   }
   function handle_voice2_port(e) {
-    voice1port.current = e
   }
   function handle_voice2_attack(e) {
-    voice1EnvAt.current = e
   }
   function handle_voice2_decay(e) {
-    voice1EnvDe.current = e
   }
   function handle_voice2_sustain(e) {
-    voice1EnvSus.current = e
   }
   function handle_voice2_release(e) {
-    voice1EnvRe.current = e
   }
 
   function handle_harm_change(e) {
-    harmonicity.current = e
+    synth.harmonicity.value = e
   }
 
   function handle_vibrato_rate(e) {
-    vibratoRate.current = e
+    synth.vibratoRate.value = e
   }
 
   function handle_vibrato_amount(e) {
-    vibratoAmount.current = e
+    synth.vibratoAmount.value = e
   }
 
-  // function handle_vibrato(e, name) {
-  //   setVibrato({
-  //     ...vibrato,
-  //     [name]: e
-  //   })
-  // }
+  function handle_vibrato(e, name) {
+    // setVibrato({
+    //   ...vibrato,
+    //   [name]: e
+    // })
+  }
 
   function handleReverbChange(e, name) {
     setReverb({
@@ -235,7 +225,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Decay"
@@ -245,7 +235,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Sustain"
@@ -255,7 +245,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Release"
@@ -265,7 +255,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               </div>
           </form>
