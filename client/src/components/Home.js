@@ -51,7 +51,7 @@ const Home = () => {
   let synth;
   useEffect(() => {
     synth = new Tone.DuoSynth({
-      harmonicity: 0,
+      harmonicity: 0.1,
       vibratoAmount: 0.1,
       vibratoRate: 4.5,
       voice0: {
@@ -68,16 +68,17 @@ const Home = () => {
           }
       },
       voice1: {
-          oscillator: {
-              type: "sine" 
-          },
-          volume: 10,
-          envelope: {
-              attack: 0.1,
-              decay: 0.1,
-              sustain: 0.1,
-              release: 0.1
-          }
+        volume: -10,
+        portamento: 0,
+        oscillator: {
+          type: "sine" 
+        },
+        envelope: {
+            attack: 0.1,
+            decay: 0.1,
+            sustain: 0.1,
+            release: 0.1
+        }
       }
     },
     ).toDestination()
@@ -90,7 +91,7 @@ const Home = () => {
   })
   const [phaser, setPhaser] = useState(0.3)
 
-  // synth.connect(Phaser)
+
 
   const [distortion, setDistortion] = useState(0)
   const [delay, setDelay] = useState(0)
@@ -138,21 +139,26 @@ const Home = () => {
 
 
   function handle_voice2_osc(e) {
-    console.log(synth.voice1.oscillator.type)
     synth.voice1.oscillator.type = e.target.value
-    console.log(synth.voice1.oscillator.type)
   }
+  // think both volume knobs need to be fixed
   function handle_voice2_vol(e) {
+    synth.voice1.volume.value = e
   }
   function handle_voice2_port(e) {
+    synth.voice1.portamento.value = e
   }
   function handle_voice2_attack(e) {
+    synth.voice1.envelope.attack = e
   }
   function handle_voice2_decay(e) {
+    synth.voice1.envelope.decay = e
   }
   function handle_voice2_sustain(e) {
+    synth.voice1.envelope.sustain = e
   }
   function handle_voice2_release(e) {
+    synth.voice1.envelope.release = e
   }
 
   function handle_harm_change(e) {
@@ -302,7 +308,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Decay"
@@ -312,7 +318,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Sustain"
@@ -322,7 +328,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               <Knob
                 name="Release"
@@ -332,7 +338,7 @@ const Home = () => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0} 
+                transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               </div>
           </form>
