@@ -41,6 +41,7 @@ const NavBar = () => {
             <a>{ currentUser ? <NavLink onClick={handLogOut} to='/'>Log Out</NavLink> : <NavLink to='/login'>Log In</NavLink>}</a>
             <a><NavLink to='/explore'>Explore</NavLink></a>
             <a><NavLink to='/my-profile'>Profile</NavLink></a>
+            <a><NavLink to={'/how-to'}>How-To</NavLink></a>
             <a className='navbar-right'><NavLink onClick={handleClick} to='/ahhh'>Synth-etic</NavLink></a>
         </div>
     </div>

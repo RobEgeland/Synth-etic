@@ -6,8 +6,6 @@ import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
 
 const Home = () => {
-  // Tone.context.lookAhead = 0.3
-  // Tone.Transport.start("+0.1")
   const style = {
     height: "5px",
     margin: "1%",
@@ -49,6 +47,7 @@ const Home = () => {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
   let synth;
+
   useEffect(() => {
     synth = new Tone.DuoSynth({
       harmonicity: 0.1,
@@ -58,7 +57,7 @@ const Home = () => {
           oscillator: {
               type: "sine"
           },
-          volume: -10,
+          volume: -5,
           portamento: 0,
           envelope: {
               attack:0.1,
@@ -68,7 +67,7 @@ const Home = () => {
           }
       },
       voice1: {
-        volume: -10,
+        volume: -5,
         portamento: 0,
         oscillator: {
           type: "sine" 
@@ -85,29 +84,29 @@ const Home = () => {
 
   }, [synth])
 
-  const [reverb, setReverb] = useState({
-    amount: 0,
-    decay: 1
+  const reverbAmount = 0.1
+  // can possible get rid of decay knob, make it constant
+  const reverbDecay = 4
+  const [phaser, setPhaser] = useState({
+    frequency: 0,
+    octaves: 5
   })
-  const [phaser, setPhaser] = useState(0.3)
 
 
-
-  const [distortion, setDistortion] = useState(0)
-  const [delay, setDelay] = useState(0)
+  const distortion = 0.1
+  // delay is in seconds
+  const [delay, setDelay] = useState(0) 
+  // not sure about the autofilter
   const [autoFilter, setAutoFilter] = useState(0)
-  const [bitCrusher, setBitCrusher] = useState(1)
+  // bitchrusher range 1-8
+  const bitCrusher = 1
 
-  const Reverb = new Tone.Reverb(reverb.decay, reverb.amount)
-  const Phaser = new Tone.Phaser({
-    frequency: 15,
-	  octaves: 5,
-	  baseFrequency: 1000
-  }).toDestination()
-  const Distortion = new Tone.Distortion(distortion)
+  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+  const Phaser = new Tone.Phaser(phaser.frequency, phaser.octaves).toDestination()
+  const Distortion = new Tone.Distortion(distortion).toDestination()
   const Delay = new Tone.FeedbackDelay(delay)
   const AutoFilter = new Tone.AutoFilter(autoFilter)
-  const BitCrusher = new Tone.BitCrusher(bitCrusher)
+  const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
 
    
 
@@ -173,18 +172,34 @@ const Home = () => {
     synth.vibratoAmount.value = e
   }
 
-  function handle_vibrato(e, name) {
-    // setVibrato({
-    //   ...vibrato,
-    //   [name]: e
-    // })
+  function handleReverbAmount(e) {
+    if (e > 0.1) {
+      synth.connect(Reverb)
+      synth.Reverb = e
+    }else {
+      synth.disconnect(Reverb)
+    }
+  }
+  function handleReverbDecay(e) {
+    reverbDecay = e
   }
 
-  function handleReverbChange(e, name) {
-    setReverb({
-      ...reverb,
-      [name]: e
-    })
+  function handleBitCrusher(e) {
+    if (e > 1) {
+      synth.connect(BitCrusher)
+      synth.BitCrusher = e
+    }else{
+      synth.disconnect(BitCrusher)
+    }
+  }
+
+  function handleDistortion(e) {
+    if (e > 0.1) {
+      synth.connect(Distortion)
+      synth.Distortion = e
+    }else {
+      synth.disconnect(Distortion)
+    }
   }
  
   return (
@@ -386,7 +401,7 @@ const Home = () => {
                 name="Amount"
                 unit=""
                 defaultPercentage={0}
-                onChange={e => handleReverbChange(e, "amount")}
+                onChange={handleReverbAmount}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -396,7 +411,7 @@ const Home = () => {
                 name="Decay"
                 unit="secs"
                 defaultPercentage={0}
-                onChange={e => handleReverbChange(e, "decay")}
+                onChange={handleReverbDecay}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
@@ -417,7 +432,7 @@ const Home = () => {
               name="Distortion"
               unit=""
               defaultPercentage={0}
-              onChange={setDistortion}
+              onChange={handleDistortion}
               bg="black"
               fg="white"
               mouseSpeed={5}
@@ -427,11 +442,11 @@ const Home = () => {
               name="BitCrusher"
               unit=""
               defaultPercentage={0}
-              onChange={setBitCrusher}
+              onChange={handleBitCrusher}
               bg="black"
               fg="white"
               mouseSpeed={5}
-              transform={p => parseInt((p * 15) + 1)} 
+              transform={p => parseInt((p * 7) + 1)} 
               style={style4} />
           <Knob
               name="Delay"
