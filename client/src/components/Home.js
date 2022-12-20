@@ -87,28 +87,26 @@ const Home = () => {
   const reverbAmount = 0.1
   // can possible get rid of decay knob, make it constant
   const reverbDecay = 4
-  const [phaser, setPhaser] = useState({
-    frequency: 0,
-    octaves: 5
-  })
+  const phaser = 0.1
 
 
   const distortion = 0.1
   // delay is in seconds
-  const [delay, setDelay] = useState(0) 
+  const delay = 0.1 
   // not sure about the autofilter
   const [autoFilter, setAutoFilter] = useState(0)
   // bitchrusher range 1-8
   const bitCrusher = 1
+  const feedback = 0.1
 
   const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
-  const Phaser = new Tone.Phaser(phaser.frequency, phaser.octaves).toDestination()
+  const Phaser = new Tone.Phaser(phaser).toDestination()
   const Distortion = new Tone.Distortion(distortion).toDestination()
-  const Delay = new Tone.FeedbackDelay(delay)
-  const AutoFilter = new Tone.AutoFilter(autoFilter)
+  const Delay = new Tone.PingPongDelay(delay).toDestination()
+  const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
   const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
 
-   
+  
 
   function handle_voice1_osc(e) {
     synth.voice0.oscillator.type = e.target.value
@@ -180,9 +178,6 @@ const Home = () => {
       synth.disconnect(Reverb)
     }
   }
-  function handleReverbDecay(e) {
-    reverbDecay = e
-  }
 
   function handleBitCrusher(e) {
     if (e > 1) {
@@ -201,7 +196,33 @@ const Home = () => {
       synth.disconnect(Distortion)
     }
   }
- 
+  
+  function handleFeedback(e) {
+    if (e > 0.1) {
+      synth.connect(Feedback)
+      synth.Feedback = e
+    }else {
+      synth.disconnect(Feedback)
+    }
+  }
+
+  function handleDelay(e) {
+    if (e > 0.1) {
+      synth.connect(Delay)
+      synth.Delay = e
+    }else {
+      synth.disconnect(Delay)
+    }
+  }
+
+  function handlePhaser(e) {
+    if (e > 0.1) {
+      synth.connect(Phaser)
+      synth.Phaser = e
+    }else {
+      synth.disconnect(Phaser)
+    }
+  }
   return (
     <div>
       <div className='voice1'>
@@ -406,23 +427,13 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseFloat(p)} 
-                style={style} />
-            <Knob
-                name="Decay"
-                unit="secs"
-                defaultPercentage={0}
-                onChange={handleReverbDecay}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseInt((p * 5) + 1)} 
-                style={style} />
+                style={style4} />
           </div>
           <Knob
               name="Phaser"
               unit=""
               defaultPercentage={0}
-              onChange={setPhaser}
+              onChange={handlePhaser}
               bg="black"
               fg="white"
               mouseSpeed={5}
@@ -452,17 +463,17 @@ const Home = () => {
               name="Delay"
               unit=""
               defaultPercentage={0}
-              onChange={setDelay}
+              onChange={handleDelay}
               bg="black"
               fg="white"
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
           <Knob
-              name="AutoFilter"
+              name="Feedback"
               unit=""
               defaultPercentage={0}
-              onChange={setAutoFilter}
+              onChange={handleFeedback}
               bg="black"
               fg="white"
               mouseSpeed={5}
