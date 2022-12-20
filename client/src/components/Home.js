@@ -416,10 +416,8 @@ const Home = () => {
       </div>
       <div className='effects'>
         <div className='effectsinner'>
-          <div className='reverb'>
-            <div className='reverb_underline'></div>
             <Knob
-                name="Amount"
+                name="Reverb"
                 unit=""
                 defaultPercentage={0}
                 onChange={handleReverbAmount}
@@ -428,7 +426,6 @@ const Home = () => {
                 mouseSpeed={5}
                 transform={p => parseFloat(p)} 
                 style={style4} />
-          </div>
           <Knob
               name="Phaser"
               unit=""
