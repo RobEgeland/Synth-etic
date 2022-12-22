@@ -13,114 +13,56 @@ import * as Tone from 'tone'
 
 
 function App() {
-  let synth;
   const [currentUser, setCurrentUser] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
 
-  // const [voice1, setVoice1] = useState({
-  //   // need to figure out how high/low this can go
-  //   volume: -10, 
-  //   // think this will go to 5?
-  //   portamento: 0,
-  //   // sine, triangle, sawtooth, square
-  //   oscillator: {
-  //     type: "sine"
-  //   },
-  //   // all these are 0 - 1
-  //   envelope : {
-  //     attack: 0.1,
-  //     decay: 0.1,
-  //     sustain: 0.1,
-  //     release: 0.1
-  //   }
-  // })
-  // const [voice2, setVoice2] = useState({
-  //   // need to figure out how high/low this can go
-  //   volume: -10, 
-  //   // think this will go to 5?
-  //   portamento: 0,
-  //   // sine, triangle, sawtooth, square
-  //   oscillator: {
-  //     type: "sine"
-  //   },
-  //   // all these are 0 - 1
-  //   envelope : {
-  //     attack: 0.1,
-  //     decay: 0.1,
-  //     sustain: 0.1,
-  //     release: 0.1
-  //   }
-  // })
-  // const [harmonicity, setHarmonicity] = useState(1.0)
-  // const [vibrato, setVibrato] = useState({
-  //   amount: 0,
-  //   rate: 5
+ 
+  
+  const [synthSaveObj, setSynthSaveObj] =useState({
+    harmonicity: 0.1,
+      vibratoAmount: 0.1,
+      vibratoRate: 4.5,
+      voice0: {
+          oscillator: {
+              type: "sine"
+          },
+          volume: -5,
+          portamento: 0.1,
+          envelope: {
+              attack:0.1,
+              decay: 0.1,
+              sustain: 0.1,
+              release: 0.1
+          }
+      },
+      voice1: {
+        volume: -5,
+        portamento: 1,
+        oscillator: {
+          type: "sine" 
+        },
+        envelope: {
+            attack: 0.1,
+            decay: 0.1,
+            sustain: 0.1,
+            release: 0.1
+        }
+      }
+    })
 
-  // })
-  
+    function setOsc(e) {
+      setSynthSaveObj({
+        ...synthSaveObj,
+        [synthSaveObj.voice0.oscillator.type]: e.target.value
+      })
 
-  // function handle_voice1_osc(e) {
-  //   setState((prev) => ({...prev, [voice0.oscillator.type]: e.target.value}))
-  // }
-  // function handle_voice1_env(e, name) {
-  //   setVoice1({
-  //     ...voice1,
-  //     envelope: {
-  //       ...voice1.envelope,
-  //       [name]: e
-  //     }
-  //   })
-  // }
-  // function handle_voice1_vol_port(e, name) {
-  //   setVoice1({
-  //     ...voice1,
-  //     [name]: e
-  //   })
-  // }
-  // function handle_voice2_vol_port(e, name) {
-  //   setVoice2({
-  //     ...voice2,
-  //     [name]: e
-  //   })
-  // }
-  // function handle_voice2_env(e, name) {
-  //   setVoice2({
-  //     ...voice2,
-  //     envelope: {
-  //       ...voice2.envelope,
-  //       [name]: e
-  //     }
-  //   })
-  // }
-  // function handle_voice2_osc(e) {
-  //   if (e.target.value === "OCS 2") {
-  //     setVoice2({
-  //       ...voice2,
-  //       oscillator: {
-  //         type: ""
-  //       }
-  //     })
-  //   }else {
-  //     setVoice2({
-  //       ...voice2,
-  //       oscillator: {
-  //         type: e.target.value
-  //       }
-  //     })
-  //   }
-  // }
-  // function handle_harm_change(e) {
-  //   setHarmonicity(e)
-  // }
-  // function handle_vibrato(e, name) {
-  //   setVibrato({
-  //     ...vibrato,
-  //     [name]: e
-  //   })
-  // }
-  
-  
-  
+    }
+
+    useEffect(() => {
+      // localStorage.setItem("synthSave", JSON.stringify(synthSaveObj))
+      console.log(synthSaveObj)
+    }, [synthSaveObj])
+
 
   
 
@@ -146,23 +88,7 @@ function App() {
     currentUser, setCurrentUser
   }), [loggedIn, currentUser])
 
-  // const synthProvider = useMemo(() => ({
-  //   synth,
-  //   handle_osc_change,
-  //   // handle_vibrato,
-  //   // handle_harm_change,
-  //   handle_voice2_osc,
-  //   handle_voice2_env,
-  //   handle_voice2_vol_port,
-  //   handle_voice1_vol_port,
-  //   handle_voice1_env,
-  //   handle_voice1_osc,
-  //   setSynthChange,
-  //   synthChange,
-  //   // setHarmonicity,
-  //   // setVibrato
-
-  // }), [synth])
+ 
 
   return (
     
@@ -186,7 +112,7 @@ function App() {
             <Login/> 
           </Route>
           <Route path="/">
-            <Home />
+            <Home setOsc={setOsc} />
           </Route>
         </Switch>
         </SynthProvider>

@@ -5,7 +5,7 @@ import * as Tone from 'tone'
 import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
 
-const Home = () => {
+const Home = ({setOsc}) => {
   const style = {
     height: "5px",
     margin: "1%",
@@ -58,7 +58,7 @@ const Home = () => {
               type: "sine"
           },
           volume: -5,
-          portamento: 0,
+          portamento: 0.1,
           envelope: {
               attack:0.1,
               decay: 0.1,
@@ -68,7 +68,7 @@ const Home = () => {
       },
       voice1: {
         volume: -5,
-        portamento: 0,
+        portamento: 1,
         oscillator: {
           type: "sine" 
         },
@@ -79,11 +79,12 @@ const Home = () => {
             release: 0.1
         }
       }
-    },
+    }
     ).toDestination()
-
   }, [synth])
 
+
+ 
   const reverbAmount = 0.1
   // can possible get rid of decay knob, make it constant
   const reverbDecay = 4
@@ -106,10 +107,11 @@ const Home = () => {
   const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
   const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
 
-  
+// console.log(localStorage.)
 
   function handle_voice1_osc(e) {
     synth.voice0.oscillator.type = e.target.value
+    localStorage.setItem("Osc", JSON.stringify(e.target.value))
   }
 
   function handle_voice1_vol(e) {
@@ -161,7 +163,6 @@ const Home = () => {
   function handle_harm_change(e) {
     synth.harmonicity.value = e
   }
-
   function handle_vibrato_rate(e) {
     synth.vibratoRate.value = e
   }
@@ -229,7 +230,10 @@ const Home = () => {
         <div className='osc1form'>
           <form> 
             <div name='voice1_osc'>
-              <select onChange={handle_voice1_osc} >
+              <select onChange={(e) => {
+                handle_voice1_osc(e)
+                setOsc(e)
+                }} >
                 <option selected>sine</option>
                 <option>triangle</option>
                 <option>sawtooth</option>
