@@ -230,10 +230,7 @@ const Home = ({setOsc}) => {
         <div className='osc1form'>
           <form> 
             <div name='voice1_osc'>
-              <select onChange={(e) => {
-                handle_voice1_osc(e)
-                setOsc(e)
-                }} >
+              <select onChange={handle_voice1_osc} >
                 <option selected>sine</option>
                 <option>triangle</option>
                 <option>sawtooth</option>
@@ -480,6 +477,7 @@ const Home = ({setOsc}) => {
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
+          <button class="button-62" role="button">Save Sound</button>
         </div>
       </div>
       
