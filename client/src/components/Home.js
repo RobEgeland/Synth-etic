@@ -4,8 +4,54 @@ import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
 import { Distortion } from 'tone';
+import { UserContext } from '../context/UserContext'
 
-const Home = ({setOsc}) => {
+const Home = () => {
+  const { currentUser, loggedIn } = useContext(UserContext)
+  const [errors, setErrors] = useState()
+  const [isloaded, setIsLoaded] = useState(false)
+  let synth = useRef(null)
+  // this still cause some audo glitching
+  // const [synthSavfeObj, setSynthSaveObj] = useState({
+  //   harmonicity: 0.1,
+  //   vibrato_amount: 0.1,
+  //   vibrato_rate: 4.5,
+  //   voice0_oscillator: "sine",
+  //   voice0_volume: -5,
+  //   voice0_portamento: 0.1,
+  //   voice0_attack: 0.1,
+  //   voice0_decay: 0.1,
+  //   voice0_sustain: 0.1,
+  //   voice0_release: 0.1,
+  //   voice1_oscillator: "sine",
+  //   voice1_volume: -5,
+  //   voice1_portamento: 0.1,
+  //   voice1_attack: 0.1,
+  //   voice1_decay: 0.1,
+  //   voice1_sustain: 0.1,
+  //   voice1_release: 0.1
+    
+  // })
+
+  const [harmonicity, setHarmonicity] = useState(0.1)
+  const [vibratoAmount, setVibratoAmnount] = useState(0.1)
+  const [vibratoRate, setVibartoRate] = useState(4.5)
+  const [voice0oscillator, setVoice0Oscillator] = useState("sine") 
+  const [voice0Volume, setVoice0Volume] = useState(-5)
+  const [voice0Portamento, setVoice0Portamento] = useState(0.1)
+  const [voice0Attack, setVoice0Attack] = useState(0.1)
+  const [voice0Decay, setVoice0Decay] = useState(0.1)
+  const [voice0Sustain, setVoice0Sustain] = useState(0.1)
+  const [voice0Release, setVoice0Release] = useState(0.1)
+  const [voice1Oscillator, setVoice1Oscillator] = useState("sine")
+  const [voice1Volume, setVoice1Volume] = useState(-5)
+  const [voice1Portamento, setVoice1Portamento] = useState(0.1)
+  const [voice1Attack, setVoice1Attack] = useState(0.1)
+  const [voice1Decay, setVoice1Decay] = useState(0.1)
+  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
+  const [voice1Release, setVoice1Release] = useState(0.1)
+
+
   const style = {
     height: "5px",
     margin: "1%",
@@ -46,10 +92,10 @@ const Home = ({setOsc}) => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-  let synth;
+  
 
   useEffect(() => {
-    synth = new Tone.DuoSynth({
+    synth.current = new Tone.DuoSynth({
       harmonicity: 0.1,
       vibratoAmount: 0.1,
       vibratoRate: 4.5,
@@ -78,13 +124,15 @@ const Home = ({setOsc}) => {
             sustain: 0.1,
             release: 0.1
         }
+      },
+      onload: () => {
+        setIsLoaded(true)
       }
     }
     ).toDestination()
-  }, [synth])
+  }, [])
 
 
- 
   const reverbAmount = 0.1
   // can possible get rid of decay knob, make it constant
   const reverbDecay = 4
@@ -110,119 +158,183 @@ const Home = ({setOsc}) => {
 // console.log(localStorage.)
 
   function handle_voice1_osc(e) {
-    synth.voice0.oscillator.type = e.target.value
-    localStorage.setItem("Osc", JSON.stringify(e.target.value))
+    synth.current.voice0.oscillator.type = e.target.value
+    setVoice0Oscillator(e.target.value)
   }
 
   function handle_voice1_vol(e) {
-    synth.voice0.volume.value = e
+    synth.current.voice0.volume.value = e
+    setVoice0Volume(e)
   }
   function handle_voice1_port(e) {
-    synth.voice0.portamento.value = e
-    
+    synth.current.voice0.portamento.value = e
+    setVoice0Portamento(e)
   }
   // these can be refactored to one function
   function handle_voice1_attack(e) {
-    synth.voice0.envelope.attack = e
-
+    synth.current.voice0.envelope.attack = e
+    setVoice0Attack(e)
   }
   function handle_voice1_decay(e) {
-    synth.voice0.envelope.decay = e
+    synth.current.voice0.envelope.decay = e
+    setVoice0Decay(e)
   }
   function  handle_voice1_sustain(e) {
-    synth.voice0.envelope.decay = e
+    synth.current.voice0.envelope.decay = e
+    setVoice0Sustain(e)
   }
   function handle_voice1_release(e) {
-    synth.voice0.envelope.release = e
+    synth.current.voice0.envelope.release = e
+    setVoice0Release(e)
   }
 
 
   function handle_voice2_osc(e) {
-    synth.voice1.oscillator.type = e.target.value
+    synth.current.voice1.oscillator.type = e.target.value
+    setVoice1Oscillator(e.target.value)
   }
-  // think both volume knobs need to be fixed
+
   function handle_voice2_vol(e) {
-    synth.voice1.volume.value = e
+    synth.current.voice1.volume.value = e
+    setVoice1Volume(e)
   }
   function handle_voice2_port(e) {
-    synth.voice1.portamento.value = e
+    synth.current.voice1.portamento.value = e
+    setVoice1Portamento(e)
   }
   function handle_voice2_attack(e) {
-    synth.voice1.envelope.attack = e
+    synth.current.voice1.envelope.attack = e
+    setVoice1Attack(e)
   }
   function handle_voice2_decay(e) {
-    synth.voice1.envelope.decay = e
+    synth.current.voice1.envelope.decay = e
+    setVoice1Decay(e)
   }
   function handle_voice2_sustain(e) {
-    synth.voice1.envelope.sustain = e
+    synth.current.voice1.envelope.sustain = e
+    setVoice1Sustain(e)
   }
   function handle_voice2_release(e) {
-    synth.voice1.envelope.release = e
+    synth.current.voice1.envelope.release = e
+    setVoice1Release(e)
   }
 
   function handle_harm_change(e) {
-    synth.harmonicity.value = e
+    synth.current.harmonicity.value = e
+    setHarmonicity(e)
   }
   function handle_vibrato_rate(e) {
-    synth.vibratoRate.value = e
+    synth.current.vibratoRate.value = e
+    setVibartoRate(e)
   }
 
   function handle_vibrato_amount(e) {
-    synth.vibratoAmount.value = e
+    synth.current.vibratoAmount.value = e
+    setVibratoAmnount(e)
   }
 
   function handleReverbAmount(e) {
     if (e > 0.1) {
-      synth.connect(Reverb)
-      synth.Reverb = e
+      synth.current.connect(Reverb)
+      synth.current.Reverb = e
     }else {
-      synth.disconnect(Reverb)
+      synth.current.disconnect(Reverb)
     }
   }
 
   function handleBitCrusher(e) {
     if (e > 1) {
-      synth.connect(BitCrusher)
-      synth.BitCrusher = e
+      synth.current.connect(BitCrusher)
+      synth.current.BitCrusher = e
     }else{
-      synth.disconnect(BitCrusher)
+      synth.current.disconnect(BitCrusher)
     }
   }
 
   function handleDistortion(e) {
     if (e > 0.1) {
-      synth.connect(Distortion)
-      synth.Distortion = e
+      synth.current.connect(Distortion)
+      synth.current.Distortion = e
     }else {
-      synth.disconnect(Distortion)
+      synth.current.disconnect(Distortion)
     }
   }
   
   function handleFeedback(e) {
     if (e > 0.1) {
-      synth.connect(Feedback)
-      synth.Feedback = e
+      synth.current.connect(Feedback)
+      synth.current.Feedback = e
     }else {
-      synth.disconnect(Feedback)
+      synth.current.disconnect(Feedback)
     }
   }
 
   function handleDelay(e) {
     if (e > 0.1) {
-      synth.connect(Delay)
-      synth.Delay = e
+      synth.current.connect(Delay)
+      synth.current.Delay = e
     }else {
-      synth.disconnect(Delay)
+      synth.current.disconnect(Delay)
     }
   }
 
   function handlePhaser(e) {
     if (e > 0.1) {
-      synth.connect(Phaser)
-      synth.Phaser = e
+      synth.current.connect(Phaser)
+      synth.current.Phaser = e
     }else {
-      synth.disconnect(Phaser)
+      synth.current.disconnect(Phaser)
     }
+  }
+
+  function handleSynthSave(synth) {
+    const synthObj = {
+      user_id: currentUser.id,
+      harmonicity: synth.current.harmonicity.value,
+      vibrato_amount: synth.current.vibratoAmount,
+      vibrato_rate: synth.current.vibratoRate,
+      voice0_oscillator: synth.current.voice0.oscillator.type,
+      voice0_volume: synth.current.voice0.volume.value,
+      voice0_portamento: synth.current.voice0.portamento.value,
+      voice0_attack: synth.current.voice0.envelope.attack,
+      voice0_decay: synth.current.voice0.envelope.decay,
+      voice0_sustain: synth.current.voice0.envelope.sustain,
+      voice0_release: synth.current.voice0.envelope.release,
+      voice1_oscillator: synth.current.voice1.oscillator.type,
+      voice1_volume: synth.current.voice1.volume.value,
+      voice1_portamento: synth.current.voice1.portamento.value,
+      voice1_attack: synth.current.voice1.envelope.attack,
+      voice1_decay: synth.current.voice1.envelope.decay,
+      voice1_sustain: synth.current.voice1.envelope.sustain,
+      voice1_release: synth.current.voice1.envelope.release
+    }
+      const headers = {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      }
+      const options = {
+          method: "POST",
+          headers,
+          body: JSON.stringify(synthObj)
+      }
+      fetch('/sounds', options)
+      .then(res => {
+          if(res.ok){
+              res.json().then(data => {
+                console.log(data)
+              })
+          }else {
+              res.json().then(error => {
+                  console.log(error.errors)
+                  const errorAr = []
+                  for (const element in error.errors) {
+                      errorAr.push(` ${element} ${error.errors[element]} -`)
+                  }
+                  setErrors(errorAr)
+                  throw new Error(errors)
+              })
+          }
+      })
   }
   return (
     <div>
@@ -246,7 +358,7 @@ const Home = ({setOsc}) => {
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
-                transform={p => parseInt(p * 25, 10) } 
+                transform={p => parseInt(p * 10, 10) } 
                 style={style} />
               <Knob
                 name="Portamento"
@@ -477,7 +589,7 @@ const Home = ({setOsc}) => {
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
-          <button class="button-62" role="button">Save Sound</button>
+          <button onClick={handleSynthSave} class="button-62" role="button">Save Sound</button>
         </div>
       </div>
       
@@ -490,58 +602,58 @@ const Home = ({setOsc}) => {
           switch(MidiNumbers) {
             // 8TH note durration works for now but need to figure out how to extend
             case 48:
-              synth.triggerAttackRelease("C4", "4n");
+              synth.current.triggerAttackRelease("C4", "4n");
               break;
             case 49:
-              synth.triggerAttackRelease("C#4", "4n");
+              synth.current.triggerAttackRelease("C#4", "4n");
               break;
             case 50:
-              synth.triggerAttackRelease("D4", "4n");
+              synth.current.triggerAttackRelease("D4", "4n");
               break;
             case 51:
-              synth.triggerAttackRelease("D#4", "4n");
+              synth.current.triggerAttackRelease("D#4", "4n");
               break;
             case 52:
-              synth.triggerAttackRelease("E4", "4n");
+              synth.current.triggerAttackRelease("E4", "4n");
               break;
             case 53:
-              synth.triggerAttackRelease("F4", "4n");
+              synth.current.triggerAttackRelease("F4", "4n");
               break;
             case 54:
-              synth.triggerAttackRelease("F#4", "4n");
+              synth.current.triggerAttackRelease("F#4", "4n");
               break;
             case 55:
-              synth.triggerAttackRelease("G4", "4n");
+              synth.current.triggerAttackRelease("G4", "4n");
               break;
             case 56:
-              synth.triggerAttackRelease("G#4", "4n");
+              synth.current.triggerAttackRelease("G#4", "4n");
               break;
             case 57:
-              synth.triggerAttackRelease("A4", "4n");
+              synth.current.triggerAttackRelease("A4", "4n");
               break;  
             case 58:
-              synth.triggerAttackRelease("A#4", "4n");
+              synth.current.triggerAttackRelease("A#4", "4n");
               break;
             case 59:
-              synth.triggerAttackRelease("B4", "4n");
+              synth.current.triggerAttackRelease("B4", "4n");
               break;
             case 60:
-              synth.triggerAttackRelease("C5", "4n");
+              synth.current.triggerAttackRelease("C5", "4n");
               break;
             case 61:
-              synth.triggerAttackRelease("C#5", "4n");
+              synth.current.triggerAttackRelease("C#5", "4n");
               break;
             case 62:
-              synth.triggerAttackRelease("D5", "4n");
+              synth.current.triggerAttackRelease("D5", "4n");
               break;
             case 63:
-              synth.triggerAttackRelease("D#5", "4n");
+              synth.current.triggerAttackRelease("D#5", "4n");
               break;
             case 64:
-              synth.triggerAttackRelease("E5", "4n");
+              synth.current.triggerAttackRelease("E5", "4n");
               break;
             case 65:
-              synth.triggerAttackRelease("F5", "4n");
+              synth.current.triggerAttackRelease("F5", "4n");
               break;
           }
         }}
@@ -553,10 +665,11 @@ const Home = ({setOsc}) => {
           
         }}
         keyboardShortcuts={keyboardShortcuts}
-        />
+        /> 
     </div>
     </div>
   )
 }
+
 
 export default Home
