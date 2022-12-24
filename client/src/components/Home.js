@@ -155,7 +155,7 @@ const Home = () => {
 
   function handle_voice1_osc(e) {
     synth.current.voice0.oscillator.type = e.target.value
-    synthSaveObj.voice1_oscillator = e.target.value
+    synthSaveObj.voice0_oscillator = e.target.value
   }
 
   function handle_voice1_vol(e) {
