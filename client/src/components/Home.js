@@ -12,44 +12,44 @@ const Home = () => {
   const [isloaded, setIsLoaded] = useState(false)
   let synth = useRef(null)
   // this still cause some audo glitching
-  // const [synthSavfeObj, setSynthSaveObj] = useState({
-  //   harmonicity: 0.1,
-  //   vibrato_amount: 0.1,
-  //   vibrato_rate: 4.5,
-  //   voice0_oscillator: "sine",
-  //   voice0_volume: -5,
-  //   voice0_portamento: 0.1,
-  //   voice0_attack: 0.1,
-  //   voice0_decay: 0.1,
-  //   voice0_sustain: 0.1,
-  //   voice0_release: 0.1,
-  //   voice1_oscillator: "sine",
-  //   voice1_volume: -5,
-  //   voice1_portamento: 0.1,
-  //   voice1_attack: 0.1,
-  //   voice1_decay: 0.1,
-  //   voice1_sustain: 0.1,
-  //   voice1_release: 0.1
+  let synthSaveObj = {
+    harmonicity: 0.1,
+    vibrato_amount: 0.1,
+    vibrato_rate: 4.5,
+    voice0_oscillator: "sine",
+    voice0_volume: -5,
+    voice0_portamento: 0.1,
+    voice0_attack: 0.1,
+    voice0_decay: 0.1,
+    voice0_sustain: 0.1,
+    voice0_release: 0.1,
+    voice1_oscillator: "sine",
+    voice1_volume: -5,
+    voice1_portamento: 0.1,
+    voice1_attack: 0.1,
+    voice1_decay: 0.1,
+    voice1_sustain: 0.1,
+    voice1_release: 0.1
     
-  // })
+  }
 
-  const [harmonicity, setHarmonicity] = useState(0.1)
-  const [vibratoAmount, setVibratoAmnount] = useState(0.1)
-  const [vibratoRate, setVibartoRate] = useState(4.5)
-  const [voice0oscillator, setVoice0Oscillator] = useState("sine") 
-  const [voice0Volume, setVoice0Volume] = useState(-5)
-  const [voice0Portamento, setVoice0Portamento] = useState(0.1)
-  const [voice0Attack, setVoice0Attack] = useState(0.1)
-  const [voice0Decay, setVoice0Decay] = useState(0.1)
-  const [voice0Sustain, setVoice0Sustain] = useState(0.1)
-  const [voice0Release, setVoice0Release] = useState(0.1)
-  const [voice1Oscillator, setVoice1Oscillator] = useState("sine")
-  const [voice1Volume, setVoice1Volume] = useState(-5)
-  const [voice1Portamento, setVoice1Portamento] = useState(0.1)
-  const [voice1Attack, setVoice1Attack] = useState(0.1)
-  const [voice1Decay, setVoice1Decay] = useState(0.1)
-  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
-  const [voice1Release, setVoice1Release] = useState(0.1)
+  // const [harmonicity, setHarmonicity] = useState(0.1)
+  // const [vibratoAmount, setVibratoAmnount] = useState(0.1)
+  // const [vibratoRate, setVibartoRate] = useState(4.5)
+  // const [voice0oscillator, setVoice0Oscillator] = useState("sine") 
+  // const [voice0Volume, setVoice0Volume] = useState(-5)
+  // const [voice0Portamento, setVoice0Portamento] = useState(0.1)
+  // const [voice0Attack, setVoice0Attack] = useState(0.1)
+  // const [voice0Decay, setVoice0Decay] = useState(0.1)
+  // const [voice0Sustain, setVoice0Sustain] = useState(0.1)
+  // const [voice0Release, setVoice0Release] = useState(0.1)
+  // const [voice1Oscillator, setVoice1Oscillator] = useState("sine")
+  // const [voice1Volume, setVoice1Volume] = useState(-5)
+  // const [voice1Portamento, setVoice1Portamento] = useState(0.1)
+  // const [voice1Attack, setVoice1Attack] = useState(0.1)
+  // const [voice1Decay, setVoice1Decay] = useState(0.1)
+  // const [voice1Sustain, setVoice1Sustain] = useState(0.1)
+  // const [voice1Release, setVoice1Release] = useState(0.1)
 
 
   const style = {
@@ -125,11 +125,7 @@ const Home = () => {
             release: 0.1
         }
       },
-      onload: () => {
-        setIsLoaded(true)
-      }
-    }
-    ).toDestination()
+    }).toDestination()
   }, [])
 
 
@@ -159,78 +155,78 @@ const Home = () => {
 
   function handle_voice1_osc(e) {
     synth.current.voice0.oscillator.type = e.target.value
-    setVoice0Oscillator(e.target.value)
+    synthSaveObj.voice1_oscillator = e.target.value
   }
 
   function handle_voice1_vol(e) {
     synth.current.voice0.volume.value = e
-    setVoice0Volume(e)
+    synthSaveObj.voice0_volume = e
   }
   function handle_voice1_port(e) {
     synth.current.voice0.portamento.value = e
-    setVoice0Portamento(e)
+    synthSaveObj.voice0_portamento = e
   }
   // these can be refactored to one function
   function handle_voice1_attack(e) {
     synth.current.voice0.envelope.attack = e
-    setVoice0Attack(e)
+    synthSaveObj.voice0_attack = e
   }
   function handle_voice1_decay(e) {
     synth.current.voice0.envelope.decay = e
-    setVoice0Decay(e)
+    synthSaveObj.voice0_decay = e
   }
   function  handle_voice1_sustain(e) {
     synth.current.voice0.envelope.decay = e
-    setVoice0Sustain(e)
+    synthSaveObj.voice0_sustain = e
   }
   function handle_voice1_release(e) {
     synth.current.voice0.envelope.release = e
-    setVoice0Release(e)
+    synthSaveObj.voice0_release = e
   }
 
 
   function handle_voice2_osc(e) {
     synth.current.voice1.oscillator.type = e.target.value
-    setVoice1Oscillator(e.target.value)
+    synthSaveObj.voice1_oscillator = e.target.value
   }
 
   function handle_voice2_vol(e) {
     synth.current.voice1.volume.value = e
-    setVoice1Volume(e)
+    synthSaveObj.voice1_volume = e
   }
   function handle_voice2_port(e) {
     synth.current.voice1.portamento.value = e
-    setVoice1Portamento(e)
+    synthSaveObj.voice1_portamento = e
   }
   function handle_voice2_attack(e) {
     synth.current.voice1.envelope.attack = e
-    setVoice1Attack(e)
+    synthSaveObj.voice1_attack = e
   }
   function handle_voice2_decay(e) {
     synth.current.voice1.envelope.decay = e
-    setVoice1Decay(e)
+    synthSaveObj.voice1_decay = e 
   }
   function handle_voice2_sustain(e) {
     synth.current.voice1.envelope.sustain = e
-    setVoice1Sustain(e)
+    synthSaveObj.voice1_sustain = e
   }
   function handle_voice2_release(e) {
     synth.current.voice1.envelope.release = e
-    setVoice1Release(e)
+    synthSaveObj.voice1_release = e
   }
 
   function handle_harm_change(e) {
     synth.current.harmonicity.value = e
-    setHarmonicity(e)
+    synthSaveObj.harmonicity = e
   }
   function handle_vibrato_rate(e) {
     synth.current.vibratoRate.value = e
-    setVibartoRate(e)
+    synthSaveObj.vibrato_rate = e
   }
 
   function handle_vibrato_amount(e) {
     synth.current.vibratoAmount.value = e
-    setVibratoAmnount(e)
+    synthSaveObj.vibrato_amount = e
   }
 
   function handleReverbAmount(e) {
@@ -287,26 +283,27 @@ const Home = () => {
     }
   }
 
-  function handleSynthSave(synth) {
-    const synthObj = {
+  function handleSynthSave() {
+    console.log("before post", synthSaveObj)
+    const synthObject = {
       user_id: currentUser.id,
-      harmonicity: synth.current.harmonicity.value,
-      vibrato_amount: synth.current.vibratoAmount,
-      vibrato_rate: synth.current.vibratoRate,
-      voice0_oscillator: synth.current.voice0.oscillator.type,
-      voice0_volume: synth.current.voice0.volume.value,
-      voice0_portamento: synth.current.voice0.portamento.value,
-      voice0_attack: synth.current.voice0.envelope.attack,
-      voice0_decay: synth.current.voice0.envelope.decay,
-      voice0_sustain: synth.current.voice0.envelope.sustain,
-      voice0_release: synth.current.voice0.envelope.release,
-      voice1_oscillator: synth.current.voice1.oscillator.type,
-      voice1_volume: synth.current.voice1.volume.value,
-      voice1_portamento: synth.current.voice1.portamento.value,
-      voice1_attack: synth.current.voice1.envelope.attack,
-      voice1_decay: synth.current.voice1.envelope.decay,
-      voice1_sustain: synth.current.voice1.envelope.sustain,
-      voice1_release: synth.current.voice1.envelope.release
+      harmonicity: synthSaveObj.harmonicity,
+      vibrato_amount: synthSaveObj.vibrato_amount,
+      vibrato_rate: synthSaveObj.vibrato_rate,
+      voice0_oscillator: synthSaveObj.voice0_oscillator,
+      voice0_volume: synthSaveObj.voice0_volume,
+      voice0_portamento: synthSaveObj.voice0_portamento,
+      voice0_attack: synthSaveObj.voice0_attack,
+      voice0_decay: synthSaveObj.voice0_decay,
+      voice0_sustain: synthSaveObj.voice0_sustain,
+      voice0_release: synthSaveObj.voice0_release,
+      voice1_oscillator: synthSaveObj.voice1_oscillator,
+      voice1_volume: synthSaveObj.voice1_volume,
+      voice1_portamento: synthSaveObj.voice1_portamento,
+      voice1_attack: synthSaveObj.voice1_attack,
+      voice1_decay: synthSaveObj.voice1_decay,
+      voice1_sustain: synthSaveObj.voice1_sustain,
+      voice1_release: synthSaveObj.voice1_release
     }
       const headers = {
           "Accept": "application/json",
@@ -315,7 +312,7 @@ const Home = () => {
       const options = {
           method: "POST",
           headers,
-          body: JSON.stringify(synthObj)
+          body: JSON.stringify(synthObject)
       }
       fetch('/sounds', options)
       .then(res => {
