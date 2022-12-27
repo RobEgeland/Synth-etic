@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_232317) do
 
   create_table "sounds", force: :cascade do |t|
     t.integer "user_id"
+    t.string "sound_name"
     t.float "harmonicity"
     t.float "vibrato_amount"
     t.float "vibrato_rate"

@@ -9,12 +9,12 @@ import { UserContext } from '../context/UserContext'
 const Home = () => {
   const { currentUser, loggedIn } = useContext(UserContext)
   const [errors, setErrors] = useState()
-  const [isloaded, setIsLoaded] = useState(false)
+  const [saveClicked, setSaveClicked] = useState(false)
+  const [soundName, setSoundName] = useState("")
   let synth = useRef(null)
   // this still cause some audo glitching
   let synthSaveObj = {
     harmonicity: 0.1,
-    vibrato_amount: 0.1,
     vibrato_rate: 4.5,
     voice0_oscillator: "sine",
     voice0_volume: -5,
@@ -33,23 +33,6 @@ const Home = () => {
     
   }
 
-  // const [harmonicity, setHarmonicity] = useState(0.1)
-  // const [vibratoAmount, setVibratoAmnount] = useState(0.1)
-  // const [vibratoRate, setVibartoRate] = useState(4.5)
-  // const [voice0oscillator, setVoice0Oscillator] = useState("sine") 
-  // const [voice0Volume, setVoice0Volume] = useState(-5)
-  // const [voice0Portamento, setVoice0Portamento] = useState(0.1)
-  // const [voice0Attack, setVoice0Attack] = useState(0.1)
-  // const [voice0Decay, setVoice0Decay] = useState(0.1)
-  // const [voice0Sustain, setVoice0Sustain] = useState(0.1)
-  // const [voice0Release, setVoice0Release] = useState(0.1)
-  // const [voice1Oscillator, setVoice1Oscillator] = useState("sine")
-  // const [voice1Volume, setVoice1Volume] = useState(-5)
-  // const [voice1Portamento, setVoice1Portamento] = useState(0.1)
-  // const [voice1Attack, setVoice1Attack] = useState(0.1)
-  // const [voice1Decay, setVoice1Decay] = useState(0.1)
-  // const [voice1Sustain, setVoice1Sustain] = useState(0.1)
-  // const [voice1Release, setVoice1Release] = useState(0.1)
 
 
   const style = {
@@ -104,7 +87,7 @@ const Home = () => {
               type: "sine"
           },
           volume: -5,
-          portamento: 0.1,
+          portamento: 0,
           envelope: {
               attack:0.1,
               decay: 0.1,
@@ -151,7 +134,6 @@ const Home = () => {
   const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
   const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
 
-// console.log(localStorage.)
 
   function handle_voice1_osc(e) {
     synth.current.voice0.oscillator.type = e.target.value
@@ -163,7 +145,7 @@ const Home = () => {
     synthSaveObj.voice0_volume = e
   }
   function handle_voice1_port(e) {
-    synth.current.voice0.portamento.value = e
+    synth.current.voice0.portamento = e
     synthSaveObj.voice0_portamento = e
   }
   // these can be refactored to one function
@@ -195,7 +177,7 @@ const Home = () => {
     synthSaveObj.voice1_volume = e
   }
   function handle_voice2_port(e) {
-    synth.current.voice1.portamento.value = e
+    synth.current.voice1.portamento = e
     synthSaveObj.voice1_portamento = e
   }
   function handle_voice2_attack(e) {
@@ -283,10 +265,15 @@ const Home = () => {
     }
   }
 
+  function handleSynthName(e) {
+    setSoundName(e.target.value)
+  }
+
   function handleSynthSave() {
     console.log("before post", synthSaveObj)
     const synthObject = {
       user_id: currentUser.id,
+      sound_name: soundName,
       harmonicity: synthSaveObj.harmonicity,
       vibrato_amount: synthSaveObj.vibrato_amount,
       vibrato_rate: synthSaveObj.vibrato_rate,
@@ -528,7 +515,7 @@ const Home = () => {
         <div className='effectsinner'>
             <Knob
                 name="Reverb"
-                unit=""
+                unit=""  
                 defaultPercentage={0}
                 onChange={handleReverbAmount}
                 bg="black"
@@ -586,7 +573,13 @@ const Home = () => {
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
-          <button onClick={handleSynthSave} class="button-62" role="button">Save Sound</button>
+          <button onClick={() => setSaveClicked(!saveClicked)} className="button-62" role="button">Save Sound</button>
+          {saveClicked ? <form onSubmit={handleSynthSave}>
+            <label htmlFor='name'>Sound Name</label>
+            <br/>
+            <input type={"text"} value={soundName} onChange={handleSynthName} />
+            <input type={"submit"} value={"save sound"}/>
+          </form> : null}
         </div>
       </div>
       
