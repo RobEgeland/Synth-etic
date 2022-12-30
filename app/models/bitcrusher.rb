@@ -1,0 +1,2 @@
+class Bitcrusher < ApplicationRecord
+end

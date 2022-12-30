@@ -1,0 +1,2 @@
+class Soundeffect < ApplicationRecord
+end

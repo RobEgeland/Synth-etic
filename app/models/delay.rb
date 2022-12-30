@@ -1,0 +1,2 @@
+class Delay < ApplicationRecord
+end

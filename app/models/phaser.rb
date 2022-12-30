@@ -1,0 +1,2 @@
+class Phaser < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class Distortion < ApplicationRecord
+end

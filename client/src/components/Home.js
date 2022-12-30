@@ -41,7 +41,36 @@ const Home = () => {
     
   }
 
+  // not sure if these are updating fast enough
+  let reverbSave = {
+      name: "reverb",
+      wet: 0.1
+    }
+  let phaserSave = {
+      name: "phaser",
+      wet: 0.1
+    }
+  let distortionSave = {
+      name: "distortion",
+      wet: 0.1
+    }
+  let bitcrusherSave = {
+      name: "bitcrusher",
+      wet: 0.1
+    }
+    let delaySave = {
+      name: "delay",
+      wet: 0.1
+    }
+  let feedbackSave = {
+      name: "feedback",
+      wet: 0.1
+    }
+  
 
+  
+  
+  
 
   const style = {
     height: "5px",
@@ -218,6 +247,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Reverb)
       synth.current.Reverb = e
+      reverbSave.wet = e
     }else {
       synth.current.disconnect(Reverb)
     }
@@ -227,6 +257,7 @@ const Home = () => {
     if (e > 1) {
       synth.current.connect(BitCrusher)
       synth.current.BitCrusher = e
+      bitcrusherSave.wet = e
     }else{
       synth.current.disconnect(BitCrusher)
     }
@@ -236,6 +267,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Distortion)
       synth.current.Distortion = e
+      distortionSave.wet = e
     }else {
       synth.current.disconnect(Distortion)
     }
@@ -245,6 +277,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Feedback)
       synth.current.Feedback = e
+      feedbackSave.wet = e
     }else {
       synth.current.disconnect(Feedback)
     }
@@ -254,6 +287,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Delay)
       synth.current.Delay = e
+      delaySave.wet = e
     }else {
       synth.current.disconnect(Delay)
     }
@@ -263,14 +297,13 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Phaser)
       synth.current.Phaser = e
+      phaserSave.wet = e
     }else {
       synth.current.disconnect(Phaser)
     }
   }
 
-  function handleSynthName(e) {
-    setSoundName(e.target.value)
-  }
+  
 
   function handleSynthSave() {
     console.log("before post", synthSaveObj)
@@ -298,7 +331,8 @@ const Home = () => {
         voice1_attack: synthSaveObj.voice1_attack,
         voice1_decay: synthSaveObj.voice1_decay,
         voice1_sustain: synthSaveObj.voice1_sustain,
-        voice1_release: synthSaveObj.voice1_release
+        voice1_release: synthSaveObj.voice1_release,
+        effects: [reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave]
       }
         const headers = {
             "Accept": "application/json",
