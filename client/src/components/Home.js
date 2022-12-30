@@ -9,9 +9,17 @@ import { UserContext } from '../context/UserContext'
 const Home = () => {
   const { currentUser, loggedIn } = useContext(UserContext)
   const [errors, setErrors] = useState()
-  const [saveClicked, setSaveClicked] = useState(false)
+  const [nameTyping, setNameTyping] = useState(false)
   const [soundName, setSoundName] = useState("")
   let synth = useRef(null)
+  const firstNote = MidiNumbers.fromNote('c3');
+  const lastNote = MidiNumbers.fromNote('f5');
+  const keyboardShortcuts = KeyboardShortcuts.create({
+    firstNote: firstNote,
+    lastNote: lastNote,
+    keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  });
+
   // this still cause some audo glitching
   let synthSaveObj = {
     harmonicity: 0.1,
@@ -68,14 +76,9 @@ const Home = () => {
     color: "white",
   }
   
-  const firstNote = MidiNumbers.fromNote('c3');
-  const lastNote = MidiNumbers.fromNote('f5');
-  const keyboardShortcuts = KeyboardShortcuts.create({
-    firstNote: firstNote,
-    lastNote: lastNote,
-    keyboardConfig: KeyboardShortcuts.HOME_ROW,
-  });
-  
+  setTimeout(() => {
+    setNameTyping(false)
+  }, "5000")
 
   useEffect(() => {
     synth.current = new Tone.DuoSynth({
@@ -271,57 +274,66 @@ const Home = () => {
 
   function handleSynthSave() {
     console.log("before post", synthSaveObj)
-    const synthObject = {
-      user_id: currentUser.id,
-      sound_name: soundName,
-      harmonicity: synthSaveObj.harmonicity,
-      vibrato_amount: synthSaveObj.vibrato_amount,
-      vibrato_rate: synthSaveObj.vibrato_rate,
-      voice0_oscillator: synthSaveObj.voice0_oscillator,
-      voice0_volume: synthSaveObj.voice0_volume,
-      voice0_portamento: synthSaveObj.voice0_portamento,
-      voice0_attack: synthSaveObj.voice0_attack,
-      voice0_decay: synthSaveObj.voice0_decay,
-      voice0_sustain: synthSaveObj.voice0_sustain,
-      voice0_release: synthSaveObj.voice0_release,
-      voice1_oscillator: synthSaveObj.voice1_oscillator,
-      voice1_volume: synthSaveObj.voice1_volume,
-      voice1_portamento: synthSaveObj.voice1_portamento,
-      voice1_attack: synthSaveObj.voice1_attack,
-      voice1_decay: synthSaveObj.voice1_decay,
-      voice1_sustain: synthSaveObj.voice1_sustain,
-      voice1_release: synthSaveObj.voice1_release
+    if (!currentUser) {
+      setErrors("Must Be Logged in to save")
+    }else if(soundName === "") {
+      setErrors("sound must have a name")
+    }else {
+      const synthObject = {
+        user_id: currentUser.id,
+        sound_name: soundName,
+        harmonicity: synthSaveObj.harmonicity,
+        vibrato_amount: synthSaveObj.vibrato_amount,
+        vibrato_rate: synthSaveObj.vibrato_rate,
+        voice0_oscillator: synthSaveObj.voice0_oscillator,
+        voice0_volume: synthSaveObj.voice0_volume,
+        voice0_portamento: synthSaveObj.voice0_portamento,
+        voice0_attack: synthSaveObj.voice0_attack,
+        voice0_decay: synthSaveObj.voice0_decay,
+        voice0_sustain: synthSaveObj.voice0_sustain,
+        voice0_release: synthSaveObj.voice0_release,
+        voice1_oscillator: synthSaveObj.voice1_oscillator,
+        voice1_volume: synthSaveObj.voice1_volume,
+        voice1_portamento: synthSaveObj.voice1_portamento,
+        voice1_attack: synthSaveObj.voice1_attack,
+        voice1_decay: synthSaveObj.voice1_decay,
+        voice1_sustain: synthSaveObj.voice1_sustain,
+        voice1_release: synthSaveObj.voice1_release
+      }
+        const headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+        const options = {
+            method: "POST",
+            headers,
+            body: JSON.stringify(synthObject)
+        }
+        fetch('/sounds', options)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => {
+                  console.log(data)
+                })
+            }else {
+                res.json().then(error => {
+                    console.log(error.errors)
+                    const errorAr = []
+                    for (const element in error.errors) {
+                        errorAr.push(` ${element} ${error.errors[element]} -`)
+                    }
+                    setErrors(errorAr)
+                    throw new Error(errors)
+                })
+            }
+        })
     }
-      const headers = {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-      }
-      const options = {
-          method: "POST",
-          headers,
-          body: JSON.stringify(synthObject)
-      }
-      fetch('/sounds', options)
-      .then(res => {
-          if(res.ok){
-              res.json().then(data => {
-                console.log(data)
-              })
-          }else {
-              res.json().then(error => {
-                  console.log(error.errors)
-                  const errorAr = []
-                  for (const element in error.errors) {
-                      errorAr.push(` ${element} ${error.errors[element]} -`)
-                  }
-                  setErrors(errorAr)
-                  throw new Error(errors)
-              })
-          }
-      })
   }
   return (
     <div>
+      <div>
+      {errors ? <h2 className='error'>{errors}</h2> : null}
+      </div>
       <div className='voice1'>
         <div className='osc1form'>
           <form> 
@@ -512,6 +524,11 @@ const Home = () => {
           </div>
       </div>
       <div className='effects'>
+        {/* <h3>Sound Name</h3> */}
+        <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
+          setNameTyping(true)
+          setSoundName(e.target.value)
+          }}></input>
         <div className='effectsinner'>
             <Knob
                 name="Reverb"
@@ -573,20 +590,14 @@ const Home = () => {
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
-          <button onClick={() => setSaveClicked(!saveClicked)} className="button-62" role="button">Save Sound</button>
-          {saveClicked ? <form onSubmit={handleSynthSave}>
-            <label htmlFor='name'>Sound Name</label>
-            <br/>
-            <input type={"text"} value={soundName} onChange={handleSynthName} />
-            <input type={"submit"} value={"save sound"}/>
-          </form> : null}
+          <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
         </div>
       </div>
-      
       <br>
       </br>
       <div className='piano'>
         <Piano 
+        disabled={nameTyping ? true : false}
         noteRange={{ first: 48, last: 77}}
         playNote={(MidiNumbers) => {
           switch(MidiNumbers) {
