@@ -34,7 +34,7 @@ const NavBar = () => {
   }, 4000)
 
   return (
-    <div>
+    <divn className='navbar-parent'>
         <div className='navbar'>
             <a><NavLink to='/'>Home</NavLink></a>
             <a><NavLink to='/signup'>SignUp</NavLink></a>
@@ -44,7 +44,7 @@ const NavBar = () => {
             <a><NavLink to={'/how-to'}>How-To</NavLink></a>
             <a className='navbar-right'><NavLink onClick={handleClick} to='/ahhh'>Synth-etic</NavLink></a>
         </div>
-    </div>
+    </divn>
   )
 }
 

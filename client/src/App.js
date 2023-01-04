@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import TestKnob2 from './components/TestKnob2';
 import UserProfile from './components/UserProfile';
+import HowTo from './components/HowTo';
 import {useState, useEffect, useMemo, useRef} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import { UserContext } from './context/UserContext';
@@ -110,6 +111,9 @@ function App() {
           </Route>
           <Route path={"/login"}>
             <Login/> 
+          </Route>
+          <Route path={"/how-to"}>
+            <HowTo />
           </Route>
           <Route path="/">
             <Home setOsc={setOsc} />
