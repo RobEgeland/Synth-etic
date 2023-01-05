@@ -31,6 +31,31 @@ const Home = () => {
     voice1_sustain: 0.1,
     voice1_release: 0.1
   })
+  let reverbSave = useRef({
+      name: "reverb",
+      wet: 0.1
+    })
+  let phaserSave = useRef({
+      name: "phaser",
+      wet: 0.1
+    })
+  let distortionSave = useRef({
+      name: "distortion",
+      wet: 0.1
+    })
+  let bitcrusherSave = useRef({
+      name: "bitcrusher",
+      wet: 0.1
+    })
+    let delaySave = useRef({
+      name: "delay",
+      wet: 0.1
+    })
+  let feedbackSave = useRef({
+      name: "feedback",
+      wet: 0.1
+    })
+
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -39,52 +64,8 @@ const Home = () => {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
 
-  // this still cause some audo glitching
-  // synthSaveObj.current = {
-  //   harmonicity: 0.1,
-  //   vibrato_rate: 4.5,
-  //   voice0_oscillator: "sine",
-  //   voice0_volume: -5,
-  //   voice0_portamento: 0.1,
-  //   voice0_attack: 0.1,
-  //   voice0_decay: 0.1,
-  //   voice0_sustain: 0.1,
-  //   voice0_release: 0.1,
-  //   voice1_oscillator: "sine",
-  //   voice1_volume: -5,
-  //   voice1_portamento: 0.1,
-  //   voice1_attack: 0.1,
-  //   voice1_decay: 0.1,
-  //   voice1_sustain: 0.1,
-  //   voice1_release: 0.1
-    
-  // }
 
   // not sure if these are updating fast enough
-  let reverbSave = {
-      name: "reverb",
-      wet: 0.1
-    }
-  let phaserSave = {
-      name: "phaser",
-      wet: 0.1
-    }
-  let distortionSave = {
-      name: "distortion",
-      wet: 0.1
-    }
-  let bitcrusherSave = {
-      name: "bitcrusher",
-      wet: 0.1
-    }
-    let delaySave = {
-      name: "delay",
-      wet: 0.1
-    }
-  let feedbackSave = {
-      name: "feedback",
-      wet: 0.1
-    }
   
 
   
@@ -267,7 +248,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Reverb)
       synth.current.Reverb = e
-      reverbSave.wet = e
+      reverbSave.current.wet = e
     }else {
       synth.current.disconnect(Reverb)
     }
@@ -277,7 +258,7 @@ const Home = () => {
     if (e > 1) {
       synth.current.connect(BitCrusher)
       synth.current.BitCrusher = e
-      bitcrusherSave.wet = e
+      bitcrusherSave.current.wet = e
     }else{
       synth.current.disconnect(BitCrusher)
     }
@@ -287,7 +268,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Distortion)
       synth.current.Distortion = e
-      distortionSave.wet = e
+      distortionSave.current.wet = e
     }else {
       synth.current.disconnect(Distortion)
     }
@@ -297,7 +278,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Feedback)
       synth.current.Feedback = e
-      feedbackSave.wet = e
+      feedbackSave.current.wet = e
     }else {
       synth.current.disconnect(Feedback)
     }
@@ -307,7 +288,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Delay)
       synth.current.Delay = e
-      delaySave.wet = e
+      delaySave.current.wet = e
     }else {
       synth.current.disconnect(Delay)
     }
@@ -317,7 +298,7 @@ const Home = () => {
     if (e > 0.1) {
       synth.current.connect(Phaser)
       synth.current.Phaser = e
-      phaserSave.wet = e
+      phaserSave.current.wet = e
     }else {
       synth.current.disconnect(Phaser)
     }
@@ -326,7 +307,7 @@ const Home = () => {
   
 
   function handleSynthSave() {
-    console.log("before post", synthSaveObj)
+    console.log("before post", reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave)
     if (!currentUser) {
       setErrors("Must Be Logged in to save")
     }else if(soundName === "") {
@@ -352,7 +333,7 @@ const Home = () => {
         voice1_decay: synthSaveObj.current.voice1_decay,
         voice1_sustain: synthSaveObj.current.voice1_sustain,
         voice1_release: synthSaveObj.current.voice1_release,
-        effects: [reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave]
+        effects: [reverbSave.wet, phaserSave.wet, distortionSave.wet, bitcrusherSave.wet, delaySave.wet, feedbackSave.wet]
       }
       console.log(synthObject)
       const headers = {
