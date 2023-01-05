@@ -333,7 +333,7 @@ const Home = () => {
         voice1_decay: synthSaveObj.current.voice1_decay,
         voice1_sustain: synthSaveObj.current.voice1_sustain,
         voice1_release: synthSaveObj.current.voice1_release,
-        effects: [reverbSave.wet, phaserSave.wet, distortionSave.wet, bitcrusherSave.wet, delaySave.wet, feedbackSave.wet]
+        effects: [reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave]
       }
       console.log(synthObject)
       const headers = {

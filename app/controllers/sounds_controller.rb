@@ -4,7 +4,7 @@ class SoundsController < ApplicationController
     def create 
         sound = Sound.create!(sound_params)
         params[:effects].each do |effect|
-            effect = Effect.create!(name: effect[:name], wet: effect[:wet])
+            effect = Effect.create!(name: effect[:current][:name], wet: effect[:current][:wet])
             Soundeffect.create!(sound_id: sound.id, effect_id: effect.id)
         end
         render json: sound, status: :created
