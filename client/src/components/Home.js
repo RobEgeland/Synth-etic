@@ -63,9 +63,6 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
-
-  // not sure if these are updating fast enough
   
 
   
@@ -143,6 +140,47 @@ const Home = () => {
     }).toDestination()
   }, [])
 
+  window.addEventListener('beforeunload', () => {
+    window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
+  }) 
+
+  window.addEventListener('load', () => {
+    let returnObj = JSON.parse(window.sessionStorage.getItem("synth"))
+    console.log(returnObj.voice0_oscillator)
+    // synth.current = {
+    //   harmonicity: returnObj.harmonicity,
+    //   vibratoAmount: returnObj.vibratoAmount,
+    //   vibratoRate: returnObj.vibratoRate,
+    //   voice0: {
+    //       oscillator: {
+    //           type: returnObj.voice0_oscillator
+    //       },
+    //       volume: returnObj.voice0_volume,
+    //       portamento: returnObj.voice0_portamento,
+    //       envelope: {
+    //           attack:returnObj.voice0_attack,
+    //           decay: returnObj.voice0_decay,
+    //           sustain: returnObj.voice0_sustain,
+    //           release: returnObj.voice0_release
+    //       }
+    //   },
+    //   voice1: {
+    //     volume: returnObj.voice1_volume,
+    //     portamento: returnObj.voice1_portamento,
+    //     oscillator: {
+    //       type: returnObj.voice1_oscillator
+    //     },
+    //     envelope: {
+    //         attack: returnObj.voice1_attack,
+    //         decay: returnObj.voice1_decay,
+    //         sustain: returnObj.voice1_sustain,
+    //         release: returnObj.voice1_release
+    //     }
+    //   },
+    // }
+    
+    // synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
+  })
 
   const reverbAmount = 0.1
   // can possible get rid of decay knob, make it constant
@@ -307,7 +345,6 @@ const Home = () => {
   
 
   function handleSynthSave() {
-    console.log("before post", reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave)
     if (!currentUser) {
       setErrors("Must Be Logged in to save")
     }else if(soundName === "") {
