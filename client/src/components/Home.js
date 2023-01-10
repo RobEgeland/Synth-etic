@@ -205,6 +205,7 @@ const Home = () => {
 
   function handleSoundReset() {
     setSynthReset(true)
+    window.sessionStorage.setItem("synth", "")
   }
 
 
