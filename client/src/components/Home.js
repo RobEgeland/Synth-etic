@@ -13,6 +13,7 @@ const Home = () => {
   const [nameTyping, setNameTyping] = useState(false)
   const [soundName, setSoundName] = useState("")
   const [reload, setReload] = useState(false)
+  const [synthReset, setSynthReset] = useState(false)
   let synth = useRef(null)
   let synthSaveObj = useRef({
     harmonicity: 0.1,
@@ -104,9 +105,10 @@ const Home = () => {
     color: "white",
   }
   
-  // setTimeout(() => {
-  //   setNameTyping(false)
-  // }, "5000")
+  setTimeout(() => {
+    setNameTyping(false)
+    setSynthReset(false)
+  }, "5000")
 
   useEffect(() => {
     synth.current = new Tone.DuoSynth({
@@ -140,7 +142,7 @@ const Home = () => {
         }
       },
     }).toDestination()
-  }, [])
+  }, [synthReset])
 
   window.addEventListener('beforeunload', () => {
     window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
@@ -153,37 +155,6 @@ const Home = () => {
       let returnObj = JSON.parse(window.sessionStorage.getItem("synth"))
       console.log(returnObj)
   
-      // synth.current =  {
-      //   harmonicity: returnObj.harmonicity,
-      //   vibratoAmount: returnObj.vibrato_amount,
-      //   vibratoRate: returnObj.vibrato_rate,
-      //   voice0: {
-      //       oscillator: {
-      //           type: returnObj.voice0_oscillator
-      //       },
-      //       volume: returnObj.voice0_volume,
-      //       portamento: returnObj.voice0_portamento,
-      //       envelope: {
-      //           attack:returnObj.voice0_attack,
-      //           decay: returnObj.voice0_decay,
-      //           sustain: returnObj.voice0_sustain,
-      //           release: returnObj.voice0_release
-      //       }
-      //   },
-      //   voice1: {
-      //     volume: returnObj.voice1_volume,
-      //     portamento: returnObj.voice1_portamento,
-      //     oscillator: {
-      //       type: returnObj.voice1_oscillator
-      //     },
-      //     envelope: {
-      //         attack: returnObj.voice1_attack,
-      //         decay: returnObj.voice1_decay,
-      //         sustain: returnObj.voice1_sustain,
-      //         release: returnObj.voice1_release
-      //     }
-      //   },
-      // }
       synth.current.harmonicity.value = returnObj.harmonicity
       synth.current.vibratoAmount.value = returnObj.vibrato_amount
       synth.current.vibratoRate.value = returnObj.vibrato_rate
@@ -231,6 +202,10 @@ const Home = () => {
   const Delay = new Tone.PingPongDelay(delay).toDestination()
   const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
   const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
+
+  function handleSoundReset() {
+    setSynthReset(true)
+  }
 
 
   function handle_voice1_osc(e) {
@@ -691,6 +666,7 @@ const Home = () => {
               mouseSpeed={5}
               transform={p => parseFloat(p)} 
               style={style4} />
+          <button onClick={handleSoundReset}  className="button-63" role="button">Reset</button>    
           <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
         </div>
       </div>
