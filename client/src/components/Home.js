@@ -15,6 +15,7 @@ const Home = () => {
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
   let synth = useRef(null)
+  let voice0_vol_default = 0.5
   let synthSaveObj = useRef({
     harmonicity: 0.1,
     vibrato_rate: 4.5,
@@ -174,9 +175,10 @@ const Home = () => {
       synth.current.voice1.envelope.release = returnObj.voice1_release
       
       synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
-      console.log(synthSaveObj.current)
+      
+      voice0_vol_default = parseFloat(`0.${returnObj.voice0_volume}`)
+      console.log(voice0_vol_default)
       // synth.current = synthSaveObj.current
-      console.log(synth.current)
       window.sessionStorage.setItem("reload", "false")
     }
   })
@@ -217,7 +219,6 @@ const Home = () => {
   function handle_voice1_vol(e) {
     synth.current.voice0.volume.value = e
     synthSaveObj.current.voice0_volume = e
-    console.log(synthSaveObj)
   }
   function handle_voice1_port(e) {
     synth.current.voice0.portamento = e
@@ -426,7 +427,7 @@ const Home = () => {
               <Knob
                 name="Volume"
                 unit="dB"
-                defaultPercentage={0}
+                defaultPercentage={voice0_vol_default}
                 onChange={(e) => handle_voice1_vol(e)}
                 bg="black"
                 fg="white"
