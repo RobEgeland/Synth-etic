@@ -80,6 +80,7 @@ html {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 20px;
   color: red;
+  z-index: 10;
 }
 
 .login-form {
@@ -278,6 +279,10 @@ html {
   width: 400px;
   margin-left: 250px;
   right: 0;
+}
+
+.Knob_test .p-knob-text {
+  font-size: 25px;
 }
 
 .triangle {

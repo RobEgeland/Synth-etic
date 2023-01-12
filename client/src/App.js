@@ -20,7 +20,7 @@ function App() {
  
   
   const [synthSaveObj, setSynthSaveObj] =useState({
-    harmonicity: 0.1,
+      harmonicity: 0.1,
       vibratoAmount: 0.1,
       vibratoRate: 4.5,
       voice0: {

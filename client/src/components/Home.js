@@ -3,6 +3,7 @@ import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
 import Knob from "react-simple-knob";
+import {Knob as Knob2} from 'primereact/knob'
 import { Distortion } from 'tone';
 import { UserContext } from '../context/UserContext'
 
@@ -15,7 +16,7 @@ const Home = () => {
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
   let synth = useRef(null)
-  let [voice0_vol_default, setVoice0_vol_default] = useState(0)
+  let voice0_vol_default = 0
   let synthSaveObj = useRef({
     harmonicity: 0.1,
     vibrato_rate: 4.5,
@@ -175,9 +176,9 @@ const Home = () => {
       synth.current.voice1.envelope.release = returnObj.voice1_release
       
       synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
-      
-      // setVoice0_vol_default(parseFloat(`0.${returnObj.voice0_volume}`))
-      console.log(voice0_vol_default)
+      setTestVol(returnObj.voice0_volume)
+      voice0_vol_default = parseFloat(`0.${returnObj.voice0_volume}`)
+      console.log(returnObj.voice0_volume)
       // synth.current = synthSaveObj.current
       window.sessionStorage.setItem("reload", "false")
     }
@@ -207,6 +208,7 @@ const Home = () => {
 
   function handleSoundReset() {
     setSynthReset(true)
+    setTestVol(-5)
     window.sessionStorage.setItem("synth", "")
     synthSaveObj.current = {
       harmonicity: 0.1,
@@ -238,6 +240,7 @@ const Home = () => {
   function handle_voice1_vol(e) {
     synth.current.voice0.volume.value = e
     synthSaveObj.current.voice0_volume = e
+
   }
   function handle_voice1_port(e) {
     synth.current.voice0.portamento = e
@@ -426,6 +429,9 @@ const Home = () => {
         })
     }
   }
+
+  const [testVol, setTestVol] = useState(-5)
+  const [testVol2, setTestVol2] = useState(-5)
   return (
     <div>
       <div>
@@ -443,16 +449,20 @@ const Home = () => {
               </select>
             </div>
             <div className='voice1_vol_port'>
-              <Knob
+              <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol} onChange={(e) => {
+                handle_voice1_vol(e.value)
+                setTestVol(e.value)
+                }} />
+              {/* <Knob
                 name="Volume"
                 unit="dB"
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_vol(e)}
+                defaultPercentage={testVol}
+                onChange={(e) => setTestVol(e)}
                 bg="black"
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 10, 10) } 
-                style={style} /> 
+                style={style} />  */}
               <Knob
                 name="Portamento"
                 unit="sec"
@@ -520,7 +530,11 @@ const Home = () => {
               </select>
             </div>
             <div className='voice1_vol_port'>
-              <Knob
+            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
+                handle_voice2_vol(e.value)
+                setTestVol2(e.value)
+                }} />
+              {/* <Knob
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
@@ -529,7 +543,7 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 10, 10) } 
-                style={style} />
+                style={style} /> */}
               <Knob
                 name="Portamento"
                 unit="sec"
