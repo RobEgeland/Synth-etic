@@ -60,6 +60,27 @@ const Home = () => {
       name: "feedback",
       wet: 0.1
     })
+    const reverbAmount = 0.1
+    // can possible get rid of decay knob, make it constant
+    const reverbDecay = 4
+    const phaser = 0.1
+  
+  
+    const distortion = 0.1
+    // delay is in seconds
+    const delay = 0.1 
+    // not sure about the autofilter
+    const [autoFilter, setAutoFilter] = useState(0)
+    // bitchrusher range 1-8
+    const bitCrusher = 1
+    const feedback = 0.1
+  
+    const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+    const Phaser = new Tone.Phaser(phaser).toDestination()
+    const Distortion = new Tone.Distortion(distortion).toDestination()
+    const Delay = new Tone.PingPongDelay(delay).toDestination()
+    const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
+    const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
 
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
@@ -69,11 +90,6 @@ const Home = () => {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
   
-
-  
-  
-  
-
   const style = {
     height: "5px",
     margin: "1%",
@@ -106,6 +122,11 @@ const Home = () => {
     fontFamily: "Arial",
     color: "white",
   }
+
+  
+  
+  
+
   
   setTimeout(() => {
     setNameTyping(false)
@@ -145,7 +166,7 @@ const Home = () => {
       },
     }).toDestination()
   }, [synthReset])
-
+  // persist the data through session storage
   window.addEventListener('beforeunload', () => {
     window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
     window.sessionStorage.setItem("reload", "true")
@@ -183,28 +204,7 @@ const Home = () => {
       window.sessionStorage.setItem("reload", "false")
     }
   })
-
-  const reverbAmount = 0.1
-  // can possible get rid of decay knob, make it constant
-  const reverbDecay = 4
-  const phaser = 0.1
-
-
-  const distortion = 0.1
-  // delay is in seconds
-  const delay = 0.1 
-  // not sure about the autofilter
-  const [autoFilter, setAutoFilter] = useState(0)
-  // bitchrusher range 1-8
-  const bitCrusher = 1
-  const feedback = 0.1
-
-  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
-  const Phaser = new Tone.Phaser(phaser).toDestination()
-  const Distortion = new Tone.Distortion(distortion).toDestination()
-  const Delay = new Tone.PingPongDelay(delay).toDestination()
-  const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
-  const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
+  
 
   function handleSoundReset() {
     setSynthReset(true)
@@ -231,7 +231,7 @@ const Home = () => {
     }
   }
 
-
+  // functions for changing knobs
   function handle_voice1_osc(e) {
     synth.current.voice0.oscillator.type = e.target.value
     synthSaveObj.current.voice0_oscillator = e.target.value
