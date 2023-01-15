@@ -1,46 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Knob} from 'primereact/knob'
 
-const Oscillator1 = () => {
-  return (
-    <div className='voice_1'>
-        <div name='voice1_osc'>
-            <select onChange={handle_voice1_osc} >
-                <option selected>sine</option>
-                <option>triangle</option>
-                <option>sawtooth</option>
-                <option>square</option>
-            </select>
+const Oscillator1 = ({
+    setVoice1Osc, 
+    setVoice1Vol, 
+    voice1Vol, 
+    setVoice1Port, 
+    voice1Port,
+    setVoice1Attack,
+    voice1Attack,
+    setVoice1Decay,
+    voice1Decay,
+    setVoice1Sustain,
+    voice1Sustain,
+    setVoice1Release,
+    voice1Release
+}) => {
+
+    return (
+        <div>
+            <div name='voice1_osc'>
+                <select onChange={(e) => setVoice1Osc(e.target.value)} >
+                    <option selected>sine</option>
+                    <option>triangle</option>
+                    <option>sawtooth</option>
+                    <option>square</option>
+                </select>
+            </div>
+            <div className='voice1_vol_port'>
+                <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => setVoice1Vol(e)} />
+                <Knob className='voice1_portamento' textColor={"white"} step={1} size={60} min={0} max={10} value={voice1Port} onChange={(e) => setVoice1Port(e)} />
+            </div>
+            <div className='voice1Env'>
+                <Knob className='voice1_attack' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Attack} onChange={(e) => setVoice1Attack(e)} />
+                <Knob className='voice1_decay' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Decay} onChange={(e) => setVoice1Decay(e)} />
+                <Knob className='voice1_sustain' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Sustain} onChange={(e) => setVoice1Sustain(e)} />
+                <Knob className='voice1_release' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Release} onChange={(e) => setVoice1Release(e)} />
+            </div>
         </div>
-        <div className='voice1_vol_port'>
-            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol} onChange={(e) => {
-                handle_voice1_vol(e.value)
-                setTestVol(e.value)
-                }} />
-            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={0.1} max={10} value={testPort} onChange={(e) => {
-                handle_voice1_port(e.value)
-                setTestPort(e.value)
-                }} />
-        </div>
-        <div className='voice1Env'>
-            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testAtt} onChange={(e) => {
-                handle_voice1_attack(e.value)
-                setTestAtt(e.value)
-                }} />
-            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testDec} onChange={(e) => {
-                handle_voice1_decay(e.value)
-                setTestDec(e.value)
-                }} />
-            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testSus} onChange={(e) => {
-                handle_voice1_sustain(e.value)
-                setTestSus(e.value)
-                }} />
-            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testRel} onChange={(e) => {
-                handle_voice1_release(e.value)
-                setTestRel(e.value)
-                }} />
-        </div>
-    </div>
-  )
+    )
 }
 
 export default Oscillator1
