@@ -232,6 +232,10 @@ const Home = () => {
   }
 
   // functions for changing knobs
+  const [voice1Osc, setVoice1Osc] = useState("sine")
+  useEffect(() => {
+    synth.current.voice0.oscillator.type = e.target.value
+  }, [voice1Osc])
   function handle_voice1_osc(e) {
     synth.current.voice0.oscillator.type = e.target.value
     synthSaveObj.current.voice0_oscillator = e.target.value
@@ -432,6 +436,11 @@ const Home = () => {
 
   const [testVol, setTestVol] = useState(-5)
   const [testVol2, setTestVol2] = useState(-5)
+  const [testPort, setTestPort] = useState(0)
+  const [testAtt, setTestAtt] = useState(0.1)
+  const [testDec, setTestDec] = useState(0.1)
+  const [testSus, setTestSus] = useState(0)
+  const [testRel, setTestRel] = useState(0)
   return (
     <div>
       <div>
@@ -448,6 +457,7 @@ const Home = () => {
                 <option>square</option>
               </select>
             </div>
+            {/* testing new knobs */}
             <div className='voice1_vol_port'>
               <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol} onChange={(e) => {
                 handle_voice1_vol(e.value)
@@ -463,7 +473,14 @@ const Home = () => {
                 mouseSpeed={5}
                 transform={p => parseInt(p * 10, 10) } 
                 style={style} />  */}
-              <Knob
+
+                {/*  */}
+
+                <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={0.1} max={10} value={testPort} onChange={(e) => {
+                handle_voice1_port(e.value)
+                setTestPort(e.value)
+                }} />
+              {/* <Knob
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
@@ -472,10 +489,14 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 5)} 
-                style={style} />
+                style={style} /> */}
             </div>
             <div className='voice1Env'>
-              <Knob
+            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testAtt} onChange={(e) => {
+                handle_voice1_attack(e.value)
+                setTestAtt(e.value)
+                }} />
+              {/* <Knob
                 name="Attack"
                 unit=""
                 defaultPercentage={0}
@@ -484,8 +505,14 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
+                style={style_env} /> */}
+
+                {/*  */}
+                <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testDec} onChange={(e) => {
+                handle_voice1_decay(e.value)
+                setTestDec(e.value)
+                }} />
+              {/* <Knob
                 name="Decay"
                 unit=""
                 defaultPercentage={0}
@@ -494,8 +521,12 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
+                style={style_env} /> */}
+              <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testSus} onChange={(e) => {
+                handle_voice1_sustain(e.value)
+                setTestSus(e.value)
+                }} />
+              {/* <Knob
                 name="Sustain"
                 unit=""
                 defaultPercentage={0}
@@ -504,8 +535,13 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
+                style={style_env} /> */}
+                {/*  */}
+                <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testRel} onChange={(e) => {
+                handle_voice1_release(e.value)
+                setTestRel(e.value)
+                }} />
+              {/* <Knob
                 name="Release"
                 unit=""
                 defaultPercentage={0}
@@ -514,7 +550,7 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
+                style={style_env} /> */}
               </div>
           </form>
         </div>
@@ -530,10 +566,10 @@ const Home = () => {
               </select>
             </div>
             <div className='voice1_vol_port'>
-            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
+            {/* <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
                 handle_voice2_vol(e.value)
                 setTestVol2(e.value)
-                }} />
+                }} /> */}
               {/* <Knob
                 name="Volume"
                 unit="dB"
@@ -544,7 +580,7 @@ const Home = () => {
                 mouseSpeed={5}
                 transform={p => parseInt(p * 10, 10) } 
                 style={style} /> */}
-              <Knob
+              {/* <Knob
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
@@ -553,7 +589,7 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 5)} 
-                style={style} />
+                style={style} /> */}
             </div>
             <div className='voice1Env'>
               <Knob
