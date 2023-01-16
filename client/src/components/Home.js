@@ -235,54 +235,35 @@ const Home = () => {
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
   }, [voice1Osc])
-  
-  // function handle_voice1_osc(e) {
-  //   synth.current.voice0.oscillator.type = e.target.value
-  //   synthSaveObj.current.voice0_oscillator = e.target.value
-  // }
+
   const [voice1Vol, setVoice1Vol] = useState(-5)
   useEffect(() => {
     synth.current.voice0.volume.value = voice1Vol
   }, [voice1Vol])
-  // function handle_voice1_vol(e) {
-  //   synth.current.voice0.volume.value = e
-  //   synthSaveObj.current.voice0_volume = e
 
-  // }
+
   const [voice1Port, setVoice1Port] = useState(0)
   useEffect(() => {
     synth.current.voice0.portamento = voice1Port
   }, [voice1Port])
-  // function handle_voice1_port(e) {
-  //   synth.current.voice0.portamento = e
-  //   synthSaveObj.current.voice0_portamento = e
-  // }
+
   // these can be refactored to one function
   const [voice1Attack, setVoice1Attack] = useState(0.1)
   useEffect(() => {
     synth.current.voice0.envelope.attack = voice1Attack
   }, [voice1Attack])
 
-  // function handle_voice1_attack(e) {
-  //   synth.current.voice0.envelope.attack = e
-  //   synthSaveObj.current.voice0_attack = e
-  // }
+
   const [voice1Decay, setVoice1Decay] = useState(0.1)
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Decay
   }, [voice1Decay])
-  // function handle_voice1_decay(e) {
-  //   synth.current.voice0.envelope.decay = e
-  //   synthSaveObj.current.voice0_decay = e
-  // }
+ 
   const [voice1Sustain, setVoice1Sustain] = useState(0.1)
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Sustain
   }, [voice1Sustain])
-  // function  handle_voice1_sustain(e) {
-  //   synth.current.voice0.envelope.decay = e
-  //   synthSaveObj.current.voice0_sustain = e
-  // }
+
   const [voice1Release, setVoice1Release] = useState(0.1)
   useEffect(() => {
     synth.current.voice0.envelope.release = voice1Release
@@ -477,110 +458,8 @@ const Home = () => {
         voice1Release={voice1Release}
         
         />
-        {/* <div className='osc1form'>
-          <form> 
-            <div name='voice1_osc'>
-              <select onChange={handle_voice1_osc} >
-                <option selected>sine</option>
-                <option>triangle</option>
-                <option>sawtooth</option>
-                <option>square</option>
-              </select>
-            </div>
-            <div className='voice1_vol_port'>
-              <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol} onChange={(e) => {
-                handle_voice1_vol(e.value)
-                setTestVol(e.value)
-                }} />
-              <Knob
-                name="Volume"
-                unit="dB"
-                defaultPercentage={testVol}
-                onChange={(e) => setTestVol(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseInt(p * 10, 10) } 
-                style={style} /> 
-
-
-                <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={0.1} max={10} value={testPort} onChange={(e) => {
-                handle_voice1_port(e.value)
-                setTestPort(e.value)
-                }} />
-              <Knob
-                name="Portamento"
-                unit="sec"
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_port(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseInt(p * 5)} 
-                style={style} />
-            </div>
-            <div className='voice1Env'>
-            <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testAtt} onChange={(e) => {
-                handle_voice1_attack(e.value)
-                setTestAtt(e.value)
-                }} />
-              <Knob
-                name="Attack"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_attack(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-                <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testDec} onChange={(e) => {
-                handle_voice1_decay(e.value)
-                setTestDec(e.value)
-                }} />
-              <Knob
-                name="Decay"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_decay(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testSus} onChange={(e) => {
-                handle_voice1_sustain(e.value)
-                setTestSus(e.value)
-                }} />
-              <Knob
-                name="Sustain"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_sustain(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-                <Knob2 className='Knob_test' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={testRel} onChange={(e) => {
-                handle_voice1_release(e.value)
-                setTestRel(e.value)
-                }} />
-              <Knob
-                name="Release"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice1_release(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              </div>
-          </form>
-        </div> */}
       </div>
-      <div className='osc2form'>
+      <div className='voice2'>
           <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >
