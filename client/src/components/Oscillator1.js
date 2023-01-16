@@ -28,9 +28,8 @@ const Oscillator1 = ({
                 </select>
             </div>
             <div className='voice1_vol'>
-                <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => {
-                    console.log(e.value)
-                    setVoice1Vol(e.value)}} />
+                <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => setVoice1Vol(e.value)} />
+                    <h3>Volume</h3>
             </div>
             <div className='voice1_port'>
                 <Knob className='voice1_portamento' textColor={"white"} step={1} size={60} min={0} max={10} value={voice1Port} onChange={(e) => setVoice1Port(e.value)} />

@@ -8,6 +8,7 @@ import { Distortion } from 'tone';
 import { UserContext } from '../context/UserContext'
 import Oscillator1  from './Oscillator1';
 import Oscilliator2 from './Oscilliator2';
+import Vibracity from './Vibracity';
 
 
 const Home = () => {
@@ -259,7 +260,7 @@ const Home = () => {
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Decay
   }, [voice1Decay])
- 
+
   const [voice1Sustain, setVoice1Sustain] = useState(0.1)
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Sustain
@@ -306,20 +307,21 @@ const Home = () => {
     synth.current.voice1.envelope.release = voice2Release
   }, [voice2Release])
   
+  const [harmonicity, setHarmonicity] = useState(0.1)
+  useEffect(() => {
+    synth.current.harmonicity.value = harmonicity
+  }, [harmonicity])
 
-  function handle_harm_change(e) {
-    synth.current.harmonicity.value = e
-    synthSaveObj.current.harmonicity = e
-  }
-  function handle_vibrato_rate(e) {
-    synth.current.vibratoRate.value = e
-    synthSaveObj.current.vibrato_rate = e
-  }
+  const [vibratoRate, setVibratoRate] = useState(4.5)
+  useEffect(() => {
+    synth.current.vibratoRate.value = vibratoRate
+  }, [vibratoRate])
 
-  function handle_vibrato_amount(e) {
-    synth.current.vibratoAmount.value = e
-    synthSaveObj.current.vibrato_amount = e
-  }
+  const [vibrato, setVibrato] = useState(0.1)
+  useEffect(() => {
+    synth.current.vibratoAmount.value = vibrato
+  }, [vibrato])
+
 
   function handleReverbAmount(e) {
     if (e > 0.1) {
@@ -481,119 +483,19 @@ const Home = () => {
         setVoice2Release={setVoice2Release}
         voice2Release={voice2Release}
         />
-          {/* <form> 
-            <div name='voice2_osc'>
-              <select onChange={handle_voice2_osc} >
-                <option selected>sine</option>
-                <option>triangle</option>
-                <option>sawtooth</option>
-                <option>square</option>
-              </select>
-            </div>
-            <div className='voice1_vol_port'>
-            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
-                handle_voice2_vol(e.value)
-                setTestVol2(e.value)
-                }} />
-              <Knob
-                name="Volume"
-                unit="dB"
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_vol(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseInt(p * 10, 10) } 
-                style={style} />
-              <Knob
-                name="Portamento"
-                unit="sec"
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_port(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseInt(p * 5)} 
-                style={style} />
-            </div>
-            <div className='voice1Env'>
-              <Knob
-                name="Attack"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_attack(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
-                name="Decay"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_decay(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
-                name="Sustain"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_sustain(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              <Knob
-                name="Release"
-                unit=""
-                defaultPercentage={0}
-                onChange={(e) => handle_voice2_release(e)}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p * 1.0) + 0.1} 
-                style={style_env} />
-              </div>
-          </form> */}
       </div>
       <div className='triangle' />
       <div className='vib_harm'>
         <div className='vib_harm_inner'>
-          <Knob
-            name="Harmonicity"
-            unit="voice(s)"
-            defaultPercentage={0}
-            onChange={(e) => handle_harm_change(e)}
-            bg="black"
-            fg="white"
-            mouseSpeed={5}
-            transform={p => parseFloat((p) + 1) } 
-            style={style3} />
-          <Knob
-            name="Vibrato Rate"
-            unit="Hz"
-            defaultPercentage={0}
-            onChange={(e) => handle_vibrato_rate(e)}
-            bg="black"
-            fg="white"
-            mouseSpeed={5}
-            transform={p => parseFloat((p * 10) + 5.0)} 
-            style={style3} />
-          <Knob
-            name="Vibrato"
-            unit=""
-            defaultPercentage={0}
-            onChange={(e) => handle_vibrato_amount(e)}
-            bg="black"
-            fg="white"
-            mouseSpeed={5}
-            transform={p => parseFloat(p)} 
-            style={style3} />
-          </div>
+          <Vibracity 
+          setHarmonicity={setHarmonicity}
+          harmonicity={harmonicity}
+          setVibratoRate={setVibratoRate}
+          vibratoRate={vibratoRate}
+          setVibrato={setVibrato}
+          vibrato={vibrato}
+          />
+        </div>
       </div>
       <div className='effects'>
         {/* <h3>Sound Name</h3> */}
