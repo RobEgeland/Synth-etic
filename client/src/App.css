@@ -259,6 +259,16 @@ html {
   border: 3px solid black;
   
 }
+.osc2form {
+  width: 710px;
+  height: 254px;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25% ;
+  grid-template-rows: 50% 50%;
+  /* position: relative; has to be position relative for left to work, or you could just do margin-left: -50px; too */
+  /* left: 0px; */
+  border: 3px solid black;
+}
 .voice1_osc {
   grid-column-start: 2;
   grid-column-end: 5;
@@ -266,13 +276,7 @@ html {
   grid-row-end: 3;
 }
 
-.voice2 {
-  width: 800px;
-  height: 262px;
-  position: relative; /* has to be position relative for left to work, or you could just do margin-left: -50px; too */
-  left: 0px;
-  border: 3px solid black;
-}
+
 .piano-parent {
   display: flex;
   flex-direction: column;

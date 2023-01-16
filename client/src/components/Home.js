@@ -7,6 +7,7 @@ import {Knob as Knob2} from 'primereact/knob'
 import { Distortion } from 'tone';
 import { UserContext } from '../context/UserContext'
 import Oscillator1  from './Oscillator1';
+import Oscilliator2 from './Oscilliator2';
 
 
 const Home = () => {
@@ -270,36 +271,41 @@ const Home = () => {
   }, [voice1Release])
   
 
+  const [voice2Osc, setVoice2Osc] = useState("sine")
+  useEffect(() => {
+    synth.current.voice1.oscillator.type = voice2Osc
+  }, [voice2Osc])
 
-  function handle_voice2_osc(e) {
-    synth.current.voice1.oscillator.type = e.target.value
-    synthSaveObj.current.voice1_oscillator = e.target.value
-  }
+  const [voice2Vol, setVoice2Vol] = useState(-5)
+  useEffect(() => {
+    synth.current.voice1.volume.value = voice2Vol
+  }, [voice2Vol])
 
-  function handle_voice2_vol(e) {
-    synth.current.voice1.volume.value = e
-    synthSaveObj.current.voice1_volume = e
-  }
-  function handle_voice2_port(e) {
-    synth.current.voice1.portamento = e
-    synthSaveObj.current.voice1_portamento = e
-  }
-  function handle_voice2_attack(e) {
-    synth.current.voice1.envelope.attack = e
-    synthSaveObj.current.voice1_attack = e
-  }
-  function handle_voice2_decay(e) {
-    synth.current.voice1.envelope.decay = e
-    synthSaveObj.current.voice1_decay = e 
-  }
-  function handle_voice2_sustain(e) {
-    synth.current.voice1.envelope.sustain = e
-    synthSaveObj.current.voice1_sustain = e
-  }
-  function handle_voice2_release(e) {
-    synth.current.voice1.envelope.release = e
-    synthSaveObj.current.voice1_release = e
-  }
+  const [voice2Port, setVoice2Port] = useState(0)
+  useEffect(() => {
+    synth.current.voice1.portamento = voice2Port
+  }, [voice2Port])
+
+  const [voice2Attack, setVoice2Attack] = useState(0.1)
+  useEffect(() => {
+    synth.current.voice1.envelope.attack = voice2Attack
+  }, [voice2Attack])
+
+  const [voice2Decay, setVoice2Decay] = useState(0.1)
+  useEffect(() => {
+    synth.current.voice1.envelope.decay = voice2Decay
+  }, [voice2Decay])
+
+  const [voice2Sustain, setVoice2Sustain] = useState(0.1)
+  useEffect(() => {
+    synth.current.voice1.envelope.sustain = voice2Sustain
+  }, [voice2Sustain])
+
+  const [voice2Release, setVoice2Release] = useState(0.1)
+  useEffect(() => {
+    synth.current.voice1.envelope.release = voice2Release
+  }, [voice2Release])
+  
 
   function handle_harm_change(e) {
     synth.current.harmonicity.value = e
@@ -460,7 +466,22 @@ const Home = () => {
         />
       </div>
       <div className='voice2'>
-          <form> 
+        <Oscilliator2 
+        setVoice2Osc={setVoice2Osc}
+        setVoice2Vol={setVoice2Vol}
+        voice2Vol={voice2Vol}
+        setVoice2Port={setVoice2Port}
+        voice2Port={voice2Port}
+        setVoice2Attack={setVoice2Attack}
+        voice2Attack={voice2Attack}
+        setVoice2Decay={setVoice2Decay}
+        voice2Decay={voice2Decay}
+        setVoice2Sustain={setVoice2Sustain}
+        voice2Sustain={voice2Sustain}
+        setVoice2Release={setVoice2Release}
+        voice2Release={voice2Release}
+        />
+          {/* <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >
                 <option selected>sine</option>
@@ -470,11 +491,11 @@ const Home = () => {
               </select>
             </div>
             <div className='voice1_vol_port'>
-            {/* <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
+            <Knob2 className='Knob_test' textColor={"white"} step={1} size={60} min={-5} max={10} value={testVol2} onChange={(e) => {
                 handle_voice2_vol(e.value)
                 setTestVol2(e.value)
-                }} /> */}
-              {/* <Knob
+                }} />
+              <Knob
                 name="Volume"
                 unit="dB"
                 defaultPercentage={0}
@@ -483,8 +504,8 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 10, 10) } 
-                style={style} /> */}
-              {/* <Knob
+                style={style} />
+              <Knob
                 name="Portamento"
                 unit="sec"
                 defaultPercentage={0}
@@ -493,7 +514,7 @@ const Home = () => {
                 fg="white"
                 mouseSpeed={5}
                 transform={p => parseInt(p * 5)} 
-                style={style} /> */}
+                style={style} />
             </div>
             <div className='voice1Env'>
               <Knob
@@ -537,7 +558,7 @@ const Home = () => {
                 transform={p => parseFloat(p * 1.0) + 0.1} 
                 style={style_env} />
               </div>
-          </form>
+          </form> */}
       </div>
       <div className='triangle' />
       <div className='vib_harm'>
