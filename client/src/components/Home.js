@@ -208,7 +208,6 @@ const Home = () => {
 
   function handleSoundReset() {
     setSynthReset(true)
-    setTestVol(-5)
     window.sessionStorage.setItem("synth", "")
     synthSaveObj.current = {
       harmonicity: 0.1,
@@ -581,7 +580,7 @@ const Home = () => {
           </form>
         </div> */}
       </div>
-      <div className='osc1form'>
+      <div className='osc2form'>
           <form> 
             <div name='voice2_osc'>
               <select onChange={handle_voice2_osc} >

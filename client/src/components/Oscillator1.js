@@ -18,7 +18,7 @@ const Oscillator1 = ({
 }) => {
 
     return (
-        <div>
+        <div className='osc1form'>
             <div name='voice1_osc'>
                 <select onChange={(e) => setVoice1Osc(e.target.value)} >
                     <option selected>sine</option>
@@ -27,15 +27,25 @@ const Oscillator1 = ({
                     <option>square</option>
                 </select>
             </div>
-            <div className='voice1_vol_port'>
-                <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => setVoice1Vol(e)} />
-                <Knob className='voice1_portamento' textColor={"white"} step={1} size={60} min={0} max={10} value={voice1Port} onChange={(e) => setVoice1Port(e)} />
+            <div className='voice1_vol'>
+                <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => {
+                    console.log(e.value)
+                    setVoice1Vol(e.value)}} />
             </div>
-            <div className='voice1Env'>
-                <Knob className='voice1_attack' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Attack} onChange={(e) => setVoice1Attack(e)} />
-                <Knob className='voice1_decay' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Decay} onChange={(e) => setVoice1Decay(e)} />
-                <Knob className='voice1_sustain' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Sustain} onChange={(e) => setVoice1Sustain(e)} />
-                <Knob className='voice1_release' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Release} onChange={(e) => setVoice1Release(e)} />
+            <div className='voice1_port'>
+                <Knob className='voice1_portamento' textColor={"white"} step={1} size={60} min={0} max={10} value={voice1Port} onChange={(e) => setVoice1Port(e.value)} />
+            </div>
+            <div className='voice1_att'>
+                <Knob className='voice1_attack' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Attack} onChange={(e) => setVoice1Attack(e.value)} />
+            </div>
+            <div className='voice1_dec'>
+                <Knob className='voice1_decay' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Decay} onChange={(e) => setVoice1Decay(e.value)} />
+            </div>
+            <div className='voice1_sus'>
+                <Knob className='voice1_sustain' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Sustain} onChange={(e) => setVoice1Sustain(e.value)} />
+            </div>
+            <div className='voice1_rel'>
+                <Knob className='voice1_release' textColor={"white"} step={0.1} size={60} min={0.1} max={1} value={voice1Release} onChange={(e) => setVoice1Release(e.value)} />
             </div>
         </div>
     )
