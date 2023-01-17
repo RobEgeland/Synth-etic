@@ -359,15 +359,15 @@ html {
   position: absolute;
   top: 78px;
   left: 1011px;
-  width: 903px;
+  width: 887px;
   height: 546px;
 }
 
 .effects_inner {
-  margin-top: 100px;
-  margin-left: 60px;
+
   height: 530px;
   display: grid;
+  gap: 1fr;
   grid-template-rows: 30% 30%;
   grid-template-columns: 30% 30% 30%;
 }
@@ -387,7 +387,7 @@ html {
 .button-62 {
   position: absolute;
   top: 430px;
-  right: -53px;
+  right: 0px;
   width: 160px;
   height: 60px;
   background: linear-gradient(to bottom right, #E76F51, #E9C46A);
@@ -413,7 +413,7 @@ html {
 .button-63 {
   position: absolute;
   top: 430px;
-  right: 130px;
+  right: 175px;
   width: 160px;
   height: 60px;
   background: linear-gradient(to bottom right, #E76F51, #E9C46A);

@@ -545,7 +545,6 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className='effects'>
         <Effects 
         soundName={soundName}
         setSoundName={setSoundName}
@@ -565,7 +564,6 @@ const Home = () => {
         // handleSoundReset={handleSoundReset}
         handleSynthSave={handleSynthSave}
         />
-      </div>
       <br>
       </br>
       <div className='piano-parent'>
@@ -632,7 +630,7 @@ const Home = () => {
                 break;
             }
           }}
-          width={1920}
+          width={1905}
           stopNote={(midiNumber) => {
             // synth.triggerRelease()
             // Stop playing a given note - see notes below

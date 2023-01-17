@@ -20,7 +20,7 @@ const Effects = ({
     handleSynthSave
 }) => {
     return (
-        <div>
+        <div className='effects'>
             <input value={soundName} type={"text"} placeholder={"Sound Name"} onChange={(e) => {
                 setNameTyping(true)
                 setSoundName(e.target.value)
