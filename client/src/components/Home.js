@@ -66,17 +66,6 @@ const Home = () => {
     const reverbAmount = 0.1
     // can possible get rid of decay knob, make it constant
     const reverbDecay = 4
-    // const phaser = 0.1
-  
-  
-
-    // delay is in seconds
-
-    // not sure about the autofilter
-    const [autoFilter, setAutoFilter] = useState(0)
-    // bitchrusher range 1-8
-  
-    
   
     const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
     const Phaser = new Tone.Phaser({
@@ -381,26 +370,7 @@ const Home = () => {
       synth.current.disconnect(Feedback)
     }
   }, [feedback])
-  // function handleBitCrusher(e) {
-  //   if (e > 1) {
-  //     synth.current.connect(BitCrusher)
-  //     synth.current.BitCrusher = e
-  //     bitcrusherSave.current.wet = e
-  //   }else{
-  //     synth.current.disconnect(BitCrusher)
-  //   }
-  // }
 
-  // function handleDistortion(e) {
-  //   if (e > 0.1) {
-  //     synth.current.connect(Distortion)
-  //     synth.current.Distortion = e
-  //     distortionSave.current.wet = e
-  //   }else {
-  //     synth.current.disconnect(Distortion)
-  //   }
-  // }
-  
   function handleFeedback(e) {
     if (e > 0.1) {
       synth.current.connect(Feedback)
@@ -410,27 +380,6 @@ const Home = () => {
       synth.current.disconnect(Feedback)
     }
   }
-
-  // function handleDelay(e) {
-  //   if (e > 0.1) {
-  //     synth.current.connect(Delay)
-  //     synth.current.Delay = e
-  //     delaySave.current.wet = e
-  //   }else {
-  //     synth.current.disconnect(Delay)
-  //   }
-  // }
-
-  // function handlePhaser(e) {
-  //   if (e > 0.1) {
-  //     synth.current.connect(Phaser)
-  //     synth.current.Phaser = e
-  //     phaserSave.current.wet = e
-  //   }else {
-  //     synth.current.disconnect(Phaser)
-  //   }
-  // }
-
   
 
   function handleSynthSave() {
@@ -442,24 +391,31 @@ const Home = () => {
       const synthObject = {
         user_id: currentUser.id,
         sound_name: soundName,
-        harmonicity: synthSaveObj.current.harmonicity,
-        vibrato_amount: synthSaveObj.current.vibrato_amount,
-        vibrato_rate: synthSaveObj.current.vibrato_rate,
-        voice0_oscillator: synthSaveObj.current.voice0_oscillator,
-        voice0_volume: synthSaveObj.current.voice0_volume,
-        voice0_portamento: synthSaveObj.current.voice0_portamento,
-        voice0_attack: synthSaveObj.current.voice0_attack,
-        voice0_decay: synthSaveObj.current.voice0_decay,
-        voice0_sustain: synthSaveObj.current.voice0_sustain,
-        voice0_release: synthSaveObj.current.voice0_release,
-        voice1_oscillator: synthSaveObj.current.voice1_oscillator,
-        voice1_volume: synthSaveObj.current.voice1_volume,
-        voice1_portamento: synthSaveObj.current.voice1_portamento,
-        voice1_attack: synthSaveObj.current.voice1_attack,
-        voice1_decay: synthSaveObj.current.voice1_decay,
-        voice1_sustain: synthSaveObj.current.voice1_sustain,
-        voice1_release: synthSaveObj.current.voice1_release,
-        effects: [reverbSave, phaserSave, distortionSave, bitcrusherSave, delaySave, feedbackSave]
+        harmonicity: harmonicity,
+        vibrato_amount: vibrato,
+        vibrato_rate: vibratoRate,
+        voice0_oscillator: voice1Osc,
+        voice0_volume: voice1Vol,
+        voice0_portamento: voice1Port,
+        voice0_attack: voice1Attack,
+        voice0_decay: voice1Decay,
+        voice0_sustain: voice1Sustain,
+        voice0_release: voice1Release,
+        voice1_oscillator: voice2Osc,
+        voice1_volume: voice2Vol,
+        voice1_portamento: voice2Port,
+        voice1_attack: voice2Attack,
+        voice1_decay: voice2Decay,
+        voice1_sustain: voice2Sustain,
+        voice1_release: voice2Release,
+        effects: {
+          "reverb": reverb,
+          "phaser": phaser, 
+          "distortion": distortion, 
+          "bitcrusher": bitcrusher, 
+          "delay": delay, 
+          "feedback": feedback
+        }
       }
       console.log(synthObject)
       const headers = {
