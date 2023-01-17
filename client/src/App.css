@@ -351,12 +351,16 @@ html {
   height: 530px;
 }
 
-.effectsinner {
-  position: absolute;
-  top: 40px;
-  width: 700px;
-  left: 150px;
+.effects_inner {
+  margin-top: 100px;
+  margin-left: 60px;
+  height: 530px;
+  display: grid;
+  grid-template-rows: 30% 30%;
+  grid-template-columns: 30% 30% 30%;
 }
+
+
 
 .effectsinner svg {
   padding: 10px;

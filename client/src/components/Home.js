@@ -9,6 +9,7 @@ import { UserContext } from '../context/UserContext'
 import Oscillator1  from './Oscillator1';
 import Oscilliator2 from './Oscilliator2';
 import Vibracity from './Vibracity';
+import Effects from './Effects';
 
 
 const Home = () => {
@@ -19,7 +20,6 @@ const Home = () => {
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
   let synth = useRef(null)
-  let voice0_vol_default = 0
   let synthSaveObj = useRef({
     harmonicity: 0.1,
     vibrato_rate: 4.5,
@@ -47,10 +47,10 @@ const Home = () => {
       name: "phaser",
       wet: 0.1
     })
-  let distortionSave = useRef({
-      name: "distortion",
-      wet: 0.1
-    })
+  // let distortionSave = useRef({
+  //     name: "distortion",
+  //     wet: 0.1
+  //   })
   let bitcrusherSave = useRef({
       name: "bitcrusher",
       wet: 0.1
@@ -66,24 +66,28 @@ const Home = () => {
     const reverbAmount = 0.1
     // can possible get rid of decay knob, make it constant
     const reverbDecay = 4
-    const phaser = 0.1
+    // const phaser = 0.1
   
   
-    const distortion = 0.1
+
     // delay is in seconds
-    const delay = 0.1 
+
     // not sure about the autofilter
     const [autoFilter, setAutoFilter] = useState(0)
     // bitchrusher range 1-8
-    const bitCrusher = 1
-    const feedback = 0.1
+  
+    
   
     const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
-    const Phaser = new Tone.Phaser(phaser).toDestination()
-    const Distortion = new Tone.Distortion(distortion).toDestination()
-    const Delay = new Tone.PingPongDelay(delay).toDestination()
-    const Feedback = new Tone.FeedbackDelay(feedback).toDestination()
-    const BitCrusher = new Tone.BitCrusher(bitCrusher).toDestination()
+    const Phaser = new Tone.Phaser({
+      frequency: 10,
+	    octaves: 5,
+	    baseFrequency: 600
+    }).toDestination()
+    const Distortion = new Tone.Distortion(0.4).toDestination()
+    const Delay = new Tone.PingPongDelay("8n").toDestination()
+    const Feedback = new Tone.FeedbackDelay("8n").toDestination()
+    const BitCrusher = new Tone.BitCrusher(2).toDestination()
 
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
@@ -170,42 +174,41 @@ const Home = () => {
     }).toDestination()
   }, [synthReset])
   // persist the data through session storage
-  window.addEventListener('beforeunload', () => {
-    window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
-    window.sessionStorage.setItem("reload", "true")
-  }) 
+  // window.addEventListener('beforeunload', () => {
+  //   window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
+  //   window.sessionStorage.setItem("reload", "true")
+  // }) 
 
-  window.addEventListener('load', () => {
-    console.log(reload)
-    if (window.sessionStorage.getItem("reload") === "true") {
-      let returnObj = JSON.parse(window.sessionStorage.getItem("synth"))
+  // window.addEventListener('load', () => {
+  //   console.log(reload)
+  //   if (window.sessionStorage.getItem("reload") === "true") {
+  //     let returnObj = JSON.parse(window.sessionStorage.getItem("synth"))
 
   
-      synth.current.harmonicity.value = returnObj.harmonicity
-      synth.current.vibratoAmount.value = returnObj.vibrato_amount
-      synth.current.vibratoRate.value = returnObj.vibrato_rate
-      synth.current.voice0.oscillator.type = returnObj.voice0_oscillator
-      synth.current.voice0.volume.value = returnObj.voice0_volume
-      synth.current.voice0.portamento = returnObj.voice0_portamento
-      synth.current.voice0.envelope.attack = returnObj.voice0_attack
-      synth.current.voice0.envelope.decay = returnObj.voice0_decay
-      synth.current.voice0.envelope.sustain = returnObj.voice0_sustain
-      synth.current.voice0.envelope.release = returnObj.voice0_release
-      synth.current.voice1.volume.value = returnObj.voice1_volume
-      synth.current.voice1.portamento = returnObj.voice1_portamento
-      synth.current.voice1.oscillator.type = returnObj.voice1_oscillator
-      synth.current.voice1.envelope.attack = returnObj.voice1_attack
-      synth.current.voice1.envelope.decay = returnObj.voice1_decay
-      synth.current.voice1.envelope.sustain = returnObj.voice1_sustain
-      synth.current.voice1.envelope.release = returnObj.voice1_release
+  //     synth.current.harmonicity.value = returnObj.harmonicity
+  //     synth.current.vibratoAmount.value = returnObj.vibrato_amount
+  //     synth.current.vibratoRate.value = returnObj.vibrato_rate
+  //     synth.current.voice0.oscillator.type = returnObj.voice0_oscillator
+  //     synth.current.voice0.volume.value = returnObj.voice0_volume
+  //     synth.current.voice0.portamento = returnObj.voice0_portamento
+  //     synth.current.voice0.envelope.attack = returnObj.voice0_attack
+  //     synth.current.voice0.envelope.decay = returnObj.voice0_decay
+  //     synth.current.voice0.envelope.sustain = returnObj.voice0_sustain
+  //     synth.current.voice0.envelope.release = returnObj.voice0_release
+  //     synth.current.voice1.volume.value = returnObj.voice1_volume
+  //     synth.current.voice1.portamento = returnObj.voice1_portamento
+  //     synth.current.voice1.oscillator.type = returnObj.voice1_oscillator
+  //     synth.current.voice1.envelope.attack = returnObj.voice1_attack
+  //     synth.current.voice1.envelope.decay = returnObj.voice1_decay
+  //     synth.current.voice1.envelope.sustain = returnObj.voice1_sustain
+  //     synth.current.voice1.envelope.release = returnObj.voice1_release
       
-      synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
-      setTestVol(returnObj.voice0_volume)
-      voice0_vol_default = parseFloat(`0.${returnObj.voice0_volume}`)
-      // synth.current = synthSaveObj.current
-      window.sessionStorage.setItem("reload", "false")
-    }
-  })
+  //     synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
+  //     voice0_vol_default = parseFloat(`0.${returnObj.voice0_volume}`)
+  //     // synth.current = synthSaveObj.current
+  //     window.sessionStorage.setItem("reload", "false")
+  //   }
+  // })
   
 
   function handleSoundReset() {
@@ -233,6 +236,7 @@ const Home = () => {
   }
 
   // functions for changing knobs
+  // Voice 1 controls
   const [voice1Osc, setVoice1Osc] = useState("sine")
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
@@ -271,7 +275,7 @@ const Home = () => {
     synth.current.voice0.envelope.release = voice1Release
   }, [voice1Release])
   
-
+  // voice 2 controls
   const [voice2Osc, setVoice2Osc] = useState("sine")
   useEffect(() => {
     synth.current.voice1.oscillator.type = voice2Osc
@@ -307,6 +311,7 @@ const Home = () => {
     synth.current.voice1.envelope.release = voice2Release
   }, [voice2Release])
   
+  // harm/vib controls
   const [harmonicity, setHarmonicity] = useState(0.1)
   useEffect(() => {
     synth.current.harmonicity.value = harmonicity
@@ -322,36 +327,79 @@ const Home = () => {
     synth.current.vibratoAmount.value = vibrato
   }, [vibrato])
 
-
-  function handleReverbAmount(e) {
-    if (e > 0.1) {
-      synth.current.connect(Reverb)
-      synth.current.Reverb = e
-      reverbSave.current.wet = e
-    }else {
+  // effects controls
+  const [reverb, setReverb] = useState(0)
+  useEffect(() => {
+    synth.current.connect(Reverb)
+    synth.current.Reverb = reverb
+    if (reverb === 0) {
       synth.current.disconnect(Reverb)
     }
-  }
+  }, [reverb])
 
-  function handleBitCrusher(e) {
-    if (e > 1) {
-      synth.current.connect(BitCrusher)
-      synth.current.BitCrusher = e
-      bitcrusherSave.current.wet = e
-    }else{
-      synth.current.disconnect(BitCrusher)
+  const [phaser, setPhaser] = useState(0)
+  useEffect(() => {
+    synth.current.connect(Phaser)
+    synth.current.Phaser = phaser
+    if (phaser === 0) {
+      synth.current.disconnect(Phaser)
     }
-  }
+  }, [phaser])
 
-  function handleDistortion(e) {
-    if (e > 0.1) {
-      synth.current.connect(Distortion)
-      synth.current.Distortion = e
-      distortionSave.current.wet = e
-    }else {
+  const [distortion, setDistortion] = useState(0)
+  useEffect(() => {
+    synth.current.connect(Distortion)
+    synth.current.Distortion = distortion
+    if (distortion === 0) {
       synth.current.disconnect(Distortion)
     }
-  }
+  }, [distortion])
+
+  const [bitcrusher, setBitcrusher] = useState(0)
+  useEffect(() => {
+    synth.current.connect(BitCrusher)
+    synth.current.BitCrusher = bitcrusher
+    if (bitcrusher === 0) {
+      synth.current.disconnect(BitCrusher)
+    }
+  })
+
+  const [delay, setDelay] = useState(0)
+  useEffect(() => {
+    synth.current.connect(Delay)
+    synth.current.Delay = delay
+    if (delay === 0) {
+      synth.current.disconnect(Delay)
+    }
+  }, [delay])
+
+  const [feedback, setFeedback] = useState(0)
+  useEffect(() => {
+    synth.current.connect(Feedback)
+    synth.current.Feedback = feedback
+    if (feedback === 0) {
+      synth.current.disconnect(Feedback)
+    }
+  }, [feedback])
+  // function handleBitCrusher(e) {
+  //   if (e > 1) {
+  //     synth.current.connect(BitCrusher)
+  //     synth.current.BitCrusher = e
+  //     bitcrusherSave.current.wet = e
+  //   }else{
+  //     synth.current.disconnect(BitCrusher)
+  //   }
+  // }
+
+  // function handleDistortion(e) {
+  //   if (e > 0.1) {
+  //     synth.current.connect(Distortion)
+  //     synth.current.Distortion = e
+  //     distortionSave.current.wet = e
+  //   }else {
+  //     synth.current.disconnect(Distortion)
+  //   }
+  // }
   
   function handleFeedback(e) {
     if (e > 0.1) {
@@ -363,25 +411,25 @@ const Home = () => {
     }
   }
 
-  function handleDelay(e) {
-    if (e > 0.1) {
-      synth.current.connect(Delay)
-      synth.current.Delay = e
-      delaySave.current.wet = e
-    }else {
-      synth.current.disconnect(Delay)
-    }
-  }
+  // function handleDelay(e) {
+  //   if (e > 0.1) {
+  //     synth.current.connect(Delay)
+  //     synth.current.Delay = e
+  //     delaySave.current.wet = e
+  //   }else {
+  //     synth.current.disconnect(Delay)
+  //   }
+  // }
 
-  function handlePhaser(e) {
-    if (e > 0.1) {
-      synth.current.connect(Phaser)
-      synth.current.Phaser = e
-      phaserSave.current.wet = e
-    }else {
-      synth.current.disconnect(Phaser)
-    }
-  }
+  // function handlePhaser(e) {
+  //   if (e > 0.1) {
+  //     synth.current.connect(Phaser)
+  //     synth.current.Phaser = e
+  //     phaserSave.current.wet = e
+  //   }else {
+  //     synth.current.disconnect(Phaser)
+  //   }
+  // }
 
   
 
@@ -498,8 +546,26 @@ const Home = () => {
         </div>
       </div>
       <div className='effects'>
-        {/* <h3>Sound Name</h3> */}
-        <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
+        <Effects 
+        soundName={soundName}
+        setSoundName={setSoundName}
+        setNameTyping={setNameTyping}
+        setReverb={setReverb}
+        reverb={reverb}
+        setPhaser={setPhaser}
+        phaser={phaser}
+        setDistortion={setDistortion}
+        distortion={distortion}
+        setBitcrusher={setBitcrusher}
+        bitcrusher={bitcrusher}
+        setDelay={setDelay}
+        delay={delay}
+        setFeedback={setFeedback}
+        feedback={feedback}
+        // handleSoundReset={handleSoundReset}
+        handleSynthSave={handleSynthSave}
+        />
+        {/* <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
           setNameTyping(true)
           setSoundName(e.target.value)
           }}></input>
@@ -566,7 +632,7 @@ const Home = () => {
               style={style4} />
           <button onClick={handleSoundReset}  className="button-63" role="button">Reset</button>    
           <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
-        </div>
+        </div> */}
       </div>
       <br>
       </br>
