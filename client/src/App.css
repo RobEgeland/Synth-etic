@@ -250,21 +250,22 @@ html {
 }
 .osc1form {
   width: 710px;
-  height: 270px;
+  height: 273px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25% ;
   grid-template-rows: 50% 50%;
   /* position: relative; has to be position relative for left to work, or you could just do margin-left: -50px; too */
   /* left: 0px; */
   border: 3px solid black;
+  border-bottom: 0px;
   
 }
 .osc1form > div {
-  margin: 30px;
+  margin: 20px;
 }
 .osc2form {
   width: 710px;
-  height: 254px;
+  height: 270px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25% ;
   grid-template-rows: 50% 50%;
@@ -273,7 +274,7 @@ html {
   border: 3px solid black;
 }
 .osc2form > div {
-  margin: 30px;
+  margin: 20px;
 }
 .voice1_osc {
   grid-column-start: 2;
@@ -284,13 +285,13 @@ html {
 
 
 .piano-parent {
-  display: flex;
-  flex-direction: column;
+  height: auto;
 }
 .piano {
   /* position: fixed;
   bottom: 0; */
-  margin-top: auto;
+  height: auto;
+ 
 }
 
 .voice1_vol_port {
@@ -319,6 +320,10 @@ html {
   border-left: 80px solid #e9c46a;
 }
 
+.knob_label {
+  color: white;
+}
+
 .vib_harm {
   display: grid;
   grid-template-rows: 100% 100% 100%;
@@ -330,14 +335,21 @@ html {
     margin-top: -50px;
     margin-left: -50px;
     width: 300px;
-    height: 530px;
+    height: 546px;
     border: 3px solid black;
     border-left: 0px;
 }
 
 .vib_harm > div {
-  margin: 150px;
-  margin-left: 120px;
+  margin: auto;
+}
+
+.harmonicity {
+  margin-top: 40px;
+}
+
+.vibrato_rate {
+  margin-top: 40px;
 }
 
 
@@ -348,7 +360,7 @@ html {
   top: 78px;
   left: 1011px;
   width: 903px;
-  height: 530px;
+  height: 546px;
 }
 
 .effects_inner {
