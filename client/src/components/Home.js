@@ -534,7 +534,7 @@ const Home = () => {
       </div>
       <div className='triangle' />
       <div className='vib_harm'>
-        <div className='vib_harm_inner'>
+        <div >
           <Vibracity 
           setHarmonicity={setHarmonicity}
           harmonicity={harmonicity}
@@ -565,74 +565,6 @@ const Home = () => {
         // handleSoundReset={handleSoundReset}
         handleSynthSave={handleSynthSave}
         />
-        {/* <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
-          setNameTyping(true)
-          setSoundName(e.target.value)
-          }}></input>
-        <div className='effectsinner'>
-            <Knob
-                name="Reverb"
-                unit=""  
-                defaultPercentage={0}
-                onChange={handleReverbAmount}
-                bg="black"
-                fg="white"
-                mouseSpeed={5}
-                transform={p => parseFloat(p)} 
-                style={style4} />
-          <Knob
-              name="Phaser"
-              unit=""
-              defaultPercentage={0}
-              onChange={handlePhaser}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p)} 
-              style={style4} />
-          <Knob
-              name="Distortion"
-              unit=""
-              defaultPercentage={0}
-              onChange={handleDistortion}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p)} 
-              style={style4} />
-          <Knob
-              name="BitCrusher"
-              unit=""
-              defaultPercentage={0}
-              onChange={handleBitCrusher}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseInt((p * 7) + 1)} 
-              style={style4} />
-          <Knob
-              name="Delay"
-              unit=""
-              defaultPercentage={0}
-              onChange={handleDelay}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p)} 
-              style={style4} />
-          <Knob
-              name="Feedback"
-              unit=""
-              defaultPercentage={0}
-              onChange={handleFeedback}
-              bg="black"
-              fg="white"
-              mouseSpeed={5}
-              transform={p => parseFloat(p)} 
-              style={style4} />
-          <button onClick={handleSoundReset}  className="button-63" role="button">Reset</button>    
-          <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
-        </div> */}
       </div>
       <br>
       </br>

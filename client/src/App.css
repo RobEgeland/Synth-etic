@@ -260,6 +260,9 @@ html {
   border-bottom: 0px;
   
 }
+.grid-span-2 {
+  grid-column: span 2;
+}
 .osc1form > div {
   margin: 20px;
 }
@@ -277,10 +280,8 @@ html {
   margin: 20px;
 }
 .voice1_osc {
-  grid-column-start: 2;
-  grid-column-end: 5;
-  grid-row-start: row1-start;
-  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 
@@ -326,7 +327,6 @@ html {
 
 .vib_harm {
   display: grid;
-  grid-template-rows: 100% 100% 100%;
   
   padding: 0%;
   position: absolute;
