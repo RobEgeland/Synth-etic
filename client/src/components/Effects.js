@@ -17,7 +17,8 @@ const Effects = ({
     delay,
     setFeedback,
     feedback,
-    handleSynthSave
+    handleSynthSave,
+    handleSoundReset
 }) => {
     return (
         <div className='effects'>
@@ -52,7 +53,7 @@ const Effects = ({
                     <h3 className='knob_label'>Feedback</h3>
                 </div>
             </div>
-            <button  className="button-63" role="button">Reset</button>    
+            <button  className="button-63" role="button" onClick={handleSoundReset}>Reset</button>    
             <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
         </div>
     )

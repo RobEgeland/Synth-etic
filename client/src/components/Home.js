@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef, useEffect} from 'react'
+import React, {useContext, useState, useRef, useEffect, Component} from 'react'
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
@@ -45,25 +45,6 @@ const Home = () => {
   const [feedback, setFeedback] = useState(0)
 
   let synth = useRef(null)
-  let synthSaveObj = useRef({
-    harmonicity: 0.1,
-    vibrato_rate: 4.5,
-    vibrato_amount: 0.1,
-    voice0_oscillator: "sine",
-    voice0_volume: -5,
-    voice0_portamento: 0.1,
-    voice0_attack: 0.1,
-    voice0_decay: 0.1,
-    voice0_sustain: 0.1,
-    voice0_release: 0.1,
-    voice1_oscillator: "sine",
-    voice1_volume: -5,
-    voice1_portamento: 0.1,
-    voice1_attack: 0.1,
-    voice1_decay: 0.1,
-    voice1_sustain: 0.1,
-    voice1_release: 0.1
-  })
     const reverbAmount = 0.1
     // can possible get rid of decay knob, make it constant
     const reverbDecay = 4
@@ -130,6 +111,9 @@ const Home = () => {
     setSynthReset(false)
   }, "5000")
 
+  
+
+    
   useEffect(() => {
     synth.current = new Tone.DuoSynth({
       harmonicity: 0.1,
@@ -162,8 +146,36 @@ const Home = () => {
         }
       },
     }).toDestination()
-  }, [synthReset])
+  }, [])
 
+  useEffect(() => {
+    let returnObj = JSON.parse(window.localStorage.getItem('Synth'))
+    if (window.localStorage.getItem('Synth')){
+      setHarmonicity(returnObj.harmonicity)
+      setVibratoRate(returnObj.vibratoRate)
+      setVibrato(returnObj.vibrato)
+      setVoice1Osc(returnObj.voice1Osc)
+      setVoice1Vol(returnObj.voice1Vol)
+      setVoice1Port(returnObj.voice1Port)
+      setVoice1Attack(returnObj.voice1Attack)
+      setVoice1Decay(returnObj.voice1Decay)
+      setVoice1Sustain(returnObj.voice1Sustain)
+      setVoice1Release(returnObj.voice1Release)
+      setVoice2Osc(returnObj.voice2Osc)
+      setVoice2Vol(returnObj.voice2Vol)
+      setVoice2Port(returnObj.voice2Port)
+      setVoice2Attack(returnObj.voice2Attack)
+      setVoice2Decay(returnObj.voice2Decay)
+      setVoice2Sustain(returnObj.voice2Sustain)
+      setVoice2Release(returnObj.voice2Release)
+      setReverb(returnObj.reverb)
+      setPhaser(returnObj.phaser)
+      setDistortion(returnObj.distortion)
+      setBitcrusher(returnObj.bitcrusher)
+      setDelay(returnObj.delay)
+      setFeedback(returnObj.feedback)
+    }
+  }, [])
 
   useEffect(() => {
     window.localStorage.setItem('Synth', JSON.stringify({
@@ -255,27 +267,9 @@ const Home = () => {
   
 
   function handleSoundReset() {
+    window.localStorage.clear()
     setSynthReset(true)
-    window.sessionStorage.setItem("synth", "")
-    synthSaveObj.current = {
-      harmonicity: 0.1,
-    vibrato_rate: 4.5,
-    vibrato_amount: 0.1,
-    voice0_oscillator: "sine",
-    voice0_volume: -5,
-    voice0_portamento: 0.1,
-    voice0_attack: 0.1,
-    voice0_decay: 0.1,
-    voice0_sustain: 0.1,
-    voice0_release: 0.1,
-    voice1_oscillator: "sine",
-    voice1_volume: -5,
-    voice1_portamento: 0.1,
-    voice1_attack: 0.1,
-    voice1_decay: 0.1,
-    voice1_sustain: 0.1,
-    voice1_release: 0.1
-    }
+    location.reload()
   }
 
   // functions for changing knobs
@@ -562,7 +556,7 @@ const Home = () => {
         delay={delay}
         setFeedback={setFeedback}
         feedback={feedback}
-        // handleSoundReset={handleSoundReset}
+        handleSoundReset={handleSoundReset}
         handleSynthSave={handleSynthSave}
         />
       <br>
