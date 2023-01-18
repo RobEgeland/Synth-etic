@@ -13,6 +13,7 @@ import Effects from './Effects';
 
 
 const Home = () => {
+  let synth = useRef(null)
   const { currentUser, loggedIn } = useContext(UserContext)
   const [errors, setErrors] = useState()
   const [nameTyping, setNameTyping] = useState(false)
@@ -44,17 +45,16 @@ const Home = () => {
   const [delay, setDelay] = useState(0)
   const [feedback, setFeedback] = useState(0)
 
-  let synth = useRef(null)
-    const reverbAmount = 0.1
+  const reverbAmount = 0.1
     // can possible get rid of decay knob, make it constant
-    const reverbDecay = 4
+  const reverbDecay = 4
   
-    const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
-    const Phaser = new Tone.Phaser({
-      frequency: 10,
-	    octaves: 5,
-	    baseFrequency: 600
-    }).toDestination()
+  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+  const Phaser = new Tone.Phaser({
+    frequency: 10,
+	  octaves: 5,
+	  baseFrequency: 600
+  }).toDestination()
     const Distortion = new Tone.Distortion(0.4).toDestination()
     const Delay = new Tone.PingPongDelay("8n").toDestination()
     const Feedback = new Tone.FeedbackDelay("8n").toDestination()
@@ -457,6 +457,7 @@ const Home = () => {
       <div className='voice1'>
         <Oscillator1 
         setVoice1Osc={setVoice1Osc} 
+        voice1Osc={voice1Osc}
         setVoice1Vol={setVoice1Vol} 
         voice1Vol={voice1Vol} 
         setVoice1Port={setVoice1Port} 
@@ -475,6 +476,7 @@ const Home = () => {
       <div className='voice2'>
         <Oscilliator2 
         setVoice2Osc={setVoice2Osc}
+        voice2Osc={voice2Osc}
         setVoice2Vol={setVoice2Vol}
         voice2Vol={voice2Vol}
         setVoice2Port={setVoice2Port}

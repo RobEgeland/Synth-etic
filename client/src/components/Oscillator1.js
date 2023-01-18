@@ -3,6 +3,7 @@ import {Knob} from 'primereact/knob'
 
 const Oscillator1 = ({
     setVoice1Osc, 
+    voice1Osc,
     setVoice1Vol, 
     voice1Vol, 
     setVoice1Port, 
@@ -20,11 +21,11 @@ const Oscillator1 = ({
     return (
         <div className='osc1form'>
             <div name='voice1_osc '>
-                <select onChange={(e) => setVoice1Osc(e.target.value)} >
-                    <option selected>sine</option>
-                    <option>triangle</option>
-                    <option>sawtooth</option>
-                    <option>square</option>
+                <select value={voice1Osc} onChange={(e) => setVoice1Osc(e.target.value)} >
+                    <option value={"sine"} selected>sine</option>
+                    <option value={"triangle"}>triangle</option>
+                    <option value={"sawtooth"}>sawtooth</option>
+                    <option value={"square"}>square</option>
                 </select>
             </div>
             <div>
