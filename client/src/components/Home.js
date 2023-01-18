@@ -19,7 +19,7 @@ const Home = () => {
   const [soundName, setSoundName] = useState("")
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
-
+  // synth state vars
   const [voice1Osc, setVoice1Osc] = useState("sine")
   const [voice1Vol, setVoice1Vol] = useState(-5)
   const [voice1Port, setVoice1Port] = useState(0)
@@ -108,7 +108,6 @@ const Home = () => {
   
   setTimeout(() => {
     setNameTyping(false)
-    setSynthReset(false)
   }, "5000")
 
   
@@ -228,47 +227,10 @@ const Home = () => {
     delay,
     feedback
   ])
-  // persist the data through session storage
-  // window.addEventListener('beforeunload', () => {
-  //   window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
-  //   window.sessionStorage.setItem("reload", "true")
-  // }) 
-
-  // window.addEventListener('load', () => {
-  //   console.log(reload)
-  //   if (window.sessionStorage.getItem("reload") === "true") {
-  //     let returnObj = JSON.parse(window.sessionStorage.getItem("synth"))
-
-  
-  //     synth.current.harmonicity.value = returnObj.harmonicity
-  //     synth.current.vibratoAmount.value = returnObj.vibrato_amount
-  //     synth.current.vibratoRate.value = returnObj.vibrato_rate
-  //     synth.current.voice0.oscillator.type = returnObj.voice0_oscillator
-  //     synth.current.voice0.volume.value = returnObj.voice0_volume
-  //     synth.current.voice0.portamento = returnObj.voice0_portamento
-  //     synth.current.voice0.envelope.attack = returnObj.voice0_attack
-  //     synth.current.voice0.envelope.decay = returnObj.voice0_decay
-  //     synth.current.voice0.envelope.sustain = returnObj.voice0_sustain
-  //     synth.current.voice0.envelope.release = returnObj.voice0_release
-  //     synth.current.voice1.volume.value = returnObj.voice1_volume
-  //     synth.current.voice1.portamento = returnObj.voice1_portamento
-  //     synth.current.voice1.oscillator.type = returnObj.voice1_oscillator
-  //     synth.current.voice1.envelope.attack = returnObj.voice1_attack
-  //     synth.current.voice1.envelope.decay = returnObj.voice1_decay
-  //     synth.current.voice1.envelope.sustain = returnObj.voice1_sustain
-  //     synth.current.voice1.envelope.release = returnObj.voice1_release
-      
-  //     synthSaveObj.current = JSON.parse(window.sessionStorage.getItem("synth"))
-  //     voice0_vol_default = parseFloat(`0.${returnObj.voice0_volume}`)
-  //     // synth.current = synthSaveObj.current
-  //     window.sessionStorage.setItem("reload", "false")
-  //   }
-  // })
   
 
   function handleSoundReset() {
     window.localStorage.clear()
-    setSynthReset(true)
     location.reload()
   }
 
