@@ -19,6 +19,31 @@ const Home = () => {
   const [soundName, setSoundName] = useState("")
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
+
+  const [voice1Osc, setVoice1Osc] = useState("sine")
+  const [voice1Vol, setVoice1Vol] = useState(-5)
+  const [voice1Port, setVoice1Port] = useState(0)
+  const [voice1Attack, setVoice1Attack] = useState(0.1)
+  const [voice1Decay, setVoice1Decay] = useState(0.1)
+  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
+  const [voice1Release, setVoice1Release] = useState(0.1)
+  const [voice2Osc, setVoice2Osc] = useState("sine")
+  const [voice2Vol, setVoice2Vol] = useState(-5)
+  const [voice2Port, setVoice2Port] = useState(0)
+  const [voice2Attack, setVoice2Attack] = useState(0.1)
+  const [voice2Decay, setVoice2Decay] = useState(0.1)
+  const [voice2Sustain, setVoice2Sustain] = useState(0.1)
+  const [voice2Release, setVoice2Release] = useState(0.1)
+  const [harmonicity, setHarmonicity] = useState(0.1)
+  const [vibratoRate, setVibratoRate] = useState(4.5)
+  const [vibrato, setVibrato] = useState(0.1)
+  const [reverb, setReverb] = useState(0)
+  const [phaser, setPhaser] = useState(0)
+  const [distortion, setDistortion] = useState(0)
+  const [bitcrusher, setBitcrusher] = useState(0)
+  const [delay, setDelay] = useState(0)
+  const [feedback, setFeedback] = useState(0)
+
   let synth = useRef(null)
   let synthSaveObj = useRef({
     harmonicity: 0.1,
@@ -39,30 +64,6 @@ const Home = () => {
     voice1_sustain: 0.1,
     voice1_release: 0.1
   })
-  let reverbSave = useRef({
-      name: "reverb",
-      wet: 0.1
-    })
-  let phaserSave = useRef({
-      name: "phaser",
-      wet: 0.1
-    })
-  // let distortionSave = useRef({
-  //     name: "distortion",
-  //     wet: 0.1
-  //   })
-  let bitcrusherSave = useRef({
-      name: "bitcrusher",
-      wet: 0.1
-    })
-    let delaySave = useRef({
-      name: "delay",
-      wet: 0.1
-    })
-  let feedbackSave = useRef({
-      name: "feedback",
-      wet: 0.1
-    })
     const reverbAmount = 0.1
     // can possible get rid of decay knob, make it constant
     const reverbDecay = 4
@@ -85,7 +86,7 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-  
+
   const style = {
     height: "5px",
     margin: "1%",
@@ -162,6 +163,59 @@ const Home = () => {
       },
     }).toDestination()
   }, [synthReset])
+
+
+  useEffect(() => {
+    window.localStorage.setItem('Synth', JSON.stringify({
+      "harmonicity": harmonicity,
+      "vibratoRate": vibratoRate,
+      "vibrato": vibrato,
+      "voice1Osc": voice1Osc,
+      "voice1Vol": voice1Vol,
+      "voice1Port": voice1Port,
+      "voice1Attack": voice1Attack,
+      "voice1Decay": voice1Decay,
+      "voice1Sustain": voice1Sustain,
+      "voice1Release": voice1Release,
+      "voice2Osc": voice2Osc,
+      "voice2Vol": voice2Vol,
+      "voice2Port": voice2Port,
+      "voice2Attack": voice2Attack,
+      "voice2Decay": voice2Decay,
+      "voice2Sustain": voice2Sustain,
+      "voice2Release": voice2Release,
+      "reverb": reverb,
+      "phaser": phaser,
+      "distortion": distortion,
+      "bitcrusher": bitcrusher,
+      "delay": delay,
+      "feedback": feedback
+    }))
+  }, [
+    harmonicity, 
+    vibratoRate, 
+    vibrato, 
+    voice1Osc, 
+    voice1Vol, 
+    voice1Port, 
+    voice1Attack, 
+    voice1Decay, 
+    voice1Sustain,
+    voice1Release,
+    voice2Osc,
+    voice2Vol,
+    voice2Port,
+    voice2Attack,
+    voice2Decay,
+    voice2Sustain,
+    voice2Release,
+    reverb,
+    phaser,
+    distortion,
+    bitcrusher,
+    delay,
+    feedback
+  ])
   // persist the data through session storage
   // window.addEventListener('beforeunload', () => {
   //   window.sessionStorage.setItem("synth", JSON.stringify(synthSaveObj.current))
@@ -226,98 +280,98 @@ const Home = () => {
 
   // functions for changing knobs
   // Voice 1 controls
-  const [voice1Osc, setVoice1Osc] = useState("sine")
+  
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
   }, [voice1Osc])
 
-  const [voice1Vol, setVoice1Vol] = useState(-5)
+ 
   useEffect(() => {
     synth.current.voice0.volume.value = voice1Vol
   }, [voice1Vol])
 
 
-  const [voice1Port, setVoice1Port] = useState(0)
+  
   useEffect(() => {
     synth.current.voice0.portamento = voice1Port
   }, [voice1Port])
 
   // these can be refactored to one function
-  const [voice1Attack, setVoice1Attack] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice0.envelope.attack = voice1Attack
   }, [voice1Attack])
 
 
-  const [voice1Decay, setVoice1Decay] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Decay
   }, [voice1Decay])
 
-  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice0.envelope.decay = voice1Sustain
   }, [voice1Sustain])
 
-  const [voice1Release, setVoice1Release] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice0.envelope.release = voice1Release
   }, [voice1Release])
   
   // voice 2 controls
-  const [voice2Osc, setVoice2Osc] = useState("sine")
+  
   useEffect(() => {
     synth.current.voice1.oscillator.type = voice2Osc
   }, [voice2Osc])
 
-  const [voice2Vol, setVoice2Vol] = useState(-5)
+  
   useEffect(() => {
     synth.current.voice1.volume.value = voice2Vol
   }, [voice2Vol])
 
-  const [voice2Port, setVoice2Port] = useState(0)
+  
   useEffect(() => {
     synth.current.voice1.portamento = voice2Port
   }, [voice2Port])
 
-  const [voice2Attack, setVoice2Attack] = useState(0.1)
+ 
   useEffect(() => {
     synth.current.voice1.envelope.attack = voice2Attack
   }, [voice2Attack])
 
-  const [voice2Decay, setVoice2Decay] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice1.envelope.decay = voice2Decay
   }, [voice2Decay])
 
-  const [voice2Sustain, setVoice2Sustain] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice1.envelope.sustain = voice2Sustain
   }, [voice2Sustain])
 
-  const [voice2Release, setVoice2Release] = useState(0.1)
+  
   useEffect(() => {
     synth.current.voice1.envelope.release = voice2Release
   }, [voice2Release])
   
   // harm/vib controls
-  const [harmonicity, setHarmonicity] = useState(0.1)
+  
   useEffect(() => {
     synth.current.harmonicity.value = harmonicity
   }, [harmonicity])
 
-  const [vibratoRate, setVibratoRate] = useState(4.5)
+  
   useEffect(() => {
     synth.current.vibratoRate.value = vibratoRate
   }, [vibratoRate])
 
-  const [vibrato, setVibrato] = useState(0.1)
+  
   useEffect(() => {
     synth.current.vibratoAmount.value = vibrato
   }, [vibrato])
 
   // effects controls
-  const [reverb, setReverb] = useState(0)
+  
   useEffect(() => {
     synth.current.connect(Reverb)
     synth.current.Reverb = reverb
@@ -326,7 +380,7 @@ const Home = () => {
     }
   }, [reverb])
 
-  const [phaser, setPhaser] = useState(0)
+  
   useEffect(() => {
     synth.current.connect(Phaser)
     synth.current.Phaser = phaser
@@ -335,7 +389,7 @@ const Home = () => {
     }
   }, [phaser])
 
-  const [distortion, setDistortion] = useState(0)
+  
   useEffect(() => {
     synth.current.connect(Distortion)
     synth.current.Distortion = distortion
@@ -344,7 +398,7 @@ const Home = () => {
     }
   }, [distortion])
 
-  const [bitcrusher, setBitcrusher] = useState(0)
+
   useEffect(() => {
     synth.current.connect(BitCrusher)
     synth.current.BitCrusher = bitcrusher
@@ -353,7 +407,7 @@ const Home = () => {
     }
   })
 
-  const [delay, setDelay] = useState(0)
+  
   useEffect(() => {
     synth.current.connect(Delay)
     synth.current.Delay = delay
@@ -362,7 +416,7 @@ const Home = () => {
     }
   }, [delay])
 
-  const [feedback, setFeedback] = useState(0)
+  
   useEffect(() => {
     synth.current.connect(Feedback)
     synth.current.Feedback = feedback
@@ -371,15 +425,6 @@ const Home = () => {
     }
   }, [feedback])
 
-  function handleFeedback(e) {
-    if (e > 0.1) {
-      synth.current.connect(Feedback)
-      synth.current.Feedback = e
-      feedbackSave.current.wet = e
-    }else {
-      synth.current.disconnect(Feedback)
-    }
-  }
   
 
   function handleSynthSave() {

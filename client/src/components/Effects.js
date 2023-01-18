@@ -21,7 +21,7 @@ const Effects = ({
 }) => {
     return (
         <div className='effects'>
-            <input value={soundName} type={"text"} placeholder={"Sound Name"} onChange={(e) => {
+            <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
                 setNameTyping(true)
                 setSoundName(e.target.value)
                 }}>
