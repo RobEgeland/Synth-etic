@@ -15,6 +15,12 @@ class SoundsController < ApplicationController
         render json: sound, status: :created
     end
 
+    def destroy
+        sound = Sound.find_by!(id: params[:id])
+        sound.destroy
+        render json: sound, status: :ok
+    end
+
     private
 
     def sound_params

@@ -62,7 +62,7 @@ function App() {
         <NavBar />
         <Switch>
         <Route path="/my-profile">
-            <UserProfile sounds={sounds} />
+            <UserProfile sounds={sounds} setSounds={setSounds} />
           </Route>
           <Route path="/signup">
             <SignUp />
