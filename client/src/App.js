@@ -71,7 +71,7 @@ function App() {
             <Login/> 
           </Route>
           <Route path="/explore">
-            <Explore />
+            <Explore sounds={sounds}/>
           </Route>
           <Route path={"/how-to"}>
             <HowTo />
