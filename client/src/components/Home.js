@@ -133,7 +133,7 @@ const Home = () => {
       },
       voice1: {
         volume: -5,
-        portamento: 1,
+        portamento: 0,
         oscillator: {
           type: "sine" 
         },

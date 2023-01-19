@@ -384,6 +384,17 @@ html {
   left: 275px;
 }
 
+.sound_card_list {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.sound_card {
+  background-color: #e9c46a;
+  border-radius: 40px;
+  box-sizing: border-box;
+}
 .button-62 {
   position: absolute;
   top: 430px;

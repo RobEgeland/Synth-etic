@@ -16,56 +16,8 @@ import * as Tone from 'tone'
 function App() {
   const [currentUser, setCurrentUser] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
+  const [sounds, setSounds] = useState([])
 
- 
-  
-  const [synthSaveObj, setSynthSaveObj] =useState({
-      harmonicity: 0.1,
-      vibratoAmount: 0.1,
-      vibratoRate: 4.5,
-      voice0: {
-          oscillator: {
-              type: "sine"
-          },
-          volume: -5,
-          portamento: 0.1,
-          envelope: {
-              attack:0.1,
-              decay: 0.1,
-              sustain: 0.1,
-              release: 0.1
-          }
-      },
-      voice1: {
-        volume: -5,
-        portamento: 1,
-        oscillator: {
-          type: "sine" 
-        },
-        envelope: {
-            attack: 0.1,
-            decay: 0.1,
-            sustain: 0.1,
-            release: 0.1
-        }
-      }
-    })
-
-    function setOsc(e) {
-      setSynthSaveObj({
-        ...synthSaveObj,
-        [synthSaveObj.voice0.oscillator.type]: e.target.value
-      })
-
-    }
-
-    useEffect(() => {
-      // localStorage.setItem("synthSave", JSON.stringify(synthSaveObj))
-      console.log(synthSaveObj)
-    }, [synthSaveObj])
-
-
-  
 
   useEffect(() => {
     fetch("/current-user")
@@ -82,6 +34,12 @@ function App() {
     }
     })
   },[])
+
+  useEffect(() => {
+    fetch('/sounds')
+    .then(r => r.json())
+    .then(data => setSounds(data))
+  }, [])
 
 
   const providerValue = useMemo(() => ({
@@ -104,7 +62,7 @@ function App() {
         <NavBar />
         <Switch>
         <Route path="/my-profile">
-            <UserProfile />
+            <UserProfile sounds={sounds} />
           </Route>
           <Route path="/signup">
             <SignUp />
@@ -116,7 +74,7 @@ function App() {
             <HowTo />
           </Route>
           <Route path="/">
-            <Home setOsc={setOsc} />
+            <Home />
           </Route>
         </Switch>
         </SynthProvider>

@@ -1,6 +1,11 @@
 class SoundsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_invalid
 
+    def index
+        sounds = Sound.all
+        render json: sounds, incluce: [:soundeffects]
+    end
+
     def create 
         sound = Sound.create!(sound_params)
         params[:effects].each do |key, value|
