@@ -1,2 +1,0 @@
-class Delay < ApplicationRecord
-end

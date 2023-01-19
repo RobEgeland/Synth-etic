@@ -3,7 +3,7 @@ class SoundsController < ApplicationController
 
     def index
         sounds = Sound.all
-        render json: sounds, incluce: [:soundeffects]
+        render json: sounds, include: [:effects]
     end
 
     def create 

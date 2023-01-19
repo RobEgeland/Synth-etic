@@ -3,4 +3,5 @@ class User < ApplicationRecord
     validates :username, presence: :true
     validates :age, presence: :true
     validates :email, presence: :true
+    has_many :sounds
 end
