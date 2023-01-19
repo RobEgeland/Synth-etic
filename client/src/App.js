@@ -3,7 +3,7 @@ import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Login from './components/Login';
-import TestKnob2 from './components/TestKnob2';
+import Explore from './components/Explore';
 import UserProfile from './components/UserProfile';
 import HowTo from './components/HowTo';
 import {useState, useEffect, useMemo, useRef} from "react"
@@ -61,7 +61,7 @@ function App() {
       >
         <NavBar />
         <Switch>
-        <Route path="/my-profile">
+          <Route path="/my-profile">
             <UserProfile sounds={sounds} setSounds={setSounds} />
           </Route>
           <Route path="/signup">
@@ -69,6 +69,9 @@ function App() {
           </Route>
           <Route path={"/login"}>
             <Login/> 
+          </Route>
+          <Route path="/explore">
+            <Explore />
           </Route>
           <Route path={"/how-to"}>
             <HowTo />
