@@ -534,58 +534,58 @@ const Home = () => {
             switch(MidiNumbers) {
               // 8TH note durration works for now but need to figure out how to extend
               case 48:
-                synth.current.triggerAttackRelease("C4", "4n");
+                synth.current.triggerAttackRelease("C4", "4n", '+0.05');
                 break;
               case 49:
-                synth.current.triggerAttackRelease("C#4", "4n");
+                synth.current.triggerAttackRelease("C#4", "4n", '+0.05');
                 break;
               case 50:
-                synth.current.triggerAttackRelease("D4", "4n");
+                synth.current.triggerAttackRelease("D4", "4n", '+0.05');
                 break;
               case 51:
-                synth.current.triggerAttackRelease("D#4", "4n");
+                synth.current.triggerAttackRelease("D#4", "4n", '+0.05');
                 break;
               case 52:
-                synth.current.triggerAttackRelease("E4", "4n");
+                synth.current.triggerAttackRelease("E4", "4n", '+0.05');
                 break;
               case 53:
-                synth.current.triggerAttackRelease("F4", "4n");
+                synth.current.triggerAttackRelease("F4", "4n", '+0.05');
                 break;
               case 54:
-                synth.current.triggerAttackRelease("F#4", "4n");
+                synth.current.triggerAttackRelease("F#4", "4n", '+0.05');
                 break;
               case 55:
-                synth.current.triggerAttackRelease("G4", "4n");
+                synth.current.triggerAttackRelease("G4", "4n", '+0.05');
                 break;
               case 56:
-                synth.current.triggerAttackRelease("G#4", "4n");
+                synth.current.triggerAttackRelease("G#4", "4n", '+0.05');
                 break;
               case 57:
-                synth.current.triggerAttackRelease("A4", "4n");
+                synth.current.triggerAttackRelease("A4", "4n", '+0.05');
                 break;  
               case 58:
-                synth.current.triggerAttackRelease("A#4", "4n");
+                synth.current.triggerAttackRelease("A#4", "4n", '+0.05');
                 break;
               case 59:
-                synth.current.triggerAttackRelease("B4", "4n");
+                synth.current.triggerAttackRelease("B4", "4n", '+0.05');
                 break;
               case 60:
-                synth.current.triggerAttackRelease("C5", "4n");
+                synth.current.triggerAttackRelease("C5", "4n", '+0.05');
                 break;
               case 61:
-                synth.current.triggerAttackRelease("C#5", "4n");
+                synth.current.triggerAttackRelease("C#5", "4n", '+0.05');
                 break;
               case 62:
-                synth.current.triggerAttackRelease("D5", "4n");
+                synth.current.triggerAttackRelease("D5", "4n", '+0.05');
                 break;
               case 63:
-                synth.current.triggerAttackRelease("D#5", "4n");
+                synth.current.triggerAttackRelease("D#5", "4n", '+0.05');
                 break;
               case 64:
-                synth.current.triggerAttackRelease("E5", "4n");
+                synth.current.triggerAttackRelease("E5", "4n", '+0.05');
                 break;
               case 65:
-                synth.current.triggerAttackRelease("F5", "4n");
+                synth.current.triggerAttackRelease("F5", "4n", '+0.05');
                 break;
             }
           }}
