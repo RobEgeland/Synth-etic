@@ -16,36 +16,41 @@ import Effects from './Effects';
 const Home = () => {
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
-  if (match) {
-    fetch(`/sounds/${match.params.id}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      setHarmonicity(data.harmonicity)
-      setVibratoRate(data.vibrato_rate)
-      setVibrato(data.vibrato_amount)
-      setVoice1Osc(data.voice0_oscillator)
-      setVoice1Vol(data.voice0_volume)
-      setVoice1Port(data.voice0_portamento)
-      setVoice1Attack(data.voice0_attack)
-      setVoice1Decay(data.voice0_decay)
-      setVoice1Sustain(data.voice0_sustain)
-      setVoice1Release(data.voice0_release)
-      setVoice2Osc(data.voice1_oscillator)
-      setVoice2Vol(data.voice1_volume)
-      setVoice2Port(data.voice1_portamento)
-      setVoice2Attack(data.voice1_attack)
-      setVoice2Decay(data.voice1_decay)
-      setVoice2Sustain(data.voice1_sustain)
-      setVoice2Release(data.voice1_release)
-      setReverb(data.effects[0].wet)
-      setPhaser(data.effects[1].wet)
-      setDistortion(data.effects[2].wet)
-      setBitcrusher(data.effects[3].wet)
-      setDelay(data.effects[4].wet)
-      setFeedback(data.effects[5].wet)
-    })
-  }
+  const [userSoundId, setUserSoundId] = useState(null)
+  console.log(match)
+  useEffect(() => {
+    if (match) {
+      fetch(`/sounds/${match.params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setHarmonicity(data.harmonicity)
+        setVibratoRate(data.vibrato_rate)
+        setVibrato(data.vibrato_amount)
+        setVoice1Osc(data.voice0_oscillator)
+        setVoice1Vol(data.voice0_volume)
+        setVoice1Port(data.voice0_portamento)
+        setVoice1Attack(data.voice0_attack)
+        setVoice1Decay(data.voice0_decay)
+        setVoice1Sustain(data.voice0_sustain)
+        setVoice1Release(data.voice0_release)
+        setVoice2Osc(data.voice1_oscillator)
+        setVoice2Vol(data.voice1_volume)
+        setVoice2Port(data.voice1_portamento)
+        setVoice2Attack(data.voice1_attack)
+        setVoice2Decay(data.voice1_decay)
+        setVoice2Sustain(data.voice1_sustain)
+        setVoice2Release(data.voice1_release)
+        setReverb(data.effects[0].wet)
+        setPhaser(data.effects[1].wet)
+        setDistortion(data.effects[2].wet)
+        setBitcrusher(data.effects[3].wet)
+        setDelay(data.effects[4].wet)
+        setFeedback(data.effects[5].wet)
+        setUserSoundId(data.user.id)
+      })
+    }
+  }, [])
   const history = useHistory()
   const { currentUser, loggedIn } = useContext(UserContext)
   const [errors, setErrors] = useState()
@@ -101,43 +106,6 @@ const Home = () => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
-  const style = {
-    height: "5px",
-    margin: "1%",
-    height: "100px",
-    fontFamily: "Arial",
-    color: "white" // Sets font color of value and knob name
-  };
-  const style_env = {
-    height: "5px",
-    margin: "1%",
-    height: "75px",
-    fontFamily: "Arial",
-    color: "white" // Sets font color of value and knob name
-  };
-
-  const style3 = {
-    height: "5px",
-    margin: "10%",
-    height: "100px",
-    width: "200px",
-    fontFamily: "Arial",
-    color: "white",
-  }
-
-  const style4 = {
-    height: "15px",
-    margin: "0%",
-    height: "200px",
-    width: "200px",
-    fontFamily: "Arial",
-    color: "white",
-  }
-
-  
-  
-  
 
   
   setTimeout(() => {
@@ -485,6 +453,50 @@ const Home = () => {
         })
     }
   }
+  console.log(reverb)
+  function handleSynthUpdate(){
+    const synthObject = {
+      user_id: currentUser.id,
+      sound_name: soundName,
+      harmonicity: harmonicity,
+      vibrato_amount: vibrato,
+      vibrato_rate: vibratoRate,
+      voice0_oscillator: voice1Osc,
+      voice0_volume: voice1Vol,
+      voice0_portamento: voice1Port,
+      voice0_attack: voice1Attack,
+      voice0_decay: voice1Decay,
+      voice0_sustain: voice1Sustain,
+      voice0_release: voice1Release,
+      voice1_oscillator: voice2Osc,
+      voice1_volume: voice2Vol,
+      voice1_portamento: voice2Port,
+      voice1_attack: voice2Attack,
+      voice1_decay: voice2Decay,
+      voice1_sustain: voice2Sustain,
+      voice1_release: voice2Release,
+      effects: {
+        "reverb": reverb,
+        "phaser": phaser, 
+        "distortion": distortion, 
+        "bitcrusher": bitcrusher, 
+        "delay": delay, 
+        "feedback": feedback
+      }
+    }
+    const headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+    const options = {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(synthObject)
+    }
+    fetch(`/sounds/${match.params.id}`, options)
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }
 
   return (
     <div>
@@ -559,6 +571,9 @@ const Home = () => {
         feedback={feedback}
         handleSoundReset={handleSoundReset}
         handleSynthSave={handleSynthSave}
+        match={match}
+        userSoundId={userSoundId}
+        handleSynthUpdate={handleSynthUpdate}
         />
       <br>
       </br>

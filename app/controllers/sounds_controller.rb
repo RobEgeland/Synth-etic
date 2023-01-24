@@ -26,6 +26,20 @@ class SoundsController < ApplicationController
         render json: sound, status: :ok
     end
 
+    def update
+        # need to fix this
+        # find out how toi pass id for sound effects
+        sound = Sound.find_by!(id: params[:id])
+        sound.update(sound_params)
+        sound.soundeffects.delete_all
+        params[:effects].each do |key, value|
+            effect = Effect.find_by!(wet: value)
+            effect.update(name: key, wet: value)
+            Soundeffect.create!(sound_id: sound.id, effect_id: effect.id)
+        end
+        render json: sound, status: :accepted
+    end
+
     private
 
     def sound_params

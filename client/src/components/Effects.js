@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Knob} from 'primereact/knob'
+import { UserContext } from '../context/UserContext'
 
 const Effects = ({
     soundName,
@@ -18,8 +19,22 @@ const Effects = ({
     setFeedback,
     feedback,
     handleSynthSave,
-    handleSoundReset
+    handleSoundReset,
+    match,
+    userSoundId,
+    handleSynthUpdate
 }) => {
+    const { currentUser, loggedIn } = useContext(UserContext)
+    let button;
+    if(match){
+        if(userSoundId === currentUser.id){
+            button = <button onClick={handleSynthUpdate} className="button-62" role="button">Update Sound</button>
+        }else{
+            button = null
+        }
+    }else{
+        button = <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
+    }
     return (
         <div className='effects'>
             <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
@@ -54,7 +69,7 @@ const Effects = ({
                 </div>
             </div>
             <button  className="button-63" role="button" onClick={handleSoundReset}>Reset</button>    
-            <button onClick={handleSynthSave} className="button-62" role="button">Save Sound</button>
+            {button}
         </div>
     )
 }
