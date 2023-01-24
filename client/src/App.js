@@ -17,7 +17,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState()
   const [loggedIn, setLoggedIn] = useState(false)
   const [sounds, setSounds] = useState([])
-
+  
 
   useEffect(() => {
     fetch("/current-user")
@@ -76,9 +76,10 @@ function App() {
           <Route path={"/how-to"}>
             <HowTo />
           </Route>
-          <Route path="/">
+          {/* <Route path={["/", "/:id"]}>
             <Home />
-          </Route>
+          </Route> */}
+            {["/", "/:id"].map(path => <Route path={path}><Home/></Route>)}
         </Switch>
         </SynthProvider>
       </UserContext.Provider>

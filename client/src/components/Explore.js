@@ -15,7 +15,7 @@ const Explore = ({sounds}) => {
             <h2>Check out cools sounds other people are making</h2>
             <br></br>
             <ul className='sound_card_list'>
-                {exploreSounds.map(sound => <ExploreCard sound={sound}/> )}
+                {exploreSounds.map(sound => <ExploreCard key={sound.id} sound={sound}/> )}
             </ul>
         </div>
     )

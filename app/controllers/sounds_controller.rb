@@ -6,6 +6,11 @@ class SoundsController < ApplicationController
         render json: sounds, include: [:effects, :user]
     end
 
+    def show
+        sound = Sound.find_by!(id: params[:id])
+        render json: sound,include: [:effects, :user], status: :ok
+    end
+
     def create 
         sound = Sound.create!(sound_params)
         params[:effects].each do |key, value|

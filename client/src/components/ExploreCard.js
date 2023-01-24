@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const ExploreCard = ({sound}) => {
     return (
@@ -6,7 +7,7 @@ const ExploreCard = ({sound}) => {
             <h1>{sound.sound_name}</h1>
             <br></br>
             <h3>by: {sound.user.username}</h3>
-            <button>play</button>
+            <NavLink to={`/${sound.id}`}><button>play</button></NavLink>
         </div>
     )
 }

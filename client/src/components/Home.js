@@ -1,4 +1,5 @@
 import React, {useContext, useState, useRef, useEffect, Component} from 'react'
+import { useParams, useRouteMatch, useHistory } from 'react-router-dom';
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
@@ -14,12 +15,45 @@ import Effects from './Effects';
 
 const Home = () => {
   let synth = useRef(null)
+  let match = useRouteMatch('/:id')
+  if (match) {
+    fetch(`/sounds/${match.params.id}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      setHarmonicity(data.harmonicity)
+      setVibratoRate(data.vibrato_rate)
+      setVibrato(data.vibrato_amount)
+      setVoice1Osc(data.voice0_oscillator)
+      setVoice1Vol(data.voice0_volume)
+      setVoice1Port(data.voice0_portamento)
+      setVoice1Attack(data.voice0_attack)
+      setVoice1Decay(data.voice0_decay)
+      setVoice1Sustain(data.voice0_sustain)
+      setVoice1Release(data.voice0_release)
+      setVoice2Osc(data.voice1_oscillator)
+      setVoice2Vol(data.voice1_volume)
+      setVoice2Port(data.voice1_portamento)
+      setVoice2Attack(data.voice1_attack)
+      setVoice2Decay(data.voice1_decay)
+      setVoice2Sustain(data.voice1_sustain)
+      setVoice2Release(data.voice1_release)
+      setReverb(data.effects[0].wet)
+      setPhaser(data.effects[1].wet)
+      setDistortion(data.effects[2].wet)
+      setBitcrusher(data.effects[3].wet)
+      setDelay(data.effects[4].wet)
+      setFeedback(data.effects[5].wet)
+    })
+  }
+  const history = useHistory()
   const { currentUser, loggedIn } = useContext(UserContext)
   const [errors, setErrors] = useState()
   const [nameTyping, setNameTyping] = useState(false)
   const [soundName, setSoundName] = useState("")
   const [reload, setReload] = useState(false)
   const [synthReset, setSynthReset] = useState(false)
+
   // synth state vars
   const [voice1Osc, setVoice1Osc] = useState("sine")
   const [voice1Vol, setVoice1Vol] = useState(-5)
@@ -231,6 +265,9 @@ const Home = () => {
 
   function handleSoundReset() {
     window.localStorage.clear()
+    if(match) {
+      history.push('/')
+    }
     location.reload()
   }
 
