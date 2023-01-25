@@ -5,10 +5,10 @@ import ExploreCard from './ExploreCard'
 
 const Explore = ({sounds}) => {
     const { currentUser, loggedIn } = useContext(UserContext)
-
-    const exploreSounds = sounds.filter(sound => sound.id !== currentUser.id)
     if (loggedIn === false) return <h1>Sign up or Log in to veiw Explore!</h1>
     if (!currentUser || !sounds) return <div>Loading...</div>
+
+    const exploreSounds = sounds.filter(sound => sound.user_id !== currentUser.id)
     return (
         <div>
             <h1>Welcome to the explore page!</h1>

@@ -25,6 +25,7 @@ const Effects = ({
     handleSynthUpdate
 }) => {
     const { currentUser, loggedIn } = useContext(UserContext)
+    if(!currentUser) return (<h1>Loading...</h1>)
     let button;
     if(match){
         if(userSoundId === currentUser.id){

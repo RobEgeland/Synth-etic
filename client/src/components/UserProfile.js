@@ -6,6 +6,9 @@ import SoundCard from './SoundCard'
 
 const UserProfile = ({sounds, setSounds}) => {
   const { currentUser, loggedIn } = useContext(UserContext)
+  if (loggedIn === false) return <h1>Sign up or Log in to veiw your profile!</h1>
+  if (!currentUser) return <div>Loading...</div>
+
   const userSounds = sounds.filter(sound => sound.user_id === currentUser.id)
 
   function handleDelete(id) {
@@ -23,18 +26,22 @@ const UserProfile = ({sounds, setSounds}) => {
   }
 
 
-  if (loggedIn === false) return <h1>Sign up or Log in to veiw your profile!</h1>
-  if (!currentUser || !sounds) return <div>Loading...</div>
-  return (
-    <div>
-        <h1>Hi, {currentUser.username}!</h1>
-        <h2>This is where you can veiw all of the sounds you have created</h2>
-        <br></br>
-        <ul className='sound_card_list'>
-          {userSounds.map(sound => <SoundCard handleDelete={handleDelete} sound={sound}/>)}
-        </ul>
-    </div>
-  )
+  if (sounds) {
+    return (
+      <div>
+          <h1>Hi, {currentUser.username}!</h1>
+          <h2>This is where you can veiw all of the sounds you have created</h2>
+          <br></br>
+          <ul className='sound_card_list'>
+            {userSounds.map(sound => <SoundCard handleDelete={handleDelete} sound={sound}/>)}
+          </ul>
+      </div>
+    )
+  }else {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
 }
 
 export default UserProfile
