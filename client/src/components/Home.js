@@ -17,6 +17,12 @@ const Home = () => {
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
   const [userSoundId, setUserSoundId] = useState(null)
+  const [reverbUpdateId, setReverbUpdateId] = useState(null)
+  const [phaserUpdateId, setPhaserUpdateId] = useState(null)
+  const [distortionUpdateId, setDistortionUpdateId] = useState(null)
+  const [bitchrusherUpdateId, setBitcrusherUpdateId] = useState(null)
+  const [delayUpdateId, setDelayUpdateId] = useState(null)
+  const [feedbackUpdateId, setFeedbackUpdateId] = useState(null)
   console.log(match)
   useEffect(() => {
     if (match) {
@@ -42,11 +48,17 @@ const Home = () => {
         setVoice2Sustain(data.voice1_sustain)
         setVoice2Release(data.voice1_release)
         setReverb(data.effects[0].wet)
+        setReverbUpdateId(data.effects[0].id)
         setPhaser(data.effects[1].wet)
+        setPhaserUpdateId(data.effects[1].id)
         setDistortion(data.effects[2].wet)
+        setDistortionUpdateId(data.effects[2].id)
         setBitcrusher(data.effects[3].wet)
+        setBitcrusherUpdateId(data.effects[3].id)
         setDelay(data.effects[4].wet)
+        setDelayUpdateId(data.effects[4].id)
         setFeedback(data.effects[5].wet)
+        setFeedbackUpdateId(data.effects[5].id)
         setUserSoundId(data.user.id)
       })
     }
@@ -476,12 +488,12 @@ const Home = () => {
       voice1_sustain: voice2Sustain,
       voice1_release: voice2Release,
       effects: {
-        "reverb": reverb,
-        "phaser": phaser, 
-        "distortion": distortion, 
-        "bitcrusher": bitcrusher, 
-        "delay": delay, 
-        "feedback": feedback
+        "reverb": [reverb, reverbUpdateId],
+        "phaser": [phaser, phaserUpdateId],
+        "distortion": [distortion, delayUpdateId], 
+        "bitcrusher": [bitcrusher, bitchrusherUpdateId], 
+        "delay": [delay, delayUpdateId],
+        "feedback": [feedback, feedbackUpdateId]
       }
     }
     const headers = {

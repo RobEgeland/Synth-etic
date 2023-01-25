@@ -33,8 +33,8 @@ class SoundsController < ApplicationController
         sound.update(sound_params)
         sound.soundeffects.delete_all
         params[:effects].each do |key, value|
-            effect = Effect.find_by!(wet: value)
-            effect.update(name: key, wet: value)
+            effect = Effect.find_by!(id: value[1])
+            effect.update(wet: value[0])
             Soundeffect.create!(sound_id: sound.id, effect_id: effect.id)
         end
         render json: sound, status: :accepted
