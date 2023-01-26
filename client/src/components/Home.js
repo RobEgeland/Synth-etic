@@ -3,8 +3,6 @@ import { useParams, useRouteMatch, useHistory } from 'react-router-dom';
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
-import Knob from "react-simple-knob";
-import {Knob as Knob2} from 'primereact/knob'
 import { Distortion } from 'tone';
 import { UserContext } from '../context/UserContext'
 import Oscillator1  from './Oscillator1';
@@ -16,6 +14,7 @@ import Effects from './Effects';
 const Home = () => {
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
+
   const [userSoundId, setUserSoundId] = useState(null)
   const [reverbUpdateId, setReverbUpdateId] = useState(null)
   const [phaserUpdateId, setPhaserUpdateId] = useState(null)
@@ -23,13 +22,71 @@ const Home = () => {
   const [bitchrusherUpdateId, setBitcrusherUpdateId] = useState(null)
   const [delayUpdateId, setDelayUpdateId] = useState(null)
   const [feedbackUpdateId, setFeedbackUpdateId] = useState(null)
-  console.log(match)
+
+  const history = useHistory()
+  const { currentUser, loggedIn } = useContext(UserContext)
+  const [errors, setErrors] = useState()
+  const [nameTyping, setNameTyping] = useState(false)
+  const [soundName, setSoundName] = useState("")
+  
+  // synth state vars
+  const [voice1Osc, setVoice1Osc] = useState("sine")
+  const [voice1Vol, setVoice1Vol] = useState(-5)
+  const [voice1Port, setVoice1Port] = useState(0)
+  const [voice1Attack, setVoice1Attack] = useState(0.1)
+  const [voice1Decay, setVoice1Decay] = useState(0.1)
+  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
+  const [voice1Release, setVoice1Release] = useState(0.1)
+  const [voice2Osc, setVoice2Osc] = useState("sine")
+  const [voice2Vol, setVoice2Vol] = useState(-5)
+  const [voice2Port, setVoice2Port] = useState(0)
+  const [voice2Attack, setVoice2Attack] = useState(0.1)
+  const [voice2Decay, setVoice2Decay] = useState(0.1)
+  const [voice2Sustain, setVoice2Sustain] = useState(0.1)
+  const [voice2Release, setVoice2Release] = useState(0.1)
+  const [harmonicity, setHarmonicity] = useState(0.1)
+  const [vibratoRate, setVibratoRate] = useState(4.5)
+  const [vibrato, setVibrato] = useState(0.1)
+  const [reverb, setReverb] = useState(0)
+  const [phaser, setPhaser] = useState(0)
+  const [distortion, setDistortion] = useState(0)
+  const [bitcrusher, setBitcrusher] = useState(0)
+  const [delay, setDelay] = useState(0)
+  const [feedback, setFeedback] = useState(0)
+  
+  const reverbAmount = 0.1
+  // can possible get rid of decay knob, make it constant
+  const reverbDecay = 4
+  
+  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+  const Phaser = new Tone.Phaser({
+    frequency: 10,
+	  octaves: 5,
+	  baseFrequency: 600
+  }).toDestination()
+    const Distortion = new Tone.Distortion(0.4).toDestination()
+    const Delay = new Tone.PingPongDelay("8n").toDestination()
+    const Feedback = new Tone.FeedbackDelay("8n").toDestination()
+    const BitCrusher = new Tone.BitCrusher(2).toDestination()
+    
+    const firstNote = MidiNumbers.fromNote('c3');
+    const lastNote = MidiNumbers.fromNote('f5');
+  const keyboardShortcuts = KeyboardShortcuts.create({
+    firstNote: firstNote,
+    lastNote: lastNote,
+    keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  });
+  
+  
+  
+  
   useEffect(() => {
     if (match) {
       fetch(`/sounds/${match.params.id}`)
       .then(res => res.json())
       .then(data => {
         console.log(data)
+        setSoundName(data.sound_name)
         setHarmonicity(data.harmonicity)
         setVibratoRate(data.vibrato_rate)
         setVibrato(data.vibrato_amount)
@@ -63,69 +120,6 @@ const Home = () => {
       })
     }
   }, [])
-  const history = useHistory()
-  const { currentUser, loggedIn } = useContext(UserContext)
-  const [errors, setErrors] = useState()
-  const [nameTyping, setNameTyping] = useState(false)
-  const [soundName, setSoundName] = useState("")
-  const [reload, setReload] = useState(false)
-  const [synthReset, setSynthReset] = useState(false)
-
-  // synth state vars
-  const [voice1Osc, setVoice1Osc] = useState("sine")
-  const [voice1Vol, setVoice1Vol] = useState(-5)
-  const [voice1Port, setVoice1Port] = useState(0)
-  const [voice1Attack, setVoice1Attack] = useState(0.1)
-  const [voice1Decay, setVoice1Decay] = useState(0.1)
-  const [voice1Sustain, setVoice1Sustain] = useState(0.1)
-  const [voice1Release, setVoice1Release] = useState(0.1)
-  const [voice2Osc, setVoice2Osc] = useState("sine")
-  const [voice2Vol, setVoice2Vol] = useState(-5)
-  const [voice2Port, setVoice2Port] = useState(0)
-  const [voice2Attack, setVoice2Attack] = useState(0.1)
-  const [voice2Decay, setVoice2Decay] = useState(0.1)
-  const [voice2Sustain, setVoice2Sustain] = useState(0.1)
-  const [voice2Release, setVoice2Release] = useState(0.1)
-  const [harmonicity, setHarmonicity] = useState(0.1)
-  const [vibratoRate, setVibratoRate] = useState(4.5)
-  const [vibrato, setVibrato] = useState(0.1)
-  const [reverb, setReverb] = useState(0)
-  const [phaser, setPhaser] = useState(0)
-  const [distortion, setDistortion] = useState(0)
-  const [bitcrusher, setBitcrusher] = useState(0)
-  const [delay, setDelay] = useState(0)
-  const [feedback, setFeedback] = useState(0)
-
-  const reverbAmount = 0.1
-    // can possible get rid of decay knob, make it constant
-  const reverbDecay = 4
-  
-  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
-  const Phaser = new Tone.Phaser({
-    frequency: 10,
-	  octaves: 5,
-	  baseFrequency: 600
-  }).toDestination()
-    const Distortion = new Tone.Distortion(0.4).toDestination()
-    const Delay = new Tone.PingPongDelay("8n").toDestination()
-    const Feedback = new Tone.FeedbackDelay("8n").toDestination()
-    const BitCrusher = new Tone.BitCrusher(2).toDestination()
-
-  const firstNote = MidiNumbers.fromNote('c3');
-  const lastNote = MidiNumbers.fromNote('f5');
-  const keyboardShortcuts = KeyboardShortcuts.create({
-    firstNote: firstNote,
-    lastNote: lastNote,
-    keyboardConfig: KeyboardShortcuts.HOME_ROW,
-  });
-
-  
-  setTimeout(() => {
-    setNameTyping(false)
-  }, "5000")
-
-  
-
     
   useEffect(() => {
     synth.current = new Tone.DuoSynth({
@@ -137,7 +131,7 @@ const Home = () => {
               type: "sine"
           },
           volume: -5,
-          portamento: 0,
+          portamento: 0.1,
           envelope: {
               attack:0.1,
               decay: 0.1,
@@ -147,7 +141,7 @@ const Home = () => {
       },
       voice1: {
         volume: -5,
-        portamento: 0,
+        portamento: 0.1,
         oscillator: {
           type: "sine" 
         },
@@ -164,6 +158,7 @@ const Home = () => {
   useEffect(() => {
     let returnObj = JSON.parse(window.localStorage.getItem('Synth'))
     if (window.localStorage.getItem('Synth')){
+      setSoundName(returnObj.soundName)
       setHarmonicity(returnObj.harmonicity)
       setVibratoRate(returnObj.vibratoRate)
       setVibrato(returnObj.vibrato)
@@ -192,6 +187,7 @@ const Home = () => {
 
   useEffect(() => {
     window.localStorage.setItem('Synth', JSON.stringify({
+      "soundName": soundName,
       "harmonicity": harmonicity,
       "vibratoRate": vibratoRate,
       "vibrato": vibrato,
@@ -239,7 +235,8 @@ const Home = () => {
     distortion,
     bitcrusher,
     delay,
-    feedback
+    feedback,
+    soundName
   ])
   
 
@@ -267,9 +264,9 @@ const Home = () => {
   
   useEffect(() => {
     synth.current.voice0.portamento = voice1Port
+    console.log(synth.current.voice0.portamento)
   }, [voice1Port])
 
-  // these can be refactored to one function
   
   useEffect(() => {
     synth.current.voice0.envelope.attack = voice1Attack
@@ -465,7 +462,7 @@ const Home = () => {
         })
     }
   }
-  console.log(reverb)
+
   function handleSynthUpdate(){
     const synthObject = {
       user_id: currentUser.id,
@@ -490,7 +487,7 @@ const Home = () => {
       effects: {
         "reverb": [reverb, reverbUpdateId],
         "phaser": [phaser, phaserUpdateId],
-        "distortion": [distortion, delayUpdateId], 
+        "distortion": [distortion, distortionUpdateId], 
         "bitcrusher": [bitcrusher, bitchrusherUpdateId], 
         "delay": [delay, delayUpdateId],
         "feedback": [feedback, feedbackUpdateId]

@@ -38,8 +38,7 @@ const Effects = ({
     }
     return (
         <div className='effects'>
-            <input value={soundName} type={"text"} placeholder={"Sound Name"} onClick={() => setNameTyping(true)} onChange={(e) => {
-                setNameTyping(true)
+            <input value={soundName} type={"text"} placeholder={"Sound Name"} onBlur={() => setNameTyping(false)} onClick={() => setNameTyping(true)} onChange={(e) => {
                 setSoundName(e.target.value)
                 }}>
             </input>
