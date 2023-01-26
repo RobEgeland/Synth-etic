@@ -1,24 +1,41 @@
-# README
+# Synth-etic
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to Synth-etic, a fully web based synthesizer
 
-Things you may want to cover:
+## How to Use
 
-* Ruby version
+* play Synth-etic like a piano with the keyboard using the keys [a - '] for the white keys and [W, E, T, Y, U, O, P] for the black keys
 
-* System dependencies
+* sign up on the corresponding tab to save sounds you've created 
 
-* Configuration
+* play sounds others have created on the explore tab
 
-* Database creation
+* read the How-To tab to get an idea of what all the knobs do
 
-* Database initialization
+## Versions 
+this app requires ruby version 3.1.0, as well as rails 7.0.4
 
-* How to run the test suite
+```
+$ rvm install "ruby-3.1.0"
+$ rvm install "rails-7.0.4"
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Ruby dependencies
+this app uses Postgresql for its database, bcrypt for password encryption
 
-* Deployment instructions
+```
+$ gem install pg
+$ gem install bcrypt
+```
 
-* ...
+## Starting postgres
+
+```
+$sudo service postgresql start
+```
+
+## Creating a new database
+
+```
+$ rails db:create
+```

@@ -25,10 +25,9 @@ const Effects = ({
     handleSynthUpdate
 }) => {
     const { currentUser, loggedIn } = useContext(UserContext)
-    if(!currentUser) return (<h1>Loading...</h1>)
     let button;
     if(match){
-        if(userSoundId === currentUser.id){
+        if(currentUser && userSoundId === currentUser.id){
             button = <button onClick={handleSynthUpdate} className="button-62" role="button">Update Sound</button>
         }else{
             button = null
