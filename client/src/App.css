@@ -286,13 +286,15 @@ html {
 
 
 .piano-parent {
-  height: auto;
+  position: relative;
+  bottom: 0px;
+  margin: 0;
+  height: 20px;
 }
 .piano {
-  /* position: fixed;
-  bottom: 0; */
-  height: auto;
- 
+position: relative;
+bottom: 21px;
+
 }
 
 .voice1_vol_port {
