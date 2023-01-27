@@ -14,7 +14,8 @@ import Effects from './Effects';
 const Home = () => {
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
-
+  
+  const [midiNote, setMidiNote] = useState(null)
   const [userSoundId, setUserSoundId] = useState(null)
   const [reverbUpdateId, setReverbUpdateId] = useState(null)
   const [phaserUpdateId, setPhaserUpdateId] = useState(null)
@@ -77,7 +78,45 @@ const Home = () => {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
   
+
+  // if (navigator.requestMIDIAccess) {
+  //   navigator.requestMIDIAccess().then(success, failure)
+  // }
+
+
+  // function success(midiAccess)  {
+  //   midiAccess.onstatechange = updateDevice
+  //   const input = midiAccess.input[0]
+  //   input.addEventListener('midimessage', handleInput)
+  //   // input.forEach((input) => {
+  //   //   input.addEventListener('midimessage', handleInput)
+  //   // })
+      
+  // }
+
+  // function handleInput(input) {
+  //   const command = input.data[0]
+  //   const note = input.data[1]
+  //   const velocity = input.data[2]
+    
+  //   switch (command) {
+  //     case 144:
+  //     if (velocity > 0) {
+  //       setMidiNote(note)
+  //       console.log(note)
+  //     }else {
+  //       setMidiNote(null)
+  //     }
+  //   }
+
+  // }
   
+  // function updateDevice(e) {
+  // }
+
+  // function failure() {
+  //   console.log("Could not connect Midi")
+  // }
   
   
   useEffect(() => {
@@ -154,6 +193,8 @@ const Home = () => {
       },
     }).toDestination()
   }, [])
+
+  
 
   useEffect(() => {
     let returnObj = JSON.parse(window.localStorage.getItem('Synth'))
@@ -589,6 +630,7 @@ const Home = () => {
       <div className='piano-parent'>
         <div className='piano'>
           <Piano 
+          playbackNote={[midiNote]}
           disabled={nameTyping ? true : false}
           noteRange={{ first: 48, last: 77}}
           playNote={(MidiNumbers) => {
