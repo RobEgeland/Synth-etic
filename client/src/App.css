@@ -246,6 +246,7 @@ select {
 .voice1osc {
   position: relative;
   width: 200px;
+  grid-area: osc;
 }
 
 
@@ -275,6 +276,7 @@ select {
 .osc1form > div {
   margin: 20px;
   position: relative;
+
 }
 .osc2form {
   width: 710px;
@@ -292,9 +294,20 @@ select {
 .voice1_osc {
   grid-column-start: 1;
   grid-column-end: 3;
-  position: relative;
 }
 
+.voice1_osc select {
+  background-color: #e9c46a;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 
 .piano-parent {
   position: relative;
@@ -378,7 +391,7 @@ height: 10px;
 }
 
 .effects_inner {
-
+  margin: 40px;
   height: 530px;
   display: grid;
   gap: 1fr;
@@ -386,7 +399,24 @@ height: 10px;
   grid-template-columns: 30% 30% 30%;
 }
 
+.voice2_osc {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  
+}
 
+.voice2_osc select {
+  background-color: #e9c46a;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 
 .effectsinner svg {
   padding: 10px;

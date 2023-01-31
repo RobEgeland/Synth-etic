@@ -20,16 +20,13 @@ const Oscillator1 = ({
 
     return (
         <div className='osc1form'>
-            <div name='voice1_osc '>
+            <div className='voice1_osc '>
                 <select value={voice1Osc} onChange={(e) => setVoice1Osc(e.target.value)} >
                     <option value={"sine"} selected>sine</option>
                     <option value={"triangle"}>triangle</option>
                     <option value={"sawtooth"}>sawtooth</option>
                     <option value={"square"}>square</option>
                 </select>
-            </div>
-            <div>
-
             </div>
             <div className='voice1_vol'>
                 <Knob className='voice1_volume' textColor={"white"} step={1} size={60} min={-5} max={10} value={voice1Vol} onChange={(e) => setVoice1Vol(e.value)} />
