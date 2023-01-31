@@ -78,9 +78,14 @@ html {
 
 .error {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 20px;
+  margin: 0;
+  position: absolute;
+  bottom: 37%;
+  right: 25%;
+  font-size: 30px;
+  width: 300px;
   color: red;
-  z-index: 10;
+  z-index: 100;
 }
 
 .login-form {
@@ -180,6 +185,10 @@ html {
       background: #181818;
 }
 
+select {
+  position: relative;
+}
+
 .knob {
   position: absolute;
   width: 100%;
@@ -232,7 +241,7 @@ html {
   border-style: solid;
   border-width: 5px;
   border: #0e0e0e;
-  
+  position: relative;
 }
 .voice1osc {
   position: relative;
@@ -249,12 +258,12 @@ html {
   margin-left: 200px;
 }
 .osc1form {
+  position: relative; 
   width: 710px;
   height: 273px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25% ;
   grid-template-rows: 50% 50%;
-  /* position: relative; has to be position relative for left to work, or you could just do margin-left: -50px; too */
   /* left: 0px; */
   border: 3px solid black;
   border-bottom: 0px;
@@ -265,6 +274,7 @@ html {
 }
 .osc1form > div {
   margin: 20px;
+  position: relative;
 }
 .osc2form {
   width: 710px;
@@ -282,6 +292,7 @@ html {
 .voice1_osc {
   grid-column-start: 1;
   grid-column-end: 3;
+  position: relative;
 }
 
 
@@ -294,11 +305,12 @@ html {
 .piano {
 position: relative;
 bottom: 21px;
+height: 10px;
 
 }
 
 .voice1_vol_port {
-  position: absolute;
+  position: relative;
   left: 35px;
   width: 400px;
   margin-left: 250px;

@@ -550,9 +550,7 @@ const Home = () => {
 
   return (
     <div>
-      <div>
       {errors ? <h2 className='error'>{errors}</h2> : null}
-      </div>
       <div className='voice1'>
         <Oscillator1 
         setVoice1Osc={setVoice1Osc} 
