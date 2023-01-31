@@ -440,7 +440,7 @@ const Home = () => {
 
   function handleSynthSave() {
     if (!currentUser) {
-      setErrors("Must Be Logged in to save")
+      setErrors("must be logged in to save")
     }else if(soundName === "") {
       setErrors("sound must have a name")
     }else {
