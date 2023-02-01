@@ -79,7 +79,7 @@ function App() {
           {/* <Route path={["/", "/:id"]}>
             <Home />
           </Route> */}
-            {["/", "/:id"].map(path => <Route path={path}><Home/></Route>)}
+            {["/", "/:id"].map(path => <Route path={path}><Home sounds={sounds} setSounds={setSounds}/></Route>)}
         </Switch>
         </SynthProvider>
       </UserContext.Provider>

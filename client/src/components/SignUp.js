@@ -1,5 +1,7 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { UserContext } from '../context/UserContext'
 
 const SignUp = () => {
   const [errors, setErrors] = useState()
@@ -10,7 +12,8 @@ const SignUp = () => {
     password: "",
     password_confirmation: "", 
   })
-
+  const { setCurrentUser, setLoggedIn } = useContext(UserContext)
+  const history = useHistory()
   function handleChange(e) {
     setUser({
         ...user,
@@ -33,7 +36,9 @@ const SignUp = () => {
     .then(res => {
         if(res.ok){
             res.json().then(data => {
-              console.log(data)
+              setCurrentUser(data)
+              setLoggedIn(true)
+              history.push('/')
             })
         }else {
             res.json().then(error => {

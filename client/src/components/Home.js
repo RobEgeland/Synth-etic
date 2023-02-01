@@ -11,7 +11,7 @@ import Vibracity from './Vibracity';
 import Effects from './Effects';
 
 
-const Home = () => {
+const Home = ({sounds, setSounds}) => {
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
   
@@ -487,7 +487,9 @@ const Home = () => {
       .then(res => {
         if(res.ok){
           res.json().then(data => {
-          console.log(data)
+          setSounds([...sounds, data])
+          window.localStorage.clear()
+          history.push('/my-profile')
         })
         }else {
           res.json().then(error => {
