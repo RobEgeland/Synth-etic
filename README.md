@@ -39,3 +39,7 @@ $sudo service postgresql start
 ```
 $ rails db:create
 ```
+
+## You can check out the website here
+
+https://synth-etic.onrender.com
