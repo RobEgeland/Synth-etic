@@ -690,7 +690,7 @@ const Home = () => {
                 break;
             }
           }}
-          width={1905}
+          width={2020}
           stopNote={(midiNumber) => {
             // synth.triggerRelease()
             // Stop playing a given note - see notes below

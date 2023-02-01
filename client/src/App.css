@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  
+  height: auto;
+  width: auto;
 }
 html {
   background-color: #2a9d8f;
@@ -386,7 +387,7 @@ height: 10px;
   position: absolute;
   top: 78px;
   left: 1011px;
-  width: 887px;
+  width: -webkit-fill-available;
   height: 546px;
 }
 
