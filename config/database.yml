@@ -81,4 +81,4 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: postgres://synth_db_user:9Lcri5RTCPH5hdfAZzbWjxPkfrGsfarW@dpg-cdq1jharrk09t6ussg50-a.oregon-postgres.render.com/synth_db

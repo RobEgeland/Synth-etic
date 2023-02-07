@@ -59,7 +59,8 @@ const Home = ({sounds, setSounds}) => {
   // can possible get rid of decay knob, make it constant
   const reverbDecay = 4
   
-  const Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+  let Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
+
   const Phaser = new Tone.Phaser({
     frequency: 10,
 	  octaves: 5,
@@ -197,6 +198,7 @@ const Home = ({sounds, setSounds}) => {
         }
       },
     }).toDestination()
+    synth.current.connect(Reverb)
   }, [])
 
   
@@ -296,6 +298,24 @@ const Home = ({sounds, setSounds}) => {
 
   // functions for changing knobs
   // Voice 1 controls
+
+  // useEffect(() => {
+  //   if(voice1Osc !== synth.current.voice0.oscillator.type) {
+  //     synth.current.voice0.oscillator.type = voice1Osc
+  //   }else if (voice1Vol !== synth.current.voice0.volume.value) {
+  //     synth.current.voice0.volume.value = voice1Vol
+  //   }else if(voice1Port !== synth.current.voice0.portamento) {
+  //     synth.current.voice0.portamento = voice1Port
+  //   }else if(voice1Attack !== synth.current.voice0.envelope.attack) {
+  //     synth.current.voice0.envelope.attack = voice1Attack
+  //   }else if(voice1Decay !== synth.current.voice0.envelope.decay) {
+  //     synth.current.voice0.envelope.decay = voice1Decay
+  //   }else if(voice1Sustain !== synth.current.voice0.envelope.decay) {
+  //     synth.current.voice0.envelope.decay = voice1Sustain
+  //   }else if(voice1Release !== synth.current.voice0.envelope.release) {
+  //     synth.current.voice0.envelope.release = voice1Release
+  //   }
+  // }, [voice1Osc, voice1Vol, voice1Port, voice1Attack, voice1Decay, voice1Sustain, voice1Release])
   
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
@@ -307,7 +327,6 @@ const Home = ({sounds, setSounds}) => {
   }, [voice1Vol])
 
 
-  
   useEffect(() => {
     synth.current.voice0.portamento = voice1Port
   }, [voice1Port])
@@ -370,26 +389,37 @@ const Home = ({sounds, setSounds}) => {
   }, [voice2Release])
   
   // harm/vib controls
-  
+
   useEffect(() => {
-    synth.current.harmonicity.value = harmonicity
-  }, [harmonicity])
+    if(harmonicity !== synth.current.harmonicity.value){
+      synth.current.harmonicity.value = harmonicity
+    } else if(vibrato !== synth.current.vibratoAmount.value){
+      synth.current.vibratoAmount.value = vibrato
+    }else if(vibratoRate !== synth.current.vibratoRate.value){
+      synth.current.vibratoRate.value = vibratoRate
+    }
+  }, [harmonicity, vibrato, vibratoRate])
+  
+  // useEffect(() => {
+  //   synth.current.harmonicity.value = harmonicity
+  // }, [harmonicity])
 
   
-  useEffect(() => {
-    synth.current.vibratoRate.value = vibratoRate
-  }, [vibratoRate])
+  // useEffect(() => {
+  //   synth.current.vibratoRate.value = vibratoRate
+  // }, [vibratoRate])
 
   
-  useEffect(() => {
-    synth.current.vibratoAmount.value = vibrato
-  }, [vibrato])
+  // useEffect(() => {
+  //   synth.current.vibratoAmount.value = vibrato
+  // }, [vibrato])
 
   // effects controls
   
   useEffect(() => {
+    console.log(Reverb.wet)
     synth.current.connect(Reverb)
-    synth.current.Reverb = reverb
+    Reverb.wet.value = reverb
     if (reverb === 0) {
       synth.current.disconnect(Reverb)
     }
@@ -409,6 +439,7 @@ const Home = ({sounds, setSounds}) => {
     synth.current.connect(Distortion)
     synth.current.Distortion = distortion
     if (distortion === 0) {
+      console.log('disconnect')
       synth.current.disconnect(Distortion)
     }
   }, [distortion])
@@ -417,10 +448,10 @@ const Home = ({sounds, setSounds}) => {
   useEffect(() => {
     synth.current.connect(BitCrusher)
     synth.current.BitCrusher = bitcrusher
-    if (bitcrusher === 0) {
+    if (synth.current.BitCrusher === 0.0) {
       synth.current.disconnect(BitCrusher)
     }
-  })
+  }, [bitcrusher])
 
   console.log(window.innerWidth)
 
@@ -698,7 +729,7 @@ const Home = ({sounds, setSounds}) => {
                 break;
             }
           }}
-          width={window.innerWidth}
+          width={(window.innerWidth) - 17}
           stopNote={(midiNumber) => {
             // synth.triggerRelease()
             // Stop playing a given note - see notes below
