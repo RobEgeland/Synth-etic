@@ -13,7 +13,7 @@ const Vibracity = ({
   return (
     <div>
         <div className='harmonicity'>
-            <Knob className='harmonicity' textColor={"white"} step={0.1} size={75} min={0.1} max={2} value={harmonicity} onChange={(e) => setHarmonicity(e.value)} />
+            <Knob className='harmonicity' textColor={"white"} step={0.1} size={75} min={0.1} max={2} value={harmonicity} onChange={(e) => setHarmonicity(e.value.toFixed(1))} />
             <h3 className='knob_label'>Harmonicity</h3>
         </div>
         <div className='vibrato_rate'>
@@ -21,7 +21,7 @@ const Vibracity = ({
             <h3 className='knob_label'>Vibrato Rate</h3>
         </div>
         <div className='vibrato'>
-            <Knob className='vibrato' textColor={"white"} step={0.1} size={75} min={0.1} max={1} value={vibrato} onChange={(e) => setVibrato(e.value)} />
+            <Knob className='vibrato' textColor={"white"} step={0.1} size={75} min={0.1} max={1} value={vibrato} onChange={(e) => setVibrato(e.value.toFixed(1))} />
             <h3 className='knob_label'>Vibrato</h3>
         </div>
     </div>

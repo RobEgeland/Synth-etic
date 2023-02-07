@@ -44,27 +44,27 @@ const Effects = ({
             </input>
             <div className='effects_inner'>
                 <div className='reverb'>
-                    <Knob className='reverb' textColor={"white"} step={0.1} size={90} min={0} max={1} value={reverb} onChange={(e) => setReverb(e.value)} />
+                    <Knob className='reverb' textColor={"white"} step={0.1} size={90} min={0} max={1} value={reverb} onChange={(e) => setReverb(e.value.toFixed(1))} />
                     <h3 className='knob_label'>Reverb</h3>
                 </div>
                 <div className='phaser'>
-                    <Knob className='phaser' textColor={"white"} step={0.1} size={90} min={0} max={1} value={phaser} onChange={(e) => setPhaser(e.value)} />
+                    <Knob className='phaser' textColor={"white"} step={0.1} size={90} min={0} max={1} value={phaser} onChange={(e) => setPhaser(e.value.toFixed(1))} />
                     <h3 className='knob_label'>Phaser</h3>
                 </div>
                 <div className='distortion'>
-                    <Knob className='distortion' textColor={"white"} step={0.1} size={90} min={0} max={1} value={distortion} onChange={(e) => setDistortion(e.value)} />
+                    <Knob className='distortion' textColor={"white"} step={0.1} size={90} min={0} max={1} value={distortion} onChange={(e) => setDistortion(e.value.toFixed(1))} />
                     <h3 className='knob_label'>Distortion</h3>
                 </div>
                 <div className='bitcrusher'>
-                    <Knob className='bitcrusher' textColor={"white"} step={0.1} size={90} min={0} max={1} value={bitcrusher} onChange={(e) => setBitcrusher(e.value)} />
+                    <Knob className='bitcrusher' textColor={"white"} step={0.1} size={90} min={0} max={1} value={bitcrusher} onChange={(e) => setBitcrusher(e.value.toFixed(1))} />
                     <h3 className='knob_label'>BitCrusher</h3>
                 </div>
                 <div className='delay'>
-                    <Knob className='delay' textColor={"white"} step={0.1} size={90} min={0} max={1} value={delay} onChange={(e) => setDelay(e.value)} />
+                    <Knob className='delay' textColor={"white"} step={0.1} size={90} min={0} max={1} value={delay} onChange={(e) => setDelay(e.value.toFixed(1))} />
                     <h3 className='knob_label'>Delay</h3>
                 </div>
                 <div className='feedback'>
-                    <Knob className='feedback' textColor={"white"} step={0.1} size={90} min={0} max={1} value={feedback} onChange={(e) => setFeedback(e.value)} />
+                    <Knob className='feedback' textColor={"white"} step={0.1} size={90} min={0} max={1} value={feedback} onChange={(e) => setFeedback(e.value.toFixed(1))} />
                     <h3 className='knob_label'>Feedback</h3>
                 </div>
             </div>

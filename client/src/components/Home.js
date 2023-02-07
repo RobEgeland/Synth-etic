@@ -65,20 +65,23 @@ const Home = ({sounds, setSounds}) => {
 	  octaves: 5,
 	  baseFrequency: 600
   }).toDestination()
-    const Distortion = new Tone.Distortion(0.4).toDestination()
-    const Delay = new Tone.PingPongDelay("8n").toDestination()
-    const Feedback = new Tone.FeedbackDelay("8n").toDestination()
-    const BitCrusher = new Tone.BitCrusher(2).toDestination()
+  const Distortion = new Tone.Distortion(0.4).toDestination()
+  const Delay = new Tone.PingPongDelay("8n").toDestination()
+  const Feedback = new Tone.FeedbackDelay("8n").toDestination()
+  const BitCrusher = new Tone.BitCrusher(2).toDestination()
     
-    const firstNote = MidiNumbers.fromNote('c3');
-    const lastNote = MidiNumbers.fromNote('f5');
+  const firstNote = MidiNumbers.fromNote('c3');
+  const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
   
+  
 
+  
+  
   // if (navigator.requestMIDIAccess) {
   //   navigator.requestMIDIAccess().then(success, failure)
   // }
@@ -86,11 +89,13 @@ const Home = ({sounds, setSounds}) => {
 
   // function success(midiAccess)  {
   //   midiAccess.onstatechange = updateDevice
-  //   const input = midiAccess.input[0]
+  //   const input = midiAccess.inputs[0]
+  //   console.log(input)
+  //   // input.onmidimessage = handleInput
   //   input.addEventListener('midimessage', handleInput)
-  //   // input.forEach((input) => {
-  //   //   input.addEventListener('midimessage', handleInput)
-  //   // })
+  //   input.forEach((input) => {
+  //     input.addEventListener('midimessage', handleInput)
+  //   })
       
   // }
 
@@ -296,7 +301,7 @@ const Home = ({sounds, setSounds}) => {
     synth.current.voice0.oscillator.type = voice1Osc
   }, [voice1Osc])
 
- 
+
   useEffect(() => {
     synth.current.voice0.volume.value = voice1Vol
   }, [voice1Vol])
@@ -305,7 +310,6 @@ const Home = ({sounds, setSounds}) => {
   
   useEffect(() => {
     synth.current.voice0.portamento = voice1Port
-    console.log(synth.current.voice0.portamento)
   }, [voice1Port])
 
   
@@ -345,7 +349,7 @@ const Home = ({sounds, setSounds}) => {
     synth.current.voice1.portamento = voice2Port
   }, [voice2Port])
 
- 
+
   useEffect(() => {
     synth.current.voice1.envelope.attack = voice2Attack
   }, [voice2Attack])
@@ -418,7 +422,8 @@ const Home = ({sounds, setSounds}) => {
     }
   })
 
-  
+  console.log(window.innerWidth)
+
   useEffect(() => {
     synth.current.connect(Delay)
     synth.current.Delay = delay
@@ -630,6 +635,7 @@ const Home = ({sounds, setSounds}) => {
       <div className='piano-parent'>
         <div className='piano'>
           <Piano 
+          activeNotes={midiNote}
           playbackNote={[midiNote]}
           disabled={nameTyping ? true : false}
           noteRange={{ first: 48, last: 77}}
@@ -692,7 +698,7 @@ const Home = ({sounds, setSounds}) => {
                 break;
             }
           }}
-          width={2020}
+          width={window.innerWidth}
           stopNote={(midiNumber) => {
             // synth.triggerRelease()
             // Stop playing a given note - see notes below
