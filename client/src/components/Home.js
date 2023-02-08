@@ -3,7 +3,6 @@ import { useParams, useRouteMatch, useHistory } from 'react-router-dom';
 import { Piano, KeyboardShortcuts, MidiNumbers  } from 'react-piano'
 import 'react-piano/dist/styles.css';
 import * as Tone from 'tone'
-import { Distortion } from 'tone';
 import { UserContext } from '../context/UserContext'
 import Oscillator1  from './Oscillator1';
 import Oscilliator2 from './Oscilliator2';
@@ -12,6 +11,7 @@ import Effects from './Effects';
 
 
 const Home = ({sounds, setSounds}) => {
+
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
   
@@ -55,22 +55,27 @@ const Home = ({sounds, setSounds}) => {
   const [delay, setDelay] = useState(0)
   const [feedback, setFeedback] = useState(0)
   
-  const reverbAmount = 0.1
-  // can possible get rid of decay knob, make it constant
-  const reverbDecay = 4
-  
-  let Reverb = new Tone.Reverb(reverbDecay, reverbAmount).toDestination()
 
+  const Reverb = new Tone.Reverb({
+    decay: 7,
+  }).toDestination()
+  
+  
   const Phaser = new Tone.Phaser({
-    frequency: 10,
+    frequency: 15,
 	  octaves: 5,
-	  baseFrequency: 600
+	  baseFrequency: 500,
+    wet: 0
   }).toDestination()
   const Distortion = new Tone.Distortion(0.4).toDestination()
   const Delay = new Tone.PingPongDelay("8n").toDestination()
   const Feedback = new Tone.FeedbackDelay("8n").toDestination()
-  const BitCrusher = new Tone.BitCrusher(2).toDestination()
-    
+
+  const BitCrusher = new Tone.BitCrusher({
+    bits: 4,
+    wet: 0
+  }).toDestination()
+    console.log(BitCrusher.current)
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -82,48 +87,7 @@ const Home = ({sounds, setSounds}) => {
   
 
   
-  
-  // if (navigator.requestMIDIAccess) {
-  //   navigator.requestMIDIAccess().then(success, failure)
-  // }
-
-
-  // function success(midiAccess)  {
-  //   midiAccess.onstatechange = updateDevice
-  //   const input = midiAccess.inputs[0]
-  //   console.log(input)
-  //   // input.onmidimessage = handleInput
-  //   input.addEventListener('midimessage', handleInput)
-  //   input.forEach((input) => {
-  //     input.addEventListener('midimessage', handleInput)
-  //   })
-      
-  // }
-
-  // function handleInput(input) {
-  //   const command = input.data[0]
-  //   const note = input.data[1]
-  //   const velocity = input.data[2]
-    
-  //   switch (command) {
-  //     case 144:
-  //     if (velocity > 0) {
-  //       setMidiNote(note)
-  //       console.log(note)
-  //     }else {
-  //       setMidiNote(null)
-  //     }
-  //   }
-
-  // }
-  
-  // function updateDevice(e) {
-  // }
-
-  // function failure() {
-  //   console.log("Could not connect Midi")
-  // }
-  
+ 
   
   useEffect(() => {
     if (match) {
@@ -198,7 +162,6 @@ const Home = ({sounds, setSounds}) => {
         }
       },
     }).toDestination()
-    synth.current.connect(Reverb)
   }, [])
 
   
@@ -417,58 +380,56 @@ const Home = ({sounds, setSounds}) => {
   // effects controls
   
   useEffect(() => {
-    console.log(Reverb.wet)
     synth.current.connect(Reverb)
     Reverb.wet.value = reverb
-    if (reverb === 0) {
-      synth.current.disconnect(Reverb)
+    if (reverb == 0) {
+      Reverb.wet.value = 0
     }
   }, [reverb])
+
 
   
   useEffect(() => {
     synth.current.connect(Phaser)
-    synth.current.Phaser = phaser
-    if (phaser === 0) {
-      synth.current.disconnect(Phaser)
+    Phaser.wet.value = phaser
+    if (phaser == 0) {
+      Phaser.wet.value = 0
     }
   }, [phaser])
 
   
   useEffect(() => {
     synth.current.connect(Distortion)
-    synth.current.Distortion = distortion
-    if (distortion === 0) {
-      console.log('disconnect')
-      synth.current.disconnect(Distortion)
+    Distortion.wet.value = distortion
+    if (distortion == 0) {
+      Distortion.wet.value = 0
     }
   }, [distortion])
 
 
   useEffect(() => {
     synth.current.connect(BitCrusher)
-    synth.current.BitCrusher = bitcrusher
-    if (synth.current.BitCrusher === 0.0) {
-      synth.current.disconnect(BitCrusher)
+    BitCrusher.wet.value = bitcrusher
+    if (bitcrusher == 0) {
+      BitCrusher.wet.value = 0
     }
   }, [bitcrusher])
 
-  console.log(window.innerWidth)
 
   useEffect(() => {
     synth.current.connect(Delay)
     synth.current.Delay = delay
-    if (delay === 0) {
-      synth.current.disconnect(Delay)
+    if (delay == 0) {
+      Delay.wet.value = 0
     }
   }, [delay])
 
   
   useEffect(() => {
     synth.current.connect(Feedback)
-    synth.current.Feedback = feedback
-    if (feedback === 0) {
-      synth.current.disconnect(Feedback)
+    Feedback.wet.value = feedback
+    if (feedback == 0) {
+      Feedback.wet.value = 0
     }
   }, [feedback])
 
