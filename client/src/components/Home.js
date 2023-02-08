@@ -544,7 +544,17 @@ const Home = ({sounds, setSounds}) => {
     }
     fetch(`/sounds/${match.params.id}`, options)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      const filteredSounds = sounds.map((sound) => {
+          if (sound.id === data.id) {
+              return data
+          } else {
+              return sound
+          }
+      })
+      setSounds(filteredSounds)
+      history.push('/my-profile')
+    })
   }
 
   return (
