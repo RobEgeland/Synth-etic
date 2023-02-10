@@ -57,7 +57,7 @@ const Home = ({sounds, setSounds}) => {
   
   // effect vars
   const Reverb = new Tone.Reverb({
-    decay: 7,
+    decay: 10,
   }).toDestination()
   
   const Phaser = new Tone.Phaser({
@@ -83,7 +83,7 @@ const Home = ({sounds, setSounds}) => {
   });
   // 
 
-  
+
   // function for loading in sounds
   useEffect(() => {
     if (match) {
@@ -287,24 +287,7 @@ const Home = ({sounds, setSounds}) => {
     }
   }, [voice1Attack, voice1Decay, voice1Sustain, voice1Release])
 
-  // useEffect(() => {
-  //   synth.current.voice0.envelope.attack = voice1Attack
-  // }, [voice1Attack])
 
-
-  // useEffect(() => {
-  //   synth.current.voice0.envelope.decay = voice1Decay
-  // }, [voice1Decay])
-
-  
-  // useEffect(() => {
-  //   synth.current.voice0.envelope.sustain = voice1Sustain
-  // }, [voice1Sustain])
-
-  
-  // useEffect(() => {
-  //   synth.current.voice0.envelope.release = voice1Release
-  // }, [voice1Release])
   
   // voice 2 controls
   
@@ -337,24 +320,6 @@ const Home = ({sounds, setSounds}) => {
     }
   }, [voice2Attack, voice2Decay, voice2Sustain, voice2Release])
 
-  // useEffect(() => {
-  //   synth.current.voice1.envelope.attack = voice2Attack
-  // }, [voice2Attack])
-
-  
-  // useEffect(() => {
-  //   synth.current.voice1.envelope.decay = voice2Decay
-  // }, [voice2Decay])
-
-  
-  // useEffect(() => {
-  //   synth.current.voice1.envelope.sustain = voice2Sustain
-  // }, [voice2Sustain])
-
-  
-  // useEffect(() => {
-  //   synth.current.voice1.envelope.release = voice2Release
-  // }, [voice2Release])
   
   // harm/vib controls
 
@@ -367,20 +332,6 @@ const Home = ({sounds, setSounds}) => {
       synth.current.vibratoRate.value = vibratoRate
     }
   }, [harmonicity, vibrato, vibratoRate])
-  
-  // useEffect(() => {
-  //   synth.current.harmonicity.value = harmonicity
-  // }, [harmonicity])
-
-  
-  // useEffect(() => {
-  //   synth.current.vibratoRate.value = vibratoRate
-  // }, [vibratoRate])
-
-  
-  // useEffect(() => {
-  //   synth.current.vibratoAmount.value = vibrato
-  // }, [vibrato])
 
   // effects controls
   

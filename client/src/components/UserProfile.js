@@ -32,6 +32,7 @@ const UserProfile = ({sounds, setSounds}) => {
           <h1>Hi, {currentUser.username}!</h1>
           <h2>This is where you can veiw all of the sounds you have created</h2>
           <br></br>
+          {userSounds.length === 0 ? <h2>You have no saved sounds yet, go make some music!</h2> : null}
           <ul className='sound_card_list'>
             {userSounds.map(sound => <SoundCard handleDelete={handleDelete} sound={sound}/>)}
           </ul>
