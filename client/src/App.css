@@ -437,6 +437,37 @@ height: 10px;
   grid-gap: 20px;
   grid-template-columns: repeat(4, 1fr);
 }
+.title {
+  margin: auto;
+  background-color: #e9c46a;
+  border-radius: 40px;
+  box-sizing: border-box;
+  width: 1000px;
+}
+
+.oscillator {
+  margin: auto;
+  background-color: #e9c46a;
+  border-radius: 40px;
+  box-sizing: border-box;
+  width: 1000px;
+}
+
+.Harm {
+  margin: auto;
+  background-color: #e9c46a;
+  border-radius: 40px;
+  box-sizing: border-box;
+  width: 1000px;
+}
+
+.effect {
+  margin: auto;
+  background-color: #e9c46a;
+  border-radius: 40px;
+  box-sizing: border-box;
+  width: 1000px;
+}
 
 .sound_card {
   background-color: #e9c46a;

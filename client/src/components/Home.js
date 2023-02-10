@@ -85,46 +85,46 @@ const Home = ({sounds, setSounds}) => {
 
 
   // function for loading in sounds
-  useEffect(() => {
-    if (match) {
-      fetch(`/sounds/${match.params.id}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setSoundName(data.sound_name)
-        setHarmonicity(data.harmonicity)
-        setVibratoRate(data.vibrato_rate)
-        setVibrato(data.vibrato_amount)
-        setVoice1Osc(data.voice0_oscillator)
-        setVoice1Vol(data.voice0_volume)
-        setVoice1Port(data.voice0_portamento)
-        setVoice1Attack(data.voice0_attack)
-        setVoice1Decay(data.voice0_decay)
-        setVoice1Sustain(data.voice0_sustain)
-        setVoice1Release(data.voice0_release)
-        setVoice2Osc(data.voice1_oscillator)
-        setVoice2Vol(data.voice1_volume)
-        setVoice2Port(data.voice1_portamento)
-        setVoice2Attack(data.voice1_attack)
-        setVoice2Decay(data.voice1_decay)
-        setVoice2Sustain(data.voice1_sustain)
-        setVoice2Release(data.voice1_release)
-        setReverb(data.effects[0].wet)
-        setReverbUpdateId(data.effects[0].id)
-        setPhaser(data.effects[1].wet)
-        setPhaserUpdateId(data.effects[1].id)
-        setDistortion(data.effects[2].wet)
-        setDistortionUpdateId(data.effects[2].id)
-        setBitcrusher(data.effects[3].wet)
-        setBitcrusherUpdateId(data.effects[3].id)
-        setDelay(data.effects[4].wet)
-        setDelayUpdateId(data.effects[4].id)
-        setFeedback(data.effects[5].wet)
-        setFeedbackUpdateId(data.effects[5].id)
-        setUserSoundId(data.user.id)
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (match) {
+  //     fetch(`/sounds/${match.params.id}`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       setSoundName(data.sound_name)
+  //       setHarmonicity(data.harmonicity)
+  //       setVibratoRate(data.vibrato_rate)
+  //       setVibrato(data.vibrato_amount)
+  //       setVoice1Osc(data.voice0_oscillator)
+  //       setVoice1Vol(data.voice0_volume)
+  //       setVoice1Port(data.voice0_portamento)
+  //       setVoice1Attack(data.voice0_attack)
+  //       setVoice1Decay(data.voice0_decay)
+  //       setVoice1Sustain(data.voice0_sustain)
+  //       setVoice1Release(data.voice0_release)
+  //       setVoice2Osc(data.voice1_oscillator)
+  //       setVoice2Vol(data.voice1_volume)
+  //       setVoice2Port(data.voice1_portamento)
+  //       setVoice2Attack(data.voice1_attack)
+  //       setVoice2Decay(data.voice1_decay)
+  //       setVoice2Sustain(data.voice1_sustain)
+  //       setVoice2Release(data.voice1_release)
+  //       setReverb(data.effects[0].wet)
+  //       setReverbUpdateId(data.effects[0].id)
+  //       setPhaser(data.effects[1].wet)
+  //       setPhaserUpdateId(data.effects[1].id)
+  //       setDistortion(data.effects[2].wet)
+  //       setDistortionUpdateId(data.effects[2].id)
+  //       setBitcrusher(data.effects[3].wet)
+  //       setBitcrusherUpdateId(data.effects[3].id)
+  //       setDelay(data.effects[4].wet)
+  //       setDelayUpdateId(data.effects[4].id)
+  //       setFeedback(data.effects[5].wet)
+  //       setFeedbackUpdateId(data.effects[5].id)
+  //       setUserSoundId(data.user.id)
+  //     })
+  //   }
+  // }, [])
     
   // init function
   useEffect(() => {
@@ -164,7 +164,44 @@ const Home = ({sounds, setSounds}) => {
   // localstore update after refresh
   useEffect(() => {
     let returnObj = JSON.parse(window.localStorage.getItem('Synth'))
-    if (window.localStorage.getItem('Synth')){
+    if (match) {
+      fetch(`/sounds/${match.params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setSoundName(data.sound_name)
+        setHarmonicity(data.harmonicity)
+        setVibratoRate(data.vibrato_rate)
+        setVibrato(data.vibrato_amount)
+        setVoice1Osc(data.voice0_oscillator)
+        setVoice1Vol(data.voice0_volume)
+        setVoice1Port(data.voice0_portamento)
+        setVoice1Attack(data.voice0_attack)
+        setVoice1Decay(data.voice0_decay)
+        setVoice1Sustain(data.voice0_sustain)
+        setVoice1Release(data.voice0_release)
+        setVoice2Osc(data.voice1_oscillator)
+        setVoice2Vol(data.voice1_volume)
+        setVoice2Port(data.voice1_portamento)
+        setVoice2Attack(data.voice1_attack)
+        setVoice2Decay(data.voice1_decay)
+        setVoice2Sustain(data.voice1_sustain)
+        setVoice2Release(data.voice1_release)
+        setReverb(data.effects[0].wet)
+        setReverbUpdateId(data.effects[0].id)
+        setPhaser(data.effects[1].wet)
+        setPhaserUpdateId(data.effects[1].id)
+        setDistortion(data.effects[2].wet)
+        setDistortionUpdateId(data.effects[2].id)
+        setBitcrusher(data.effects[3].wet)
+        setBitcrusherUpdateId(data.effects[3].id)
+        setDelay(data.effects[4].wet)
+        setDelayUpdateId(data.effects[4].id)
+        setFeedback(data.effects[5].wet)
+        setFeedbackUpdateId(data.effects[5].id)
+        setUserSoundId(data.user.id)
+      })
+    }else if (window.localStorage.getItem('Synth')){
       setSoundName(returnObj.soundName)
       setHarmonicity(returnObj.harmonicity)
       setVibratoRate(returnObj.vibratoRate)
@@ -256,7 +293,6 @@ const Home = ({sounds, setSounds}) => {
     location.reload()
   }
 
-  
   
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
