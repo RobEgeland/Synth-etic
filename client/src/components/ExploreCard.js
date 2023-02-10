@@ -7,7 +7,7 @@ const ExploreCard = ({sound}) => {
             <h1>{sound.sound_name}</h1>
             <br></br>
             <h3>by: {sound.user.username}</h3>
-            <NavLink to={`/${sound.id}`}><button>play</button></NavLink>
+            <NavLink to={`/${sound.id}`}><button className='play_button'>play</button></NavLink>
         </div>
     )
 }
