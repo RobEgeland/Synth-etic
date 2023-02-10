@@ -55,11 +55,10 @@ const Home = ({sounds, setSounds}) => {
   const [delay, setDelay] = useState(0)
   const [feedback, setFeedback] = useState(0)
   
-
+  // effect vars
   const Reverb = new Tone.Reverb({
     decay: 7,
   }).toDestination()
-  
   
   const Phaser = new Tone.Phaser({
     frequency: 15,
@@ -75,7 +74,6 @@ const Home = ({sounds, setSounds}) => {
     bits: 4,
     wet: 0
   }).toDestination()
-    console.log(BitCrusher.current)
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -83,12 +81,10 @@ const Home = ({sounds, setSounds}) => {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-  
-  
+  // 
 
   
- 
-  
+  // function for loading in sounds
   useEffect(() => {
     if (match) {
       fetch(`/sounds/${match.params.id}`)
@@ -130,6 +126,7 @@ const Home = ({sounds, setSounds}) => {
     }
   }, [])
     
+  // init function
   useEffect(() => {
     synth.current = new Tone.DuoSynth({
       harmonicity: 0.1,
@@ -149,7 +146,7 @@ const Home = ({sounds, setSounds}) => {
           }
       },
       voice1: {
-        volume: -5,
+        volume: -10,
         portamento: 0.1,
         oscillator: {
           type: "sine" 
@@ -164,8 +161,7 @@ const Home = ({sounds, setSounds}) => {
     }).toDestination()
   }, [])
 
-  
-
+  // localstore update after refresh
   useEffect(() => {
     let returnObj = JSON.parse(window.localStorage.getItem('Synth'))
     if (window.localStorage.getItem('Synth')){
@@ -195,7 +191,8 @@ const Home = ({sounds, setSounds}) => {
       setFeedback(returnObj.feedback)
     }
   }, [])
-
+  
+  // localstore persistence
   useEffect(() => {
     window.localStorage.setItem('Synth', JSON.stringify({
       "soundName": soundName,
@@ -259,26 +256,7 @@ const Home = ({sounds, setSounds}) => {
     location.reload()
   }
 
-  // functions for changing knobs
-  // Voice 1 controls
-
-  // useEffect(() => {
-  //   if(voice1Osc !== synth.current.voice0.oscillator.type) {
-  //     synth.current.voice0.oscillator.type = voice1Osc
-  //   }else if (voice1Vol !== synth.current.voice0.volume.value) {
-  //     synth.current.voice0.volume.value = voice1Vol
-  //   }else if(voice1Port !== synth.current.voice0.portamento) {
-  //     synth.current.voice0.portamento = voice1Port
-  //   }else if(voice1Attack !== synth.current.voice0.envelope.attack) {
-  //     synth.current.voice0.envelope.attack = voice1Attack
-  //   }else if(voice1Decay !== synth.current.voice0.envelope.decay) {
-  //     synth.current.voice0.envelope.decay = voice1Decay
-  //   }else if(voice1Sustain !== synth.current.voice0.envelope.decay) {
-  //     synth.current.voice0.envelope.decay = voice1Sustain
-  //   }else if(voice1Release !== synth.current.voice0.envelope.release) {
-  //     synth.current.voice0.envelope.release = voice1Release
-  //   }
-  // }, [voice1Osc, voice1Vol, voice1Port, voice1Attack, voice1Decay, voice1Sustain, voice1Release])
+  
   
   useEffect(() => {
     synth.current.voice0.oscillator.type = voice1Osc
@@ -294,26 +272,39 @@ const Home = ({sounds, setSounds}) => {
     synth.current.voice0.portamento = voice1Port
   }, [voice1Port])
 
-  
   useEffect(() => {
-    synth.current.voice0.envelope.attack = voice1Attack
-  }, [voice1Attack])
+    if(voice1Attack !== synth.current.voice0.envelope.attack) {
+      synth.current.voice0.envelope.attack = voice1Attack
+    }else if(voice1Decay !== synth.current.voice0.envelope.decay) {
+      synth.current.voice0.envelope.decay = voice1Decay
+      console.log(synth.current.voice0.envelope.decay)
+    }else if(voice1Sustain !== synth.current.voice0.envelope.sustain) {
+      synth.current.voice0.envelope.sustain = voice1Sustain
+      console.log(synth.current.voice0.envelope.sustain)
+    }else if(voice1Release !== synth.current.voice0.envelope.release) {
+      synth.current.voice0.envelope.release = voice1Release
+      console.log(synth.current.voice0.envelope.release)
+    }
+  }, [voice1Attack, voice1Decay, voice1Sustain, voice1Release])
+
+  // useEffect(() => {
+  //   synth.current.voice0.envelope.attack = voice1Attack
+  // }, [voice1Attack])
 
 
-  
-  useEffect(() => {
-    synth.current.voice0.envelope.decay = voice1Decay
-  }, [voice1Decay])
+  // useEffect(() => {
+  //   synth.current.voice0.envelope.decay = voice1Decay
+  // }, [voice1Decay])
 
   
-  useEffect(() => {
-    synth.current.voice0.envelope.decay = voice1Sustain
-  }, [voice1Sustain])
+  // useEffect(() => {
+  //   synth.current.voice0.envelope.sustain = voice1Sustain
+  // }, [voice1Sustain])
 
   
-  useEffect(() => {
-    synth.current.voice0.envelope.release = voice1Release
-  }, [voice1Release])
+  // useEffect(() => {
+  //   synth.current.voice0.envelope.release = voice1Release
+  // }, [voice1Release])
   
   // voice 2 controls
   
@@ -331,25 +322,39 @@ const Home = ({sounds, setSounds}) => {
     synth.current.voice1.portamento = voice2Port
   }, [voice2Port])
 
-
   useEffect(() => {
-    synth.current.voice1.envelope.attack = voice2Attack
-  }, [voice2Attack])
+    if(voice2Attack !== synth.current.voice1.envelope.attack) {
+      synth.current.voice1.envelope.attack = voice2Attack
+    }else if(voice2Decay !== synth.current.voice1.envelope.decay) {
+      synth.current.voice1.envelope.decay = voice2Decay
+      console.log(synth.current.voice1.envelope.decay)
+    }else if(voice2Sustain !== synth.current.voice1.envelope.sustain) {
+      synth.current.voice1.envelope.sustain = voice2Sustain
+      console.log(synth.current.voice1.envelope.sustain)
+    }else if(voice2Release !== synth.current.voice1.envelope.release) {
+      synth.current.voice1.envelope.release = voice2Release
+      console.log(synth.current.voice1.envelope.release)
+    }
+  }, [voice2Attack, voice2Decay, voice2Sustain, voice2Release])
+
+  // useEffect(() => {
+  //   synth.current.voice1.envelope.attack = voice2Attack
+  // }, [voice2Attack])
 
   
-  useEffect(() => {
-    synth.current.voice1.envelope.decay = voice2Decay
-  }, [voice2Decay])
+  // useEffect(() => {
+  //   synth.current.voice1.envelope.decay = voice2Decay
+  // }, [voice2Decay])
 
   
-  useEffect(() => {
-    synth.current.voice1.envelope.sustain = voice2Sustain
-  }, [voice2Sustain])
+  // useEffect(() => {
+  //   synth.current.voice1.envelope.sustain = voice2Sustain
+  // }, [voice2Sustain])
 
   
-  useEffect(() => {
-    synth.current.voice1.envelope.release = voice2Release
-  }, [voice2Release])
+  // useEffect(() => {
+  //   synth.current.voice1.envelope.release = voice2Release
+  // }, [voice2Release])
   
   // harm/vib controls
 
