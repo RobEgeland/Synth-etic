@@ -11,11 +11,9 @@ import Effects from './Effects';
 
 
 const Home = ({sounds, setSounds}) => {
-
   let synth = useRef(null)
   let match = useRouteMatch('/:id')
   
-  const [midiNote, setMidiNote] = useState(null)
   const [userSoundId, setUserSoundId] = useState(null)
   const [reverbUpdateId, setReverbUpdateId] = useState(null)
   const [phaserUpdateId, setPhaserUpdateId] = useState(null)
@@ -629,8 +627,6 @@ const Home = ({sounds, setSounds}) => {
       <div className='piano-parent'>
         <div className='piano'>
           <Piano 
-          activeNotes={midiNote}
-          playbackNote={[midiNote]}
           disabled={nameTyping ? true : false}
           noteRange={{ first: 48, last: 77}}
           playNote={(MidiNumbers) => {
