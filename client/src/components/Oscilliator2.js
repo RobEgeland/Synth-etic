@@ -21,7 +21,7 @@ const Oscilliator2 = ({
         <div className='osc2form'>
             <div className='voice2_osc'>
                 <select value={voice2Osc} onChange={(e) => setVoice2Osc(e.target.value)} >
-                    <option value={"sine"} selected>sine</option>
+                    <option value={"sine"}>sine</option>
                     <option value={"triangle"}>triangle</option>
                     <option value={"sawtooth"}>sawtooth</option>
                     <option value={"square"}>square</option>

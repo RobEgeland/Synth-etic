@@ -37,7 +37,7 @@ const Effects = ({
     }
     return (
         <div className='effects'>
-            <h1 class="Title">Sound Name</h1>
+            <h1 className="Title">Sound Name</h1>
             <input className='sound_name' value={soundName} type={"text"} placeholder={"Sound Name"} onBlur={() => setNameTyping(false)} onClick={() => setNameTyping(true)} onChange={(e) => {
                 setSoundName(e.target.value)
                 }}>
